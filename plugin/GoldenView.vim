@@ -4,8 +4,8 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Tue 18 Sep 2012 08:13:08 PM EDT
-" Tag            : [ vim, window, golden-ratio ]
+" Last Modified  : Tue 18 Sep 2012 09:22:01 PM EDT
+" Tag            : [ vim, window, size, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
 " =============== ============================================================
@@ -41,39 +41,70 @@ call zlib#rc#set_default({
 " Public Interface:                                                       [[[1
 " ============================================================================
 
+" Auto Resize:
+" ------------
 command! -nargs=0 GoldenViewToggleAutoResize
             \ call GoldenView#ToggleAutoResize()
+
 command! -nargs=0 GoldenViewDisableAutoResize
             \ call GoldenView#DisableAutoResize()
+
 command! -nargs=0 GoldenViewEnableAutoResize
             \ call GoldenView#EnableAutoResize()
+
 command! -nargs=0 GoldenViewResize
             \ call GoldenView#EnableAutoResize()
             \|call GoldenView#DisableAutoResize()
 
 
+nnoremap <Plug>GoldenViewToggleAutoResize
+            \ :<C-U>GoldenViewToggleAutoResize<CR>
 
-nnoremap <Plug>GoldenViewToggleAutoResize :<C-U>GoldenViewToggleAutoResize<CR>
-nnoremap <Plug>GoldenViewResize :<C-U>GoldenViewResize<CR>
+nnoremap <Plug>GoldenViewResize
+            \ :<C-U>GoldenViewResize<CR>
 
+" Layout Split:
+" -------------
+nnoremap <Plug>GoldenViewSplit
+            \ :<C-u>call zlib#window#split_nicely()<CR>
+
+
+" Goto Window:
+" ------------
+nnoremap <Plug>GoldenViewNext
+            \ :<C-u>call zlib#window#next_window_or_tab()<CR>
+nnoremap <Plug>GoldenViewPrevious
+            \ :<C-u>call zlib#window#previous_window_or_tab()<CR>
+
+" Switch Window:
+" --------------
+nnoremap <Plug>GoldenViewSwitch
+            \ :<C-u>call zlib#window#switch_buffer_toggle()<CR>
+
+
+
+
+
+" ============================================================================
+" Initialization:                                                         [[[1
+" ============================================================================
+if g:goldenview__enable_at_startup == 1
+    GoldenViewEnableAutoResize
+endif
 
 if g:goldenview__enable_default_mapping == 1
+    nmap <silent> <C-N> <Plug>GoldenViewNext
+    nmap <silent> <C-P> <Plug>GoldenViewPrevious
 
-    nnoremap <silent> <C-O> :<C-u>call zlib#window#split_nicely()<CR>
-    nnoremap <silent> <C-N> :<C-u>call zlib#window#next_window_or_tab()<CR>
-    nnoremap <silent> <C-P> :<C-u>call zlib#window#previous_window_or_tab()<CR>
+    nmap <silent> <F8> <Plug>GoldenViewSwitch
+
+    nmap <silent> <C-O> <Plug>GoldenViewSplit
 endif
 
 
 
-" ============================================================================
-" Helper Functions:                                                       [[[1
-" ============================================================================
 
 
-if g:goldenview__enable_at_startup == 1
-    GoldenViewToggleAutoResize
-endif
 
 
 
