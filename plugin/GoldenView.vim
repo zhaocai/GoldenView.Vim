@@ -4,7 +4,7 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Tue 18 Sep 2012 04:15:38 PM EDT
+" Last Modified  : Tue 18 Sep 2012 08:13:08 PM EDT
 " Tag            : [ vim, window, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
@@ -16,7 +16,7 @@
 try | if !zlib#rc#load_guard(expand('<sfile>:t:r'), 700, 100, ['!&cp'])
         finish
     endif
-catch /^Vim%((a+))=:E117/ " E117: Unknown Function
+catch /^Vim\%((\a\+)\)\=:E117/ " E117: Unknown Function
     throw 'GoldenView: zlib.vim is required!'
 endtry
 
@@ -29,8 +29,10 @@ set cpo&vim
 " ============================================================================
 
 call zlib#rc#set_default({
-    \ 'g:goldenview__enable_at_startup'      : 1 ,
-    \ 'g:goldenview__enable_default_mapping' : 1 ,
+    \ 'g:goldenview__enable_at_startup'      : 1         ,
+    \ 'g:goldenview__enable_default_mapping' : 1         ,
+    \ 'g:goldenview__active_profile'         : 'default' ,
+    \ 'g:goldenview__reset_profile'          : 'reset'   ,
     \
     \ })
 
@@ -39,11 +41,20 @@ call zlib#rc#set_default({
 " Public Interface:                                                       [[[1
 " ============================================================================
 
-command! -nargs=0 GoldenViewToggleAutoResize call GoldenView#ToggleAutoResize()
+command! -nargs=0 GoldenViewToggleAutoResize
+            \ call GoldenView#ToggleAutoResize()
+command! -nargs=0 GoldenViewDisableAutoResize
+            \ call GoldenView#DisableAutoResize()
+command! -nargs=0 GoldenViewEnableAutoResize
+            \ call GoldenView#EnableAutoResize()
+command! -nargs=0 GoldenViewResize
+            \ call GoldenView#EnableAutoResize()
+            \|call GoldenView#DisableAutoResize()
 
 
 
-nnoremap <Plug>GoldenViewToggleAutoResize :<C-U>call GoldenView#ToggleAutoResize()<CR>
+nnoremap <Plug>GoldenViewToggleAutoResize :<C-U>GoldenViewToggleAutoResize<CR>
+nnoremap <Plug>GoldenViewResize :<C-U>GoldenViewResize<CR>
 
 
 if g:goldenview__enable_default_mapping == 1
