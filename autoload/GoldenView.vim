@@ -4,7 +4,7 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Tue 18 Sep 2012 04:38:47 PM EDT
+" Last Modified  : Tue 18 Sep 2012 08:46:03 PM EDT
 " Tag            : [ vim, window, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
@@ -12,43 +12,49 @@
 
 
 " ============================================================================
-" Initialization:                                                         [[[1
+" Initialization And Profile:                                             [[[1
 " ============================================================================
+function! GoldenView#ExtendProfile(name, def)
+    let default = get(g:goldenview__profile, a:name,
+                \ copy(g:goldenview__profile['default']))
+
+    let g:goldenview__profile[a:name] = extend(default, a:def)
+endfunction
+
 function! GoldenView#Init()
     if exists('g:goldenview__initialized') && g:goldenview__initialized == 1
         return
     endif
-    let s:golden_ratio = 1.618
+    let g:goldenview__golden_ratio = 1.618
+    lockvar g:goldenview__golden_ratio
 
-    call zlib#rc#set_default({
-        \ 'g:goldenview__active_profile' : 'default' ,
-        \ 'g:goldenview__reset_profile'  : 'reset'   ,
-        \ 'g:goldenview__profile' : {
-        \   'reset' : {
-        \     'focus_window' : {
-        \       'winheight' : &winheight ,
-        \       'winwidth'  : &winwidth  ,
-        \     },
-        \     'other_window' : {
-        \       'winheight' : &winminheight ,
-        \       'winwidth'  : &winminwidth  ,
-        \     },
-        \   },
-        \   'default' : {
-        \     'focus_window' : {
-        \       'winheight' : function('GoldenView#GoldenHeight') ,
-        \       'winwidth'  : function('GoldenView#GoldenWidth')  ,
-        \     },
-        \     'other_window' : {
-        \       'winheight' : 3                               ,
-        \       'winwidth'  : float2nr(3 * &columns / &lines) ,
-        \     },
-        \   },
-        \ },
-        \
-        \ })
+
+    let g:goldenview__profile = {
+    \   'reset' : {
+    \     'focus_window_winheight' : &winheight    ,
+    \     'focus_window_winwidth'  : &winwidth     ,
+    \     'other_window_winheight' : &winminheight ,
+    \     'other_window_winwidth'  : &winminwidth  ,
+    \   },
+    \   'default' : {
+    \     'focus_window_winheight' : function('GoldenView#GoldenHeight')    ,
+    \     'focus_window_winwidth'  : function('GoldenView#TextWidth')       ,
+    \     'other_window_winheight' : function('GoldenView#GoldenMinHeight') ,
+    \     'other_window_winwidth'  : function('GoldenView#GoldenMinWidth')  ,
+    \   },
+    \ }
+
+    call GoldenView#ExtendProfile('golden-ratio', {
+    \   'focus_window_winwidth'  : function('GoldenView#GoldenWidth')  ,
+    \   'focus_window_winheight' : function('GoldenView#GoldenHeight') ,
+    \ })
+
     let g:goldenview__initialized = 1
 endfunction
+
+call GoldenView#Init()
+
+
 
 " ============================================================================
 " Auto Resize:                                                            [[[1
@@ -56,8 +62,10 @@ endfunction
 function! GoldenView#ToggleAutoResize()
     if exists('s:goldenview__auto_resize') && s:goldenview__auto_resize == 1
         call GoldenView#DisableAutoResize()
+        call zlib#print#moremsg('GoldenView Auto Resize: Off')
     else
         call GoldenView#EnableAutoResize()
+        call zlib#print#moremsg('GoldenView Auto Resize: On')
     endif
 endfunction
 
@@ -67,11 +75,10 @@ function! GoldenView#EnableAutoResize()
     augroup GoldenView
         au!
         autocmd VimResized * call GoldenView#Resize()
-        autocmd BufEnter,WinEnter * let &winwidth = &textwidth + 2
+        autocmd BufWinEnter,WinEnter * call GoldenView#Resize()
     augroup END
     let s:goldenview__auto_resize = 1
 
-    call zlib#print#moremsg('GoldenView Auto Resize: On')
 endfunction
 
 
@@ -80,16 +87,18 @@ function! GoldenView#DisableAutoResize()
     call GoldenView#ResetResize()
 
     let s:goldenview__auto_resize = 0
-    call zlib#print#moremsg('GoldenView Auto Resize: Off')
 endfunction
 
 
-
-
 function! GoldenView#Resize()
+    if &winfixheight || &winfixwidth
+        call GoldenView#ResetResize()
+        return
+    endif
+
     let profile = g:goldenview__profile[g:goldenview__active_profile]
-    call s:set_other_window(profile)
     call s:set_focus_window(profile)
+    call s:set_other_window(profile)
 endfunction
 
 
@@ -99,44 +108,71 @@ function! GoldenView#ResetResize()
     call s:set_focus_window(profile)
 endfunction
 
-function! GoldenView#GoldenHeight(profile)
-    return float2nr(&lines / s:golden_ratio)
+
+function! GoldenView#GoldenHeight(...)
+    return float2nr(&lines / g:goldenview__golden_ratio)
 endfunction
 
-function! GoldenView#GoldenWidth(profile)
 
-    let ww = winwidth(0)
+function! GoldenView#GoldenWidth(...)
+    return float2nr(&columns / g:goldenview__golden_ratio)
+endfunction
+
+
+function! GoldenView#GoldenMinHeight(...)
+    return float2nr(GoldenView#GoldenHeight()/(3*g:goldenview__golden_ratio))
+endfunction
+
+
+function! GoldenView#GoldenMinWidth(...)
+    return float2nr(GoldenView#GoldenWidth()/(3*g:goldenview__golden_ratio))
+endfunction
+
+
+function! GoldenView#TextWidth(profile)
     let tw = &l:textwidth
 
-    if tw != 0 && ww > tw
-        return tw + a:profile['other_window']['winwidth']
+    if tw != 0
+        return tw + 2
     else
-        return float2nr(&columns / s:golden_ratio)
+        let gw = GoldenView#GoldenWidth()
+        return gw > 80 ? 80 : gw
     endif
-
 endfunction
 
-function s:set_focus_window(profile)
-    let &winwidth  = s:eval(a:profile, a:profile['focus_window']['winwidth'])
-    let &winheight = s:eval(a:profile, a:profile['focus_window']['winheight'])
+
+function! s:set_focus_window(profile)
+    try
+        let &winwidth  = s:eval(a:profile, a:profile['focus_window_winwidth'])
+        let &winheight = s:eval(a:profile, a:profile['focus_window_winheight'])
+    catch /^Vim\%((\a\+)\)\=:E36/ " Not enough room
+    endtry
 endfunction
 
-function s:set_other_window(profile)
-    let &winminwidth  = s:eval(a:profile, a:profile['other_window']['winwidth'])
-    let &winminheight = s:eval(a:profile, a:profile['other_window']['winheight'])
+
+function! s:set_other_window(profile)
+    try
+        let &winminwidth  = s:eval(a:profile, a:profile['other_window_winwidth'])
+        let &winminheight = s:eval(a:profile, a:profile['other_window_winheight'])
+    catch /^Vim\%((\a\+)\)\=:E36/ " Not enough room
+    endtry
 endfunction
 
-function s:eval(profile, val)
-    if type(a:val) == type(1)
+
+function! s:eval(profile, val)
+    if zlib#var#is_number(a:val)
         return a:val
-    elseif type(a:val) == type(function('type'))
+    elseif zlib#var#is_funcref(a:val)
         return a:val(a:profile)
     else
-        throw 'GoldenView: invalid profile value type!'
+        try
+            return eval(a:val)
+        catch /^Vim\%((\a\+)\)\=:E/
+            throw 'GoldenView: invalid profile value type!'
+        endtry
     endif
 endfunction
 
-call GoldenView#Init()
 " ============================================================================
 " Modeline:                                                               [[[1
 " ============================================================================
