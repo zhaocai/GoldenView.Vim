@@ -4,7 +4,7 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Thu 20 Sep 2012 01:30:24 AM EDT
+" Last Modified  : Thu 20 Sep 2012 04:33:59 PM EDT
 " Tag            : [ vim, window, size, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
@@ -13,11 +13,11 @@
 " ============================================================================
 " Load Guard:                                                             [[[1
 " ============================================================================
-try | if !zlib#rc#load_guard(expand('<sfile>:t:r'), 700, 100, ['!&cp'])
+try | if !zl#rc#load_guard(expand('<sfile>:t:r'), 700, 100, ['!&cp'])
         finish
     endif
 catch /^Vim\%((\a\+)\)\=:E117/ " E117: Unknown Function
-    throw 'GoldenView: zlib.vim is required!'
+    throw 'GoldenView: zl.vim is required!'
 endtry
 
 let s:save_cpo = &cpo
@@ -28,7 +28,7 @@ set cpo&vim
 " Settings:                                                               [[[1
 " ============================================================================
 
-call zlib#rc#set_default({
+call zl#rc#set_default({
     \ 'g:goldenview__enable_at_startup'      : 1         ,
     \ 'g:goldenview__enable_default_mapping' : 1         ,
     \ 'g:goldenview__active_profile'         : 'default' ,
@@ -46,7 +46,7 @@ call zlib#rc#set_default({
     \     '_VOOM\d\+$' ,
     \   ],
     \   'expr' : [
-    \     ['&winfixheight', '&winfixwidth'] ,
+    \     ['&winfixheight', '&winfixwidth', '&lazyredraw'] ,
     \   ],
     \ },
     \
@@ -82,22 +82,22 @@ nnoremap <Plug>GoldenViewResize
 " Layout Split:
 " -------------
 nnoremap <Plug>GoldenViewSplit
-            \ :<C-u>call zlib#window#split_nicely()<CR>
+            \ :<C-u>call zl#window#split_nicely()<CR>
 
 
 " Goto Window:
 " ------------
 nnoremap <Plug>GoldenViewNext
-            \ :<C-u>call zlib#window#next_window_or_tab()<CR>
+            \ :<C-u>call zl#window#next_window_or_tab()<CR>
 nnoremap <Plug>GoldenViewPrevious
-            \ :<C-u>call zlib#window#previous_window_or_tab()<CR>
+            \ :<C-u>call zl#window#previous_window_or_tab()<CR>
 
 " Switch Window:
 " --------------
 nnoremap <Plug>GoldenViewSwitchWithLargest
-            \ :<C-u>call zlib#window#switch_buffer_toggle({'with' : 'largest'})<CR>
+            \ :<C-u>call zl#window#switch_buffer_toggle({'with' : 'largest'})<CR>
 nnoremap <Plug>GoldenViewSwitchWithSmallest
-            \ :<C-u>call zlib#window#switch_buffer_toggle({'with' : 'smallest'})<CR>
+            \ :<C-u>call zl#window#switch_buffer_toggle({'with' : 'smallest'})<CR>
 
 
 

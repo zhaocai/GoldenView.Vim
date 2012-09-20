@@ -4,7 +4,7 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Thu 20 Sep 2012 02:00:30 AM EDT
+" Last Modified  : Thu 20 Sep 2012 04:33:59 PM EDT
 " Tag            : [ vim, window, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
@@ -47,10 +47,9 @@ function! GoldenView#Init()
 
     call GoldenView#ExtendProfile('golden-ratio', {
     \   'focus_window_winwidth'  : function('GoldenView#GoldenWidth')  ,
-    \   'focus_window_winheight' : function('GoldenView#GoldenHeight') ,
     \ })
 
-    let s:goldenview__ignore_nrule = zlib#rule#norm(
+    let s:goldenview__ignore_nrule = zl#rule#norm(
     \   g:goldenview__ignore_urule, {
     \     'logic' : 'or',
     \   }
@@ -68,10 +67,10 @@ call GoldenView#Init()
 function! GoldenView#ToggleAutoResize()
     if exists('s:goldenview__auto_resize') && s:goldenview__auto_resize == 1
         call GoldenView#DisableAutoResize()
-        call zlib#print#moremsg('GoldenView Auto Resize: Off')
+        call zl#print#moremsg('GoldenView Auto Resize: Off')
     else
         call GoldenView#EnableAutoResize()
-        call zlib#print#moremsg('GoldenView Auto Resize: On')
+        call zl#print#moremsg('GoldenView Auto Resize: On')
     endif
 endfunction
 
@@ -97,6 +96,7 @@ endfunction
 
 
 function! GoldenView#Resize()
+
     if GoldenView#IsIgnore()
         return
     endif
@@ -114,7 +114,7 @@ function! GoldenView#Resize()
 endfunction
 
 function! GoldenView#IsIgnore()
-    return zlib#rule#is_true(s:goldenview__ignore_nrule)
+    return zl#rule#is_true(s:goldenview__ignore_nrule)
 endfunction
 
 
@@ -176,9 +176,9 @@ endfunction
 
 
 function! s:eval(profile, val)
-    if zlib#var#is_number(a:val)
+    if zl#var#is_number(a:val)
         return a:val
-    elseif zlib#var#is_funcref(a:val)
+    elseif zl#var#is_funcref(a:val)
         return a:val(a:profile)
     else
         try
