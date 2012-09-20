@@ -4,7 +4,7 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Tue 18 Sep 2012 09:22:01 PM EDT
+" Last Modified  : Thu 20 Sep 2012 01:30:24 AM EDT
 " Tag            : [ vim, window, size, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
@@ -33,6 +33,22 @@ call zlib#rc#set_default({
     \ 'g:goldenview__enable_default_mapping' : 1         ,
     \ 'g:goldenview__active_profile'         : 'default' ,
     \ 'g:goldenview__reset_profile'          : 'reset'   ,
+    \ 'g:goldenview__ignore_urule'           : {
+    \   'filetype' : [
+    \     'qf'       , 'vimpager' , 'undotree' , 'tagbar' ,
+    \     'nerdtree' , 'vimshell' , 'vimfiler' , 'voom'   ,
+    \     'tabman'   , 'unite'    , 'quickrun' ,
+    \   ],
+    \   'bufname' : [
+    \     'GoToFile'                  , 'diffpanel_\d\+'      ,
+    \     '__Gundo_Preview__'         , '__Gundo__'           ,
+    \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' ,
+    \     '_VOOM\d\+$' ,
+    \   ],
+    \   'expr' : [
+    \     ['&winfixheight', '&winfixwidth'] ,
+    \   ],
+    \ },
     \
     \ })
 
@@ -78,8 +94,10 @@ nnoremap <Plug>GoldenViewPrevious
 
 " Switch Window:
 " --------------
-nnoremap <Plug>GoldenViewSwitch
-            \ :<C-u>call zlib#window#switch_buffer_toggle()<CR>
+nnoremap <Plug>GoldenViewSwitchWithLargest
+            \ :<C-u>call zlib#window#switch_buffer_toggle({'with' : 'largest'})<CR>
+nnoremap <Plug>GoldenViewSwitchWithSmallest
+            \ :<C-u>call zlib#window#switch_buffer_toggle({'with' : 'smallest'})<CR>
 
 
 
@@ -93,12 +111,13 @@ if g:goldenview__enable_at_startup == 1
 endif
 
 if g:goldenview__enable_default_mapping == 1
-    nmap <silent> <C-N> <Plug>GoldenViewNext
-    nmap <silent> <C-P> <Plug>GoldenViewPrevious
+    nmap <silent> <C-N>  <Plug>GoldenViewNext
+    nmap <silent> <C-P>  <Plug>GoldenViewPrevious
 
-    nmap <silent> <F8> <Plug>GoldenViewSwitch
+    nmap <silent> <F8>   <Plug>GoldenViewSwitchWithLargest
+    nmap <silent> <S-F8> <Plug>GoldenViewSwitchWithSmallest
 
-    nmap <silent> <C-O> <Plug>GoldenViewSplit
+    nmap <silent> <C-L>  <Plug>GoldenViewSplit
 endif
 
 
@@ -115,5 +134,5 @@ unlet s:save_cpo
 " ============================================================================
 " Modeline:                                                               [[[1
 " ============================================================================
-" vim: set ft=vim ts=4 sw=4 tw=78 fdm=syntax fmr=[[[,]]] fdl=1 :
+" vim: set ft=vim ts=4 sw=4 tw=78 fdm=marker fmr=[[[,]]] fdl=1 :
 

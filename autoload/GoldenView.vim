@@ -4,7 +4,7 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Tue 18 Sep 2012 09:08:55 PM EDT
+" Last Modified  : Thu 20 Sep 2012 02:00:30 AM EDT
 " Tag            : [ vim, window, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
@@ -30,18 +30,19 @@ function! GoldenView#Init()
 
 
     let s:goldenview__profile = {
-    \   'reset' : {
-    \     'focus_window_winheight' : &winheight    ,
-    \     'focus_window_winwidth'  : &winwidth     ,
-    \     'other_window_winheight' : &winminheight ,
-    \     'other_window_winwidth'  : &winminwidth  ,
-    \   },
-    \   'default' : {
-    \     'focus_window_winheight' : function('GoldenView#GoldenHeight')    ,
-    \     'focus_window_winwidth'  : function('GoldenView#TextWidth')       ,
-    \     'other_window_winheight' : function('GoldenView#GoldenMinHeight') ,
-    \     'other_window_winwidth'  : function('GoldenView#GoldenMinWidth')  ,
-    \   },
+    \ 'reset'   : {
+    \   'focus_window_winheight' : &winheight    ,
+    \   'focus_window_winwidth'  : &winwidth     ,
+    \   'other_window_winheight' : &winminheight ,
+    \   'other_window_winwidth'  : &winminwidth  ,
+    \ },
+    \ 'default' : {
+    \   'focus_window_winheight' : function('GoldenView#GoldenHeight')    ,
+    \   'focus_window_winwidth'  : function('GoldenView#TextWidth')       ,
+    \   'other_window_winheight' : function('GoldenView#GoldenMinHeight') ,
+    \   'other_window_winwidth'  : function('GoldenView#GoldenMinWidth')  ,
+    \ },
+    \
     \ }
 
     call GoldenView#ExtendProfile('golden-ratio', {
@@ -49,6 +50,11 @@ function! GoldenView#Init()
     \   'focus_window_winheight' : function('GoldenView#GoldenHeight') ,
     \ })
 
+    let s:goldenview__ignore_nrule = zlib#rule#norm(
+    \   g:goldenview__ignore_urule, {
+    \     'logic' : 'or',
+    \   }
+    \ )
     let g:goldenview__initialized = 1
 endfunction
 
@@ -91,21 +97,31 @@ endfunction
 
 
 function! GoldenView#Resize()
-    if &winfixheight || &winfixwidth
-        call GoldenView#ResetResize()
+    if GoldenView#IsIgnore()
         return
     endif
 
-    let profile = s:goldenview__profile[g:goldenview__active_profile]
-    call s:set_focus_window(profile)
-    call s:set_other_window(profile)
+    let active_profile = s:goldenview__profile[g:goldenview__active_profile]
+    let reset_profile = s:goldenview__profile[g:goldenview__reset_profile]
+
+    " set other window and keep the setting
+    call s:set_other_window(active_profile)
+
+    " set and reset focus window
+    call s:set_focus_window(active_profile)
+    call s:set_focus_window(reset_profile)
+
+endfunction
+
+function! GoldenView#IsIgnore()
+    return zlib#rule#is_true(s:goldenview__ignore_nrule)
 endfunction
 
 
 function! GoldenView#ResetResize()
-    let profile = s:goldenview__profile[g:goldenview__reset_profile]
-    call s:set_other_window(profile)
-    call s:set_focus_window(profile)
+    let reset_profile = s:goldenview__profile[g:goldenview__reset_profile]
+    call s:set_other_window(reset_profile)
+    call s:set_focus_window(reset_profile)
 endfunction
 
 
@@ -129,7 +145,7 @@ function! GoldenView#GoldenMinWidth(...)
 endfunction
 
 
-function! GoldenView#TextWidth(profile)
+function! GoldenView#TextWidth(...)
     let tw = &l:textwidth
 
     if tw != 0
