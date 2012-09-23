@@ -4,7 +4,7 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Thu 20 Sep 2012 06:24:13 PM EDT
+" Last Modified  : Sun 23 Sep 2012 12:00:36 PM EDT
 " Tag            : [ vim, window, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
@@ -155,8 +155,14 @@ endfunction
 
 function! s:set_focus_window(profile)
     try
-        let &winwidth  = s:eval(a:profile, a:profile['focus_window_winwidth'])
-        let &winheight = s:eval(a:profile, a:profile['focus_window_winheight'])
+        if !&winfixwidth
+            let &winwidth  =
+            \ s:eval(a:profile, a:profile['focus_window_winwidth'])
+        endif
+        if !&winfixheight
+            let &winheight =
+            \ s:eval(a:profile, a:profile['focus_window_winheight'])
+        endif
     catch /^Vim\%((\a\+)\)\=:E36/ " Not enough room
         " call zl#print#warning('GoldenView:' . v:exception)
     endtry
@@ -165,8 +171,14 @@ endfunction
 
 function! s:set_other_window(profile)
     try
-        let &winminwidth  = s:eval(a:profile, a:profile['other_window_winwidth'])
-        let &winminheight = s:eval(a:profile, a:profile['other_window_winheight'])
+        if !&winfixwidth
+            let &winminwidth  =
+            \ s:eval(a:profile, a:profile['other_window_winwidth'])
+        endif
+        if !&winfixheight
+            let &winminheight =
+            \ s:eval(a:profile, a:profile['other_window_winheight'])
+        endif
     catch /^Vim\%((\a\+)\)\=:E36/ " Not enough room
         " call zl#print#warning('GoldenView:' . v:exception)
     endtry

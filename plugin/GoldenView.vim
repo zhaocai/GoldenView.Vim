@@ -4,7 +4,7 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Thu 20 Sep 2012 04:33:59 PM EDT
+" Last Modified  : Sun 23 Sep 2012 11:55:31 AM EDT
 " Tag            : [ vim, window, size, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
@@ -37,7 +37,7 @@ call zl#rc#set_default({
     \   'filetype' : [
     \     'qf'       , 'vimpager' , 'undotree' , 'tagbar' ,
     \     'nerdtree' , 'vimshell' , 'vimfiler' , 'voom'   ,
-    \     'tabman'   , 'unite'    , 'quickrun' ,
+    \     'tabman'   , 'unite'    , 'quickrun' , 'Decho'  ,
     \   ],
     \   'bufname' : [
     \     'GoToFile'                  , 'diffpanel_\d\+'      ,
@@ -46,7 +46,7 @@ call zl#rc#set_default({
     \     '_VOOM\d\+$' ,
     \   ],
     \   'expr' : [
-    \     ['&winfixheight', '&winfixwidth', '&lazyredraw'] ,
+    \     ['&lazyredraw'] ,
     \   ],
     \ },
     \
@@ -60,44 +60,48 @@ call zl#rc#set_default({
 " Auto Resize:
 " ------------
 command! -nargs=0 GoldenViewToggleAutoResize
-            \ call GoldenView#ToggleAutoResize()
+\ call GoldenView#ToggleAutoResize()
 
 command! -nargs=0 GoldenViewDisableAutoResize
-            \ call GoldenView#DisableAutoResize()
+\ call GoldenView#DisableAutoResize()
 
 command! -nargs=0 GoldenViewEnableAutoResize
-            \ call GoldenView#EnableAutoResize()
+\ call GoldenView#EnableAutoResize()
 
 command! -nargs=0 GoldenViewResize
-            \ call GoldenView#EnableAutoResize()
-            \|call GoldenView#DisableAutoResize()
+\ call GoldenView#EnableAutoResize()
+\|call GoldenView#DisableAutoResize()
 
 
 nnoremap <Plug>GoldenViewToggleAutoResize
-            \ :<C-U>GoldenViewToggleAutoResize<CR>
+\ :<C-U>GoldenViewToggleAutoResize<CR>
 
 nnoremap <Plug>GoldenViewResize
-            \ :<C-U>GoldenViewResize<CR>
+\ :<C-U>GoldenViewResize<CR>
+
 
 " Layout Split:
 " -------------
 nnoremap <Plug>GoldenViewSplit
-            \ :<C-u>call zl#window#split_nicely()<CR>
+\ :<C-u>call zl#window#split_nicely()<CR>
 
 
 " Goto Window:
 " ------------
 nnoremap <Plug>GoldenViewNext
-            \ :<C-u>call zl#window#next_window_or_tab()<CR>
+\ :<C-u>call zl#window#next_window_or_tab()<CR>
+
 nnoremap <Plug>GoldenViewPrevious
-            \ :<C-u>call zl#window#previous_window_or_tab()<CR>
+\ :<C-u>call zl#window#previous_window_or_tab()<CR>
+
 
 " Switch Window:
 " --------------
 nnoremap <Plug>GoldenViewSwitchWithLargest
-            \ :<C-u>call zl#window#switch_buffer_toggle({'with' : 'largest'})<CR>
+\ :<C-u>call zl#window#switch_buffer_toggle({'with' : 'largest'})<CR>
+
 nnoremap <Plug>GoldenViewSwitchWithSmallest
-            \ :<C-u>call zl#window#switch_buffer_toggle({'with' : 'smallest'})<CR>
+\ :<C-u>call zl#window#switch_buffer_toggle({'with' : 'smallest'})<CR>
 
 
 
