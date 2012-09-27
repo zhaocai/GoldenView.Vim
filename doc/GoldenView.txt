@@ -1,0 +1,122 @@
+*GoldenView.txt*  Always have a nice view for vim split windows
+
+===============================================================================
+CONTENTS                                                   *goldenview-contents*
+
+  1. Introduction                                      |goldenview-introduction|
+  2. Installation                                      |goldenview-installation|
+    1. Option A - With Plugin Manager [4] ( recommanded )
+    2. Option B - Without Plugin Manager [4]
+  3. Interface                                            |goldenview-interface|
+    1. Command                                              |goldenview-command|
+    2. Key Mapping                                      |goldenview-key-mapping|
+    3. Variable                                            |goldenview-variable|
+  4. Usage                                                    |goldenview-usage|
+  5. Contributors                                      |goldenview-contributors|
+
+===============================================================================
+INTRODUCTION                                           *goldenview-introduction*
+
+  Plugin         :  GoldenView.vim ~
+  Author         :  Zhao Cai
+  EMail          :  caizhaoff@gmail.com
+  URL            :  https://github.com/zhaocai/GoldenView.vim
+  Date Created   :  Tue 18 Sep 2012 05:23:13 PM EDT
+  Last Modified  :  Thu 27 Sep 2012 12:45:43 AM EDT
+
+GoldenView [1] is a vim plugin to manage split windows. It does three things:
+
+First of all, it automatically resize the focused split window to a "golden"
+view based on golden ratio [2] and 'textwidth'.
+
+Second, it helps to quickly split windows to
+>
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    |              |        S1        |
+    |              |===================
+    |      V       |        S2        |
+    |              |===================
+    |              |        S3        |
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+or, (if you have a large monitor)
+>
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    |              |              |        S1        |
+    |              |              |===================
+    |      V1      |      V2      |        S2        |
+    |              |              |===================
+    |              |              |        S3        |
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+with single key mapping ('<C-L>' by default).
+
+Third, it maps key to switch with the largest, smallest, etc. split window.
+
+===============================================================================
+INSTALLATION                                           *goldenview-installation*
+
+Requirement:
+
+ - zl.vim [3] : https://github.com/zhaocai/zl.vim
+
+Latest version: git://github.com/zhaocai/GoldenView.Vim.git
+
+Before you start, please refer to the installation instruction from
+[zl.vim][unite] to install zl.vim [3] first.
+
+To install GoldenView [1] ( same as installing other vim plugins )
+
+-------------------------------------------------------------------------------
+OPTION A - WITH PLUGIN MANAGER [4] ( RECOMMANDED )
+
+If you use plugin managers like Pathogen, vundle, neobundle,
+vim-addon-manager, etc., just unarchive the zip file or clone the GoldenView
+[1] repo from 'git://github.com/zhaocai/GoldenView.git' into your local plugin
+installation directory (most likely '~/.vim/bundle/'). Then add corresponding
+command in .vimrc for the bundle manager you are using.
+
+Example:
+
+ - vundle: 'vim Bundle 'zhaocai/GoldenView.Vim'
+
+ - neobundle: NeoBundle 'zhaocai/GoldenView.Vim'
+
+ - vim-addon-manager: call vam#ActivateAddons(['GoldenView.Vim'],
+   {'auto_install' : 0})
+
+-------------------------------------------------------------------------------
+OPTION B - WITHOUT PLUGIN MANAGER [4]
+
+After you install zl.vim [3], unarchive the zip file into a directory that is
+under 'runtimepath' of your vim, including ~/.vim dir.
+
+===============================================================================
+INTERFACE                                                 *goldenview-interface*
+
+-------------------------------------------------------------------------------
+COMMAND                                                     *goldenview-command*
+
+-------------------------------------------------------------------------------
+KEY MAPPING                                             *goldenview-key-mapping*
+
+-------------------------------------------------------------------------------
+VARIABLE                                                   *goldenview-variable*
+
+===============================================================================
+USAGE                                                         *goldenview-usage*
+>
+    :
+
+===============================================================================
+CONTRIBUTORS                                           *goldenview-contributors*
+
+===============================================================================
+REFERENCES                                               *goldenview-references*
+
+[1] https://github.com/zhaocai/GoldenView.Vim
+[2] http://en.wikipedia.org/wiki/Golden_ratio
+[3] https://github.com/zhaocai/zl.vim
+[4] http://vim-scripts.org/vim/tools.html
+
+vim: ft=help
