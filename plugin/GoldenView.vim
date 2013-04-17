@@ -49,14 +49,9 @@ call GoldenView#zl#rc#set_default({
     \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' , 
     \     '_VOOM\d\+$'                , '__Urannotate_\d\+__' , 
     \   ],
-    \   'expr' : [
-    \     ['&lazyredraw'] ,
-    \   ],
     \ },
     \
     \ })
-
-
 
 
 

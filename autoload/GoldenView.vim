@@ -89,6 +89,7 @@ function! GoldenView#EnableAutoResize()
         autocmd VimResized  * call GoldenView#Resize({'event' : 'VimResized'})
         autocmd BufWinEnter * call GoldenView#Resize({'event' : 'BufWinEnter'})
         autocmd WinEnter    * call GoldenView#Resize({'event' : 'WinEnter'})
+        autocmd WinLeave    * call GoldenView#Resize({'event' : 'WinLeave'})
     augroup END
     let s:goldenview__auto_resize = 1
 
@@ -102,38 +103,43 @@ function! GoldenView#DisableAutoResize()
     let s:goldenview__auto_resize = 0
 endfunction
 
-
 function! GoldenView#Resize(...)
     "--------- ------------------------------------------------
     " Desc    : resize focused window
     "
-    " Args    :
-    " Return  :
-    " Raise   :
+    " Args    : {'event' : event}
+    " Return  : none
     "
+    " Raise   : none from this function
     "
     " Pitfall :
-    "   - can not set winminwith > winwidth
-    "   -
+    "   - Can not set winminwith > winwidth
+    "   - AutoCmd Sequence:
+    "     - `:copen` :
+    "       1. WinEnter (&ft inherited from last buffer)
+    "       2. BufWinEnter (&ft == '')
+    "       3. BufWinEnter (&ft == 'qf', set winfixheight)
     "
-    " AutoCmd :
-    "   - `:copen` :
-    "     1. WinEnter (&ft inherited from last buffer)
-    "     2. BufWinEnter (&ft == '')
-    "     3. BufWinEnter (&ft == 'qf', set winfixheight)
-    "
-    " Refer   :
-    " Example : >
     "--------- ------------------------------------------------
+
+    if &lazyredraw
+        return
+    endif
+
+    let opts = {}
+    if a:0 >= 1 && GoldenView#zl#var#is_dict(a:1)
+        call extend(opts, a:1)
+    endif
+
+    let event = get(opts, 'event', '')
 
     let winnr_diff = s:winnr_diff()
     if winnr_diff > 0
-        " New Window:
-
+        " New Split Window:
         " silent! call tlog#Log("GoldenView#Resize: winnr plus " . PP(extend(a:1, GoldenView#Info())))
         return
     elseif winnr_diff < 0
-        " Win Leave:
+        " Remove Split Window:
         call GoldenView#initialize_tab_variable()
         let saved_lazyredraw = &lazyredraw
         set lazyredraw
@@ -169,8 +175,11 @@ function! GoldenView#Resize(...)
     " silent! call tlog#Log("GoldenView#Resize: enter " . PP(extend(a:1, GoldenView#Info())))
 
     if GoldenView#IsIgnore()
-        " Do nothing if there is no split window
-        if winnr('$') > 1
+        " 1. Do nothing if there is no split window
+        " 2. For new split, the size does not count. Usually it will be
+        "    resized later. should use the size with WinLeave event.
+        "
+        if winnr('$') > 1 && winnr_diff == 0 && event == 'WinLeave'
             call GoldenView#initialize_tab_variable()
             let t:goldenview['bufs'][bufnr('%')] = {
             \  'winwidth'  : winwidth(0)  , 
@@ -179,6 +188,10 @@ function! GoldenView#Resize(...)
             let t:goldenview['cmdheight'] = &cmdheight
             " silent! call tlog#Log("GoldenView#Resize: ignore " . PP(extend(a:1, GoldenView#Info())))
         end
+        return
+    endif
+
+    if event == 'WinLeave'
         return
     endif
 
@@ -307,15 +320,13 @@ function! GoldenView#SwitchMain(...)
     let current_winnr = winnr()
     let switched      = 0
 
-    silent! call tlog#Log("window_count: " . PP(window_count))
+    let saved_lazyredraw = &lazyredraw
+    set lazyredraw
     for i in range(1, window_count)
         silent noautocmd exec i 'wincmd w'
 
-        silent! call tlog#Log("GoldenView#SwitchMain" . PP(extend(a:1, GoldenView#Info())))
         if ! GoldenView#IsIgnore()
             let switched = GoldenView#zl#window#switch_buffer(opts['from_bufnr'], winbufnr(i))
-            silent! call tlog#Log("winnr " . PP(i))
-            silent! call tlog#Log("from_bufnr: " . PP(opts['from_bufnr']))
             break
         endif
     endfor
@@ -323,7 +334,9 @@ function! GoldenView#SwitchMain(...)
     if ! switched
         silent noautocmd exec current_winnr 'wincmd w'
     endif
-    silent! call tlog#Log("switched: " . PP(switched))
+
+    redraw
+    let &lazyredraw = saved_lazyredraw
 endfunction
 
 
