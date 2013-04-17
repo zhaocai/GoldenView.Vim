@@ -4,13 +4,13 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Sun 23 Sep 2012 12:00:36 PM EDT
+" Last Modified  : Fri 19 Oct 2012 05:55:17 PM EDT
 " Tag            : [ vim, window, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
 " =============== ============================================================
 
-
+" [TODO]( catch WinLeave event to prevent fixed/ignored window resizing ) @zhaocai @start(2013-04-14 10:58)
 " ============================================================================
 " Initialization And Profile:                                             [[[1
 " ============================================================================
@@ -60,7 +60,6 @@ endfunction
 call GoldenView#Init()
 
 
-
 " ============================================================================
 " Auto Resize:                                                            [[[1
 " ============================================================================
@@ -76,11 +75,16 @@ endfunction
 
 
 function! GoldenView#EnableAutoResize()
-    call GoldenView#Resize()
+    " [TODO]( initialize the other window settings ) @zhaocai @start(2012-09-29 17:01)
+    let active_profile = s:goldenview__profile[g:goldenview__active_profile]
+    call s:set_focus_window(active_profile)
+    call s:set_other_window(active_profile)
+
     augroup GoldenView
         au!
-        autocmd VimResized * call GoldenView#Resize()
-        autocmd BufWinEnter,WinEnter * call GoldenView#Resize()
+        autocmd VimResized  * call GoldenView#Resize({'event' : 'VimResized'})
+        autocmd BufWinEnter * call GoldenView#Resize({'event' : 'BufWinEnter'})
+        autocmd WinEnter    * call GoldenView#Resize({'event' : 'WinEnter'})
     augroup END
     let s:goldenview__auto_resize = 1
 
@@ -95,18 +99,50 @@ function! GoldenView#DisableAutoResize()
 endfunction
 
 
-function! GoldenView#Resize()
-    " Note: winminwith < winwidth
+function! GoldenView#Resize(...)
+    "--------- ------------------------------------------------
+    " Desc    : resize focused window
+    "
+    " Args    :
+    " Return  :
+    " Raise   :
+    "
+    "
+    " Pitfall :
+    "   - can not set winminwith > winwidth
+    "   -
+    "
+    " AutoCmd :
+    "   - `:copen` :
+    "     1. WinEnter (&ft inherited from last buffer)
+    "     2. BufWinEnter (&ft == '')
+    "     3. BufWinEnter (&ft == 'qf', set winfixheight)
+    "
+    " Refer   :
+    " Example : >
+    "--------- ------------------------------------------------
+
+
+    if s:is_new_window()
+        " silent! call tlog#Log("GoldenView#Resize: is_new_window " . PP(extend(a:1, GoldenView#Info())))
+        return
+    endif
+
+    " silent! call tlog#Log("GoldenView#Resize: enter " . PP(extend(a:1, GoldenView#Info())))
 
     if GoldenView#IsIgnore()
-        call GoldenView#ResetResize()
+        " silent! call tlog#Log("GoldenView#Resize: ignore " . PP(extend(a:1, GoldenView#Info())))
         return
     endif
 
     let active_profile = s:goldenview__profile[g:goldenview__active_profile]
     call s:set_focus_window(active_profile)
-    call s:set_other_window(active_profile)
+    " silent! call tlog#Log("GoldenView#Resize: set focus " . PP(extend(a:1, GoldenView#Info())))
 
+    " reset focus windows minimal size
+    let &winheight = &winminheight
+    let &winwidth  = &winminwidth
+    " silent! call tlog#Log("GoldenView#Resize: reset focus " . PP(extend(a:1, GoldenView#Info())))
 endfunction
 
 function! GoldenView#IsIgnore()
@@ -116,8 +152,8 @@ endfunction
 
 function! GoldenView#ResetResize()
     let reset_profile = s:goldenview__profile[g:goldenview__reset_profile]
-    call s:set_other_window(reset_profile)
-    call s:set_focus_window(reset_profile)
+    call s:set_other_window(reset_profile, {'force' : 1})
+    call s:set_focus_window(reset_profile, {'force' : 1})
 endfunction
 
 
@@ -145,46 +181,66 @@ function! GoldenView#TextWidth(...)
     let tw = &l:textwidth
 
     if tw != 0
-        return tw + 2
+        return float2nr(tw * 4/3)
     else
+        let tw = float2nr(80 * 4/3)
         let gw = GoldenView#GoldenWidth()
-        return gw > 80 ? 80 : gw
+        return tw > gw ? gw : tw
     endif
 endfunction
 
 
-function! s:set_focus_window(profile)
+function! s:set_focus_window(profile,...)
+    let opts = {
+             \ 'force' : 0
+             \ }
+    if a:0 >= 1 && zl#var#is_dict(a:1)
+        call extend(opts, a:1)
+    endif
+
     try
-        if !&winfixwidth
+        if !&winfixwidth || opts['force']
             let &winwidth  =
             \ s:eval(a:profile, a:profile['focus_window_winwidth'])
         endif
-        if !&winfixheight
+        if !&winfixheight || opts['force']
             let &winheight =
             \ s:eval(a:profile, a:profile['focus_window_winheight'])
         endif
     catch /^Vim\%((\a\+)\)\=:E36/ " Not enough room
-        " call zl#print#warning('GoldenView:' . v:exception)
+        call zl#print#warning('GoldenView: ' . v:exception)
     endtry
 endfunction
 
+" [TODO]( should not check &winfixheight here ) @zhaocai @start(2012-09-29 16:57)
+function! s:set_other_window(profile,...)
+    let opts = {
+             \ 'force' : 0
+             \ }
+    if a:0 >= 1 && zl#var#is_dict(a:1)
+        call extend(opts, a:1)
+    endif
 
-function! s:set_other_window(profile)
     try
-        if !&winfixwidth
+        if !&winfixwidth || opts['force']
+            " silent! call tlog#Log("a:profile: " . PP(a:profile))
+            " silent! call tlog#Log("winminwidth: " . PP(s:eval(a:profile, a:profile['other_window_winwidth'])))
             let &winminwidth  =
             \ s:eval(a:profile, a:profile['other_window_winwidth'])
         endif
-        if !&winfixheight
+        if !&winfixheight || opts['force']
             let &winminheight =
             \ s:eval(a:profile, a:profile['other_window_winheight'])
         endif
     catch /^Vim\%((\a\+)\)\=:E36/ " Not enough room
-        " call zl#print#warning('GoldenView:' . v:exception)
+        call zl#print#warning('GoldenView: ' . v:exception)
     endtry
 endfunction
 
 
+" ============================================================================
+" Helper Functions:                                                       [[[1
+" ============================================================================
 function! s:eval(profile, val)
     if zl#var#is_number(a:val)
         return a:val
@@ -198,6 +254,51 @@ function! s:eval(profile, val)
         endtry
     endif
 endfunction
+
+function! GoldenView#initialize_tab_variable()
+    if !exists('t:goldenview')
+        let t:goldenview = {'nrwin' : winnr('$')}
+    endif
+endfunction
+
+function! s:is_new_window()
+    call GoldenView#initialize_tab_variable()
+    let nrwin = winnr('$')
+    if nrwin != t:goldenview['nrwin']
+        let t:goldenview['nrwin'] = nrwin
+        return 1
+    endif
+    return 0
+endfunction
+
+
+
+
+" ============================================================================
+" Debug:                                                                  [[[1
+" ============================================================================
+function! GoldenView#Info()
+    return {
+    \ 'buffer' : {
+    \   'filetype'  : &ft          ,
+    \   'buftype'   : &buftype     ,
+    \   'bufname'   : bufname('%') ,
+    \   'winwidth'  : winwidth(0)  ,
+    \   'winheight' : winheight(0) ,
+    \ },
+    \ 'setting' : {
+    \   'lazyredraw'   : &lazyredraw  ,
+    \   'winfixwidth'  : &winfixwidth  ,
+    \   'winfixheight' : &winfixheight ,
+    \   'winwidth'     : &winwidth     ,
+    \   'winminwidth'  : &winminwidth  ,
+    \   'winheight'    : &winheight    ,
+    \   'winminheight' : &winminheight ,
+    \ }
+    \}
+endfunction
+
+
 
 " ============================================================================
 " Modeline:                                                               [[[1

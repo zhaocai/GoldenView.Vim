@@ -1,13 +1,13 @@
 # Always have a nice view for vim split windows
 
-------------- - ----------------------------------------------------------
-Plugin        : GoldenView.vim
-Author        : Zhao Cai
-EMail         : caizhaoff@gmail.com
-URL           : https://github.com/zhaocai/GoldenView.vim
-Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
-Last Modified : Thu 27 Sep 2012 12:45:43 AM EDT
-------------- - ----------------------------------------------------------
+    ------------- - ----------------------------------------------------------
+    Plugin        : GoldenView.vim
+    Author        : Zhao Cai
+    EMail         : caizhaoff@gmail.com
+    URL           : https://github.com/zhaocai/GoldenView.vim
+    Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
+    Last Modified : Thu 27 Sep 2012 01:23:25 AM EDT
+    ------------- - ----------------------------------------------------------
 
 [GoldenView][GoldenView] is a vim plugin to manage split windows. It does three things:
 
@@ -37,7 +37,7 @@ with single key mapping (`<C-L>` by default).
 
 
 
-Third, it maps key to switch with the largest, smallest, etc. split window.
+Third, it maps keys to switch with the largest, smallest, etc. split window.
 
 
 

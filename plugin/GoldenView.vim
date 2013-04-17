@@ -4,7 +4,7 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Sun 23 Sep 2012 11:55:31 AM EDT
+" Last Modified  : Sat 29 Sep 2012 01:23:02 AM EDT
 " Tag            : [ vim, window, size, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
@@ -35,9 +35,13 @@ call zl#rc#set_default({
     \ 'g:goldenview__reset_profile'          : 'reset'   ,
     \ 'g:goldenview__ignore_urule'           : {
     \   'filetype' : [
-    \     'qf'       , 'vimpager' , 'undotree' , 'tagbar' ,
-    \     'nerdtree' , 'vimshell' , 'vimfiler' , 'voom'   ,
-    \     'tabman'   , 'unite'    , 'quickrun' , 'Decho'  ,
+    \     ''        ,
+    \     'qf'      , 'vimpager', 'undotree', 'tagbar',
+    \     'nerdtree', 'vimshell', 'vimfiler', 'voom'  ,
+    \     'tabman'  , 'unite'   , 'quickrun', 'Decho' ,
+    \   ],
+    \   'buftype' : [
+    \     'nofile'  ,
     \   ],
     \   'bufname' : [
     \     'GoToFile'                  , 'diffpanel_\d\+'      ,
@@ -84,7 +88,7 @@ nnoremap <Plug>GoldenViewResize
 " -------------
 nnoremap <Plug>GoldenViewSplit
 \ :<C-u>call zl#window#split_nicely()<CR>
-
+" [TODO]( define comfortable width &tw * 4/3) @zhaocai @start(2012-09-29 01:17)
 
 " Goto Window:
 " ------------
