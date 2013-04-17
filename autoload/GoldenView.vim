@@ -1,6 +1,6 @@
 " =============== ============================================================
 " Name           : GoldenView
-" Description    : Golden view for vim split windows
+" Description    : Always have a nice view for vim split windows
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
@@ -123,52 +123,67 @@ function! GoldenView#Resize(...)
 
     let winnr_diff = s:winnr_diff()
     if winnr_diff > 0
-        " silent! call tlog#Log("GoldenView#Resize: winnr plus " . PP(extend(a:1, GoldenView#Info())))
+        " New Window:
+
+        silent! call tlog#Log("GoldenView#Resize: winnr plus " . PP(extend(a:1, GoldenView#Info())))
         return
     elseif winnr_diff < 0
+        " Win Leave:
         call GoldenView#initialize_tab_variable()
         let saved_lazyredraw = &lazyredraw
         set lazyredraw
+        let current_bufnr = bufnr('%')
 
-        for nr in tabpagebuflist()
-            let buf_saved = get(t:goldenview['buf'], nr, {})
+        " redraw ignored window to its original size
+        for nr in zl#list#uniq(tabpagebuflist())
+            let buf_saved = get(t:goldenview['bufs'], nr, {})
             if ! empty(buf_saved)
-                execute bufwinnr(nr) 'wincmd w'
-                exec 'vertical resize ' . buf_saved['winwidth']
-                exec 'resize ' . buf_saved['winheight']
+                silent exec bufwinnr(nr) 'wincmd w'
 
-                " silent! call tlog#Log("GoldenView#Resize: buf saved " . PP(buf_saved))
+                if GoldenView#IsIgnore()
+                    silent exec 'vertical resize ' . buf_saved['winwidth']
+                    silent exec 'resize ' . buf_saved['winheight']
+                    silent! call tlog#Log("GoldenView#Resize: bufs saved " . bufname(nr) . " : " . PP(buf_saved))
+                endif
             endif
         endfor
+
+        if &cmdheight != t:goldenview['cmdheight']
+            silent exec 'set cmdheight=' . t:goldenview['cmdheight']
+        endif
+
+        silent exec bufwinnr(current_bufnr) 'wincmd w'
 
         redraw
         let &lazyredraw = saved_lazyredraw
 
-        " silent! call tlog#Log("GoldenView#Resize: winnr minus " . PP(extend(a:1, GoldenView#Info())))
+        silent! call tlog#Log("GoldenView#Resize: winnr minus " . PP(extend(a:1, GoldenView#Info())))
         return
     endif
 
-    " silent! call tlog#Log("GoldenView#Resize: enter " . PP(extend(a:1, GoldenView#Info())))
+    silent! call tlog#Log("GoldenView#Resize: enter " . PP(extend(a:1, GoldenView#Info())))
 
     if GoldenView#IsIgnore()
-        call GoldenView#initialize_tab_variable()
-        let t:goldenview['buf'][bufnr('%')] = {
-        \  'winwidth'  : winwidth(0)  , 
-        \  'winheight' : winheight(0) , 
-        \ } 
-
-        " silent! call tlog#Log("GoldenView#Resize: ignore " . PP(extend(a:1, GoldenView#Info())))
+        " Do nothing if there is no split window
+        if winnr('$') > 1
+            call GoldenView#initialize_tab_variable()
+            let t:goldenview['bufs'][bufnr('%')] = {
+            \  'winwidth'  : winwidth(0)  , 
+            \  'winheight' : winheight(0) , 
+            \ } 
+            silent! call tlog#Log("GoldenView#Resize: ignore " . PP(extend(a:1, GoldenView#Info())))
+        end
         return
     endif
 
     let active_profile = s:goldenview__profile[g:goldenview__active_profile]
     call s:set_focus_window(active_profile)
-    " silent! call tlog#Log("GoldenView#Resize: set focus " . PP(extend(a:1, GoldenView#Info())))
+    silent! call tlog#Log("GoldenView#Resize: set focus " . PP(extend(a:1, GoldenView#Info())))
 
     " reset focus windows minimal size
     let &winheight = &winminheight
     let &winwidth  = &winminwidth
-    " silent! call tlog#Log("GoldenView#Resize: reset focus " . PP(extend(a:1, GoldenView#Info())))
+    silent! call tlog#Log("GoldenView#Resize: reset focus " . PP(extend(a:1, GoldenView#Info())))
 endfunction
 
 function! GoldenView#IsIgnore()
@@ -249,8 +264,8 @@ function! s:set_other_window(profile,...)
 
     try
         if !&winfixwidth || opts['force']
-            " silent! call tlog#Log("a:profile: " . PP(a:profile))
-            " silent! call tlog#Log("winminwidth: " . PP(s:eval(a:profile, a:profile['other_window_winwidth'])))
+            silent! call tlog#Log("a:profile: " . PP(a:profile))
+            silent! call tlog#Log("winminwidth: " . PP(s:eval(a:profile, a:profile['other_window_winwidth'])))
             let &winminwidth  =
             \ s:eval(a:profile, a:profile['other_window_winwidth'])
         endif
@@ -283,7 +298,11 @@ endfunction
 
 function! GoldenView#initialize_tab_variable()
     if !exists('t:goldenview')
-        let t:goldenview = {'nrwin' : winnr('$'), 'buf' : {}}
+        let t:goldenview = {
+        \ 'nrwin'     : winnr('$') , 
+        \ 'cmdheight' : &cmdheight , 
+        \ 'bufs'      : {} , 
+        \ }
     endif
 endfunction
 

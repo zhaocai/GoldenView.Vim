@@ -68,18 +68,25 @@ bundle manager you are using.
 
 **Example**:
 
-1. *vundle*:
+1. *neobundle*:
+
+```vim
+    NeoBundle 'zhaocai/GoldenView.Vim'
+```
+
+2. *vundle*:
+
 ```vim
     Bundle 'zhaocai/GoldenView.Vim'
 ```
 
-2. *neobundle*:
-
-    NeoBundle 'zhaocai/GoldenView.Vim'
 
 3. *vim-addon-manager*:
 
+```vim
     call vam#ActivateAddons(['GoldenView.Vim'], {'auto_install' : 0})
+```
+
 
 ### **Option B** - Without [Plugin Manager][vim-plugin-manager]
 

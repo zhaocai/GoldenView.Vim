@@ -16,13 +16,15 @@ CONTENTS                                                   *goldenview-contents*
 
 ===============================================================================
 INTRODUCTION                                           *goldenview-introduction*
-
-  Plugin         :  GoldenView.vim ~
-  Author         :  Zhao Cai
-  EMail          :  caizhaoff@gmail.com
-  URL            :  https://github.com/zhaocai/GoldenView.vim
-  Date Created   :  Tue 18 Sep 2012 05:23:13 PM EDT
-  Last Modified  :  Thu 27 Sep 2012 01:23:25 AM EDT
+>
+    ------------- - ----------------------------------------------------------
+    Plugin        : GoldenView.vim
+    Author        : Zhao Cai
+    EMail         : caizhaoff@gmail.com
+    URL           : https://github.com/zhaocai/GoldenView.vim
+    Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
+    Last Modified : Thu 27 Sep 2012 01:23:25 AM EDT
+    ------------- - ----------------------------------------------------------
 
 GoldenView [1] is a vim plugin to manage split windows. It does three things:
 
@@ -58,7 +60,7 @@ INSTALLATION                                           *goldenview-installation*
 
 Requirement:
 
- - zl.vim [3] : https://github.com/zhaocai/zl.vim
+- zl.vim [3] : https://github.com/zhaocai/zl.vim
 
 Latest version: git://github.com/zhaocai/GoldenView.Vim.git
 
@@ -78,12 +80,17 @@ command in .vimrc for the bundle manager you are using.
 
 Example:
 
- - vundle: 'vim Bundle 'zhaocai/GoldenView.Vim'
+- neobundle:
+>
+    NeoBundle 'zhaocai/GoldenView.Vim'
 
- - neobundle: NeoBundle 'zhaocai/GoldenView.Vim'
+- vundle:
+>
+    Bundle 'zhaocai/GoldenView.Vim'
 
- - vim-addon-manager: call vam#ActivateAddons(['GoldenView.Vim'],
-   {'auto_install' : 0})
+- vim-addon-manager:
+>
+    call vam#ActivateAddons(['GoldenView.Vim'], {'auto_install' : 0})
 
 -------------------------------------------------------------------------------
 OPTION B - WITHOUT PLUGIN MANAGER [4]
