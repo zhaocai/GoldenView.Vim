@@ -9,7 +9,15 @@
     Last Modified : Thu 27 Sep 2012 01:23:25 AM EDT
     ------------- - ----------------------------------------------------------
 
+## Issues:
+1. play nicely with existing plugins like `tagbar`, `vimfiler`, `unite`, `VOoM`, etc. 
+2. make other window too small
+
 [GoldenView][GoldenView] is a vim plugin to manage split windows. It does three things:
+
+
+
+
 
 First of all, it automatically resize the focused split window to a "golden" view based on [golden ratio][golden-ratio-wikipedia] and `textwidth`.
 
@@ -45,15 +53,10 @@ Third, it maps keys to switch with the largest, smallest, etc. split window.
 
 ## Installation
 
-**Requirement**:
+Latest version: https://github.com/zhaocai/GoldenView.Vim
 
-+ [zl.vim][zl] : https://github.com/zhaocai/zl.vim
-
-Latest version: git://github.com/zhaocai/GoldenView.Vim.git
-
-Before you start, please refer to the installation instruction from [zl.vim][unite] to install [zl.vim][zl] first.
-
-To install [GoldenView][GoldenView] ( *same as installing other vim plugins* )
+Install [GoldenView][GoldenView] is the *same as installing other vim plugins*.
+If experienced with vim, you can skim the example below and move to the [next section](#Interface). 
 
 
 ### **Option A** - With [Plugin Manager][vim-plugin-manager] ( **recommanded** )

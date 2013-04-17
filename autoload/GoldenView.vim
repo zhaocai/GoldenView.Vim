@@ -130,7 +130,7 @@ function! GoldenView#Resize(...)
     if winnr_diff > 0
         " New Window:
 
-        silent! call tlog#Log("GoldenView#Resize: winnr plus " . PP(extend(a:1, GoldenView#Info())))
+        " silent! call tlog#Log("GoldenView#Resize: winnr plus " . PP(extend(a:1, GoldenView#Info())))
         return
     elseif winnr_diff < 0
         " Win Leave:
@@ -143,12 +143,12 @@ function! GoldenView#Resize(...)
         for nr in GoldenView#zl#list#uniq(tabpagebuflist())
             let buf_saved = get(t:goldenview['bufs'], nr, {})
             if ! empty(buf_saved)
-                silent exec bufwinnr(nr) 'wincmd w'
+                silent noautocmd exec bufwinnr(nr) 'wincmd w'
 
                 if GoldenView#IsIgnore()
                     silent exec 'vertical resize ' . buf_saved['winwidth']
                     silent exec 'resize ' . buf_saved['winheight']
-                    silent! call tlog#Log("GoldenView#Resize: bufs saved " . bufname(nr) . " : " . PP(buf_saved))
+                    " silent! call tlog#Log("GoldenView#Resize: bufs saved " . bufname(nr) . " : " . PP(buf_saved))
                 endif
             endif
         endfor
@@ -162,11 +162,11 @@ function! GoldenView#Resize(...)
         redraw
         let &lazyredraw = saved_lazyredraw
 
-        silent! call tlog#Log("GoldenView#Resize: winnr minus " . PP(extend(a:1, GoldenView#Info())))
+        " silent! call tlog#Log("GoldenView#Resize: winnr minus " . PP(extend(a:1, GoldenView#Info())))
         return
     endif
 
-    silent! call tlog#Log("GoldenView#Resize: enter " . PP(extend(a:1, GoldenView#Info())))
+    " silent! call tlog#Log("GoldenView#Resize: enter " . PP(extend(a:1, GoldenView#Info())))
 
     if GoldenView#IsIgnore()
         " Do nothing if there is no split window
@@ -177,19 +177,19 @@ function! GoldenView#Resize(...)
             \  'winheight' : winheight(0) , 
             \ } 
             let t:goldenview['cmdheight'] = &cmdheight
-            silent! call tlog#Log("GoldenView#Resize: ignore " . PP(extend(a:1, GoldenView#Info())))
+            " silent! call tlog#Log("GoldenView#Resize: ignore " . PP(extend(a:1, GoldenView#Info())))
         end
         return
     endif
 
     let active_profile = s:goldenview__profile[g:goldenview__active_profile]
     call s:set_focus_window(active_profile)
-    silent! call tlog#Log("GoldenView#Resize: set focus " . PP(extend(a:1, GoldenView#Info())))
+    " silent! call tlog#Log("GoldenView#Resize: set focus " . PP(extend(a:1, GoldenView#Info())))
 
     " reset focus windows minimal size
     let &winheight = &winminheight
     let &winwidth  = &winminwidth
-    silent! call tlog#Log("GoldenView#Resize: reset focus " . PP(extend(a:1, GoldenView#Info())))
+    " silent! call tlog#Log("GoldenView#Resize: reset focus " . PP(extend(a:1, GoldenView#Info())))
 endfunction
 
 function! GoldenView#IsIgnore()
@@ -270,8 +270,8 @@ function! s:set_other_window(profile,...)
 
     try
         if !&winfixwidth || opts['force']
-            silent! call tlog#Log("a:profile: " . PP(a:profile))
-            silent! call tlog#Log("winminwidth: " . PP(s:eval(a:profile, a:profile['other_window_winwidth'])))
+            " silent! call tlog#Log("a:profile: " . PP(a:profile))
+            " silent! call tlog#Log("winminwidth: " . PP(s:eval(a:profile, a:profile['other_window_winwidth'])))
             let &winminwidth  =
             \ s:eval(a:profile, a:profile['other_window_winwidth'])
         endif
@@ -283,6 +283,49 @@ function! s:set_other_window(profile,...)
         call GoldenView#zl#print#warning('GoldenView: ' . v:exception)
     endtry
 endfunction
+
+
+
+
+
+" ============================================================================
+" Switch:                                                                 [[[1
+" ============================================================================
+function! GoldenView#SwitchMain(...)
+    let opts = {
+                \ 'from_bufnr' : bufnr('%') ,
+            \}
+    if a:0 >= 1 && type(a:1) == type({})
+        call extend(opts, a:1)
+    endif
+
+    let window_count = winnr('$')
+    if window_count < 2
+        return
+    endif
+
+    let current_winnr = winnr()
+    let switched      = 0
+
+    silent! call tlog#Log("window_count: " . PP(window_count))
+    for i in range(1, window_count)
+        silent noautocmd exec i 'wincmd w'
+
+        silent! call tlog#Log("GoldenView#SwitchMain" . PP(extend(a:1, GoldenView#Info())))
+        if ! GoldenView#IsIgnore()
+            let switched = GoldenView#zl#window#switch_buffer(opts['from_bufnr'], winbufnr(i))
+            silent! call tlog#Log("winnr " . PP(i))
+            silent! call tlog#Log("from_bufnr: " . PP(opts['from_bufnr']))
+            break
+        endif
+    endfor
+
+    if ! switched
+        silent noautocmd exec current_winnr 'wincmd w'
+    endif
+    silent! call tlog#Log("switched: " . PP(switched))
+endfunction
+
 
 
 " ============================================================================
@@ -352,8 +395,8 @@ function! GoldenView#Info()
     \}
 endfunction
 
-
-
+function! GoldenView#Trace(message, ev)
+endfunction
 " ============================================================================
 " Modeline:                                                               [[[1
 " ============================================================================

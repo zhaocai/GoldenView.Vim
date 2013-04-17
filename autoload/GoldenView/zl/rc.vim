@@ -13,7 +13,7 @@
 " Initialization:                                                         [[[1
 " ============================================================================
 
-let s:GOLDENVIEW_ZL_VERSION_CURRENT = 120
+let s:GOLDENVIEW_ZL_VERSION_CURRENT = 130
 
 let s:VERSION_FACTOR = str2float('0.01')
 

@@ -319,17 +319,22 @@ function! GoldenView#zl#window#switch_buffer(bufnr1, bufnr2)
     let winnr2 = bufwinnr(a:bufnr2)
     if winnr1 != -1 && winnr2 != -1
 
-        silent exec winnr1 'wincmd w'
+        silent noautocmd exec winnr1 'wincmd w'
         if bufnr('%') != a:bufnr2
-            silent exec 'buffer' a:bufnr2
+            silent noautocmd exec 'buffer' a:bufnr2
             let b:switch_buffer = {
                         \ 'bufnr' : a:bufnr1 ,
                         \ 'winnr' : winnr2   ,
                         \ }
         endif
-        silent exec winnr2 'wincmd w'
+        silent noautocmd exec winnr2 'wincmd w'
         if bufnr('%') != a:bufnr1
-            silent exec 'buffer' a:bufnr1
+            silent noautocmd exec 'buffer' a:bufnr1
+
+            " need filetype detect (maybe) because bufnr1 disappears for a
+            " moment 
+            silent filetype detect
+
             let b:switch_buffer = {
                         \ 'bufnr' : a:bufnr2 ,
                         \ 'winnr' : winnr1   ,

@@ -44,10 +44,10 @@ call GoldenView#zl#rc#set_default({
     \     'nofile'  ,
     \   ],
     \   'bufname' : [
-    \     'GoToFile'                  , 'diffpanel_\d\+'      ,
-    \     '__Gundo_Preview__'         , '__Gundo__'           ,
-    \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' ,
-    \     '_VOOM\d\+$' ,
+    \     'GoToFile'                  , 'diffpanel_\d\+'      , 
+    \     '__Gundo_Preview__'         , '__Gundo__'           , 
+    \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' , 
+    \     '_VOOM\d\+$'                , '__Urannotate_\d\+__' , 
     \   ],
     \   'expr' : [
     \     ['&lazyredraw'] ,
@@ -57,31 +57,40 @@ call GoldenView#zl#rc#set_default({
     \ })
 
 
+
+
+
 " ============================================================================
 " Public Interface:                                                       [[[1
 " ============================================================================
 
+
+
 " Auto Resize:
 " ------------
-command! -nargs=0 GoldenViewToggleAutoResize
+command! -nargs=0 ToggleGoldenViewAutoResize
 \ call GoldenView#ToggleAutoResize()
 
-command! -nargs=0 GoldenViewDisableAutoResize
+command! -nargs=0 DisableGoldenViewAutoResize
 \ call GoldenView#DisableAutoResize()
 
-command! -nargs=0 GoldenViewEnableAutoResize
+command! -nargs=0 EnableGoldenViewAutoResize
 \ call GoldenView#EnableAutoResize()
 
+nnoremap <Plug>ToggleGoldenViewAutoResize
+\ :<C-U>ToggleGoldenViewAutoResize<CR>
+
+
+
+" Manual Resize:
+" --------------
 command! -nargs=0 GoldenViewResize
 \ call GoldenView#EnableAutoResize()
 \|call GoldenView#DisableAutoResize()
 
-
-nnoremap <Plug>GoldenViewToggleAutoResize
-\ :<C-U>GoldenViewToggleAutoResize<CR>
-
 nnoremap <Plug>GoldenViewResize
 \ :<C-U>GoldenViewResize<CR>
+
 
 
 " Layout Split:
@@ -89,6 +98,8 @@ nnoremap <Plug>GoldenViewResize
 nnoremap <Plug>GoldenViewSplit
 \ :<C-u>call GoldenView#zl#window#split_nicely()<CR>
 " [TODO]( define comfortable width &tw * 4/3) @zhaocai @start(2012-09-29 01:17)
+
+
 
 " Goto Window:
 " ------------
@@ -99,14 +110,31 @@ nnoremap <Plug>GoldenViewPrevious
 \ :<C-u>call GoldenView#zl#window#previous_window_or_tab()<CR>
 
 
+
 " Switch Window:
 " --------------
+nnoremap <Plug>GoldenViewSwitchMain
+\ :<C-u>call GoldenView#SwitchMain()<CR>
+command! -nargs=0 SwitchGoldenViewMain
+\ call GoldenView#SwitchMain()
+
+
+nnoremap <Plug>GoldenViewSwitchToggle
+\ :<C-u>call GoldenView#zl#window#switch_buffer_toggle()<CR>
+command! -nargs=0 SwitchGoldenViewToggle
+\ call GoldenView#zl#window#switch_buffer_toggle()
+
+
 nnoremap <Plug>GoldenViewSwitchWithLargest
-\ :<C-u>call GoldenView#zl#window#switch_buffer_toggle({'with' : 'largest'})<CR>
+\ :<C-u>call GoldenView#zl#window#switch_buffer_with_largest()<CR>
+command! -nargs=0 SwitchGoldenViewLargest
+\ call GoldenView#zl#window#switch_buffer_with_largest()
+
 
 nnoremap <Plug>GoldenViewSwitchWithSmallest
-\ :<C-u>call GoldenView#zl#window#switch_buffer_toggle({'with' : 'smallest'})<CR>
-
+\ :<C-u>call GoldenView#zl#window#switch_buffer_with_smallest()<CR>
+command! -nargs=0 SwitchGoldenViewSmallest
+\ call GoldenView#zl#window#switch_buffer_with_smallest()
 
 
 
@@ -122,8 +150,8 @@ if g:goldenview__enable_default_mapping == 1
     nmap <silent> <C-N>  <Plug>GoldenViewNext
     nmap <silent> <C-P>  <Plug>GoldenViewPrevious
 
-    nmap <silent> <F8>   <Plug>GoldenViewSwitchWithLargest
-    nmap <silent> <S-F8> <Plug>GoldenViewSwitchWithSmallest
+    nmap <silent> <F8>   <Plug>GoldenViewSwitchMain
+    nmap <silent> <S-F8> <Plug>GoldenViewSwitchToggle
 
     nmap <silent> <C-L>  <Plug>GoldenViewSplit
 endif
