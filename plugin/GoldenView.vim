@@ -13,7 +13,7 @@
 " ============================================================================
 " Load Guard:                                                             [[[1
 " ============================================================================
-try | if !zl#rc#load_guard(expand('<sfile>:t:r'), 700, 100, ['!&cp'])
+try | if !GoldenView#zl#rc#load_guard(expand('<sfile>:t:r'), 700, 100, ['!&cp'])
         finish
     endif
 catch /^Vim\%((\a\+)\)\=:E117/ " E117: Unknown Function
@@ -28,7 +28,7 @@ set cpo&vim
 " Settings:                                                               [[[1
 " ============================================================================
 
-call zl#rc#set_default({
+call GoldenView#zl#rc#set_default({
     \ 'g:goldenview__enable_at_startup'      : 1         ,
     \ 'g:goldenview__enable_default_mapping' : 1         ,
     \ 'g:goldenview__active_profile'         : 'default' ,
@@ -87,25 +87,25 @@ nnoremap <Plug>GoldenViewResize
 " Layout Split:
 " -------------
 nnoremap <Plug>GoldenViewSplit
-\ :<C-u>call zl#window#split_nicely()<CR>
+\ :<C-u>call GoldenView#zl#window#split_nicely()<CR>
 " [TODO]( define comfortable width &tw * 4/3) @zhaocai @start(2012-09-29 01:17)
 
 " Goto Window:
 " ------------
 nnoremap <Plug>GoldenViewNext
-\ :<C-u>call zl#window#next_window_or_tab()<CR>
+\ :<C-u>call GoldenView#zl#window#next_window_or_tab()<CR>
 
 nnoremap <Plug>GoldenViewPrevious
-\ :<C-u>call zl#window#previous_window_or_tab()<CR>
+\ :<C-u>call GoldenView#zl#window#previous_window_or_tab()<CR>
 
 
 " Switch Window:
 " --------------
 nnoremap <Plug>GoldenViewSwitchWithLargest
-\ :<C-u>call zl#window#switch_buffer_toggle({'with' : 'largest'})<CR>
+\ :<C-u>call GoldenView#zl#window#switch_buffer_toggle({'with' : 'largest'})<CR>
 
 nnoremap <Plug>GoldenViewSwitchWithSmallest
-\ :<C-u>call zl#window#switch_buffer_toggle({'with' : 'smallest'})<CR>
+\ :<C-u>call GoldenView#zl#window#switch_buffer_toggle({'with' : 'smallest'})<CR>
 
 
 
@@ -115,7 +115,7 @@ nnoremap <Plug>GoldenViewSwitchWithSmallest
 " Initialization:                                                         [[[1
 " ============================================================================
 if g:goldenview__enable_at_startup == 1
-    GoldenViewEnableAutoResize
+    call GoldenView#EnableAutoResize()
 endif
 
 if g:goldenview__enable_default_mapping == 1

@@ -24,6 +24,9 @@ function! GoldenView#Init()
     if exists('g:goldenview__initialized') && g:goldenview__initialized == 1
         return
     endif
+
+    call GoldenView#zl#rc#init()
+
     let s:goldenview__golden_ratio = 1.618
     lockvar s:goldenview__golden_ratio
 
@@ -48,7 +51,7 @@ function! GoldenView#Init()
     \   'focus_window_winwidth'  : function('GoldenView#GoldenWidth')  ,
     \ })
 
-    let s:goldenview__ignore_nrule = zl#rule#norm(
+    let s:goldenview__ignore_nrule = GoldenView#zl#rule#norm(
     \   g:goldenview__ignore_urule, {
     \     'logic' : 'or',
     \   }
@@ -56,7 +59,6 @@ function! GoldenView#Init()
     let g:goldenview__initialized = 1
 endfunction
 
-call GoldenView#Init()
 
 
 " ============================================================================
@@ -65,15 +67,18 @@ call GoldenView#Init()
 function! GoldenView#ToggleAutoResize()
     if exists('s:goldenview__auto_resize') && s:goldenview__auto_resize == 1
         call GoldenView#DisableAutoResize()
-        call zl#print#moremsg('GoldenView Auto Resize: Off')
+        call GoldenView#zl#print#moremsg('GoldenView Auto Resize: Off')
     else
         call GoldenView#EnableAutoResize()
-        call zl#print#moremsg('GoldenView Auto Resize: On')
+        call GoldenView#zl#print#moremsg('GoldenView Auto Resize: On')
     endif
 endfunction
 
 
 function! GoldenView#EnableAutoResize()
+
+    call GoldenView#Init()
+
     " [TODO]( initialize the other window settings ) @zhaocai @start(2012-09-29 17:01)
     let active_profile = s:goldenview__profile[g:goldenview__active_profile]
     call s:set_focus_window(active_profile)
@@ -135,7 +140,7 @@ function! GoldenView#Resize(...)
         let current_bufnr = bufnr('%')
 
         " redraw ignored window to its original size
-        for nr in zl#list#uniq(tabpagebuflist())
+        for nr in GoldenView#zl#list#uniq(tabpagebuflist())
             let buf_saved = get(t:goldenview['bufs'], nr, {})
             if ! empty(buf_saved)
                 silent exec bufwinnr(nr) 'wincmd w'
@@ -171,6 +176,7 @@ function! GoldenView#Resize(...)
             \  'winwidth'  : winwidth(0)  , 
             \  'winheight' : winheight(0) , 
             \ } 
+            let t:goldenview['cmdheight'] = &cmdheight
             silent! call tlog#Log("GoldenView#Resize: ignore " . PP(extend(a:1, GoldenView#Info())))
         end
         return
@@ -187,7 +193,7 @@ function! GoldenView#Resize(...)
 endfunction
 
 function! GoldenView#IsIgnore()
-    return zl#rule#is_true(s:goldenview__ignore_nrule)
+    return GoldenView#zl#rule#is_true(s:goldenview__ignore_nrule)
 endfunction
 
 
@@ -235,7 +241,7 @@ function! s:set_focus_window(profile,...)
     let opts = {
              \ 'force' : 0
              \ }
-    if a:0 >= 1 && zl#var#is_dict(a:1)
+    if a:0 >= 1 && GoldenView#zl#var#is_dict(a:1)
         call extend(opts, a:1)
     endif
 
@@ -249,7 +255,7 @@ function! s:set_focus_window(profile,...)
             \ s:eval(a:profile, a:profile['focus_window_winheight'])
         endif
     catch /^Vim\%((\a\+)\)\=:E36/ " Not enough room
-        call zl#print#warning('GoldenView: ' . v:exception)
+        call GoldenView#zl#print#warning('GoldenView: ' . v:exception)
     endtry
 endfunction
 
@@ -258,7 +264,7 @@ function! s:set_other_window(profile,...)
     let opts = {
              \ 'force' : 0
              \ }
-    if a:0 >= 1 && zl#var#is_dict(a:1)
+    if a:0 >= 1 && GoldenView#zl#var#is_dict(a:1)
         call extend(opts, a:1)
     endif
 
@@ -274,7 +280,7 @@ function! s:set_other_window(profile,...)
             \ s:eval(a:profile, a:profile['other_window_winheight'])
         endif
     catch /^Vim\%((\a\+)\)\=:E36/ " Not enough room
-        call zl#print#warning('GoldenView: ' . v:exception)
+        call GoldenView#zl#print#warning('GoldenView: ' . v:exception)
     endtry
 endfunction
 
@@ -283,9 +289,9 @@ endfunction
 " Helper Functions:                                                       [[[1
 " ============================================================================
 function! s:eval(profile, val)
-    if zl#var#is_number(a:val)
+    if GoldenView#zl#var#is_number(a:val)
         return a:val
-    elseif zl#var#is_funcref(a:val)
+    elseif GoldenView#zl#var#is_funcref(a:val)
         return a:val(a:profile)
     else
         try
