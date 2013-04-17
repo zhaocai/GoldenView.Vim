@@ -10,7 +10,6 @@
 "                  Released under current GPL license.
 " =============== ============================================================
 
-" [TODO]( catch WinLeave event to prevent fixed/ignored window resizing ) @zhaocai @start(2013-04-14 10:58)
 " ============================================================================
 " Initialization And Profile:                                             [[[1
 " ============================================================================
@@ -122,15 +121,42 @@ function! GoldenView#Resize(...)
     " Example : >
     "--------- ------------------------------------------------
 
+    let winnr_diff = s:winnr_diff()
+    if winnr_diff > 0
+        " silent! call tlog#Log("GoldenView#Resize: winnr plus " . PP(extend(a:1, GoldenView#Info())))
+        return
+    elseif winnr_diff < 0
+        call GoldenView#initialize_tab_variable()
+        let saved_lazyredraw = &lazyredraw
+        set lazyredraw
 
-    if s:is_new_window()
-        " silent! call tlog#Log("GoldenView#Resize: is_new_window " . PP(extend(a:1, GoldenView#Info())))
+        for nr in tabpagebuflist()
+            let buf_saved = get(t:goldenview['buf'], nr, {})
+            if ! empty(buf_saved)
+                execute bufwinnr(nr) 'wincmd w'
+                exec 'vertical resize ' . buf_saved['winwidth']
+                exec 'resize ' . buf_saved['winheight']
+
+                " silent! call tlog#Log("GoldenView#Resize: buf saved " . PP(buf_saved))
+            endif
+        endfor
+
+        redraw
+        let &lazyredraw = saved_lazyredraw
+
+        " silent! call tlog#Log("GoldenView#Resize: winnr minus " . PP(extend(a:1, GoldenView#Info())))
         return
     endif
 
     " silent! call tlog#Log("GoldenView#Resize: enter " . PP(extend(a:1, GoldenView#Info())))
 
     if GoldenView#IsIgnore()
+        call GoldenView#initialize_tab_variable()
+        let t:goldenview['buf'][bufnr('%')] = {
+        \  'winwidth'  : winwidth(0)  , 
+        \  'winheight' : winheight(0) , 
+        \ } 
+
         " silent! call tlog#Log("GoldenView#Resize: ignore " . PP(extend(a:1, GoldenView#Info())))
         return
     endif
@@ -257,18 +283,21 @@ endfunction
 
 function! GoldenView#initialize_tab_variable()
     if !exists('t:goldenview')
-        let t:goldenview = {'nrwin' : winnr('$')}
+        let t:goldenview = {'nrwin' : winnr('$'), 'buf' : {}}
     endif
 endfunction
 
-function! s:is_new_window()
+function! s:winnr_diff()
     call GoldenView#initialize_tab_variable()
+
     let nrwin = winnr('$')
     if nrwin != t:goldenview['nrwin']
+        let diff = nrwin - t:goldenview['nrwin']
         let t:goldenview['nrwin'] = nrwin
-        return 1
+        return diff
+    else
+        return 0
     endif
-    return 0
 endfunction
 
 
