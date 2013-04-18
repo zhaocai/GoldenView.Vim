@@ -48,7 +48,7 @@ Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 ------------- - -----------------------------------------------
 </code></pre>
 
-<p>The initial motive for <a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> comes from the frustration of using other vim plugins to autoresize split windows. The idea is deadly simple and very useful: <strong>resize the focused window to a proper size.</strong> However, in practice, many hiccups makes <strong>autoresizing</strong> not a smooth experience.  Below are a list of issues I am trying to solve:</p>
+<p>The initial motive for <a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> comes from the frustration of using other vim plugins to autoresize split windows. The idea is deadly simple and very useful: <strong>resize the focused window to a proper size.</strong> However, in practice, many hiccups makes <strong>autoresizing</strong> not a smooth experience.  Below are a list of issues <a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> attempts to solve:</p>
 
 <p>First and the most important one, autoresizing should play nicely with existing plugins like <code>tagbar</code>, <code>vimfiler</code>, <code>unite</code>, <code>VOoM</code>, <code>quickfix</code>, <code>undotree</code>, <code>gundo</code>, etc. These windows should manage there own window size.</p>
 
@@ -68,30 +68,34 @@ Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 
 <p>Second, it maps a single key (<code>&lt;C-L&gt;</code> by default) to nicely split windows to tiled windows. </p>
 
-<pre><code>-----------------------------------
-|              |        S1        |
-|              |===================
-|      V       |        S2        |
-|              |===================
-|              |        S3        |
------------------------------------
+<pre><code>----+--------------+------------+---+
+|   |              |            |   |
+| F |              |    S1      | T |
+| I |              +------------| A |
+| L |  MAIN PANE   |    S2      | G |
+| E |              +------------+ B |
+| R |              |    S3      | A |
+|   |              |            |   |
++---+--------------+------------+---+
 </code></pre>
 
 <p>To get this view, just hit <code>&lt;C-L&gt;</code> 4 times. or, if you have a large monitor, you may get tiled windows below.</p>
 
-<pre><code>--------------------------------------------------
-|              |              |        S1        |
-|              |              |===================
-|      V1      |      V2      |        S2        |
-|              |              |===================
-|              |              |        S3        |
---------------------------------------------------
+<pre><code>----+--------------+--------------+------------+---+
+|   |              |              |            |   |
+| F |              |              |    S1      | T |
+| I |              |              +------------| A |
+| L |  MAIN PANE   |      M2      |    S2      | G |
+| E |              |              +------------+ B |
+| R |              |              |    S3      | A |
+|   |              |              |            |   |
++---+--------------+--------------+------------+---+
 </code></pre>
 
 <p>To quickly switch between those windows, a few keys are mapped to </p>
 
 <ul>
-<li>Focuse to the main window (- the <strong>V</strong> pane above),</li>
+<li>Focuse to the main window</li>
 <li>Switch with the largest, smallest, etc. </li>
 <li>Jump to next and previous window</li>
 </ul><h2>Installation</h2>
@@ -133,17 +137,17 @@ Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 
 <p><a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> should work out of the box without configuration. It should automatically start to resize focused window to <a href="http://en.wikipedia.org/wiki/Golden_ratio">golden ratio</a> based on <code>textwidth</code> and vim available size. You may start to play with it now.</p>
 
-<p>To get you started, a few default keymappings are list as below:</p>
+<p>To get you started, a few default keys are mapped as below:</p>
 
-<div class="highlight"><pre><span class="c">" split to tiled windows</span>
+<div class="highlight"><pre><span class="c">" 1. split to tiled windows</span>
 nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>C<span class="p">-</span>L<span class="p">&gt;</span>  <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewSplit
 
-<span class="c">" quickly switch current window with the main pane</span>
+<span class="c">" 2. quickly switch current window with the main pane</span>
 <span class="c">" and toggle back</span>
 nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>F8<span class="p">&gt;</span>   <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewSwitchMain
 nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>S<span class="p">-</span>F8<span class="p">&gt;</span> <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewSwitchToggle
 
-<span class="c">" jump to next and previous window</span>
+<span class="c">" 3. jump to next and previous window</span>
 nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>C<span class="p">-</span><span class="k">N</span><span class="p">&gt;</span>  <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewNext
 nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>C<span class="p">-</span><span class="k">P</span><span class="p">&gt;</span>  <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewPrevious
 
@@ -151,22 +155,23 @@ nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt
 
 <p>The meaning of those keys are self-explaining. A general workflow would be <code>&lt;Plug&gt;GoldenViewSplit</code> key to quickly and nicely split windows to the layout as below. Then you may open your files.</p>
 
-<pre><code>-----------------------------------
-|              |        S1        |
-|              |===================
-|      V       |        S2        |
-|              |===================
-|              |        S3        |
------------------------------------
+<pre><code>----+--------------+------------+---+
+|   |              |            |   |
+| F |              |    S1      | T |
+| I |              +------------| A |
+| L |  MAIN PANE   |    S2      | G |
+| E |              +------------+ B |
+| R |              |    S3      | A |
+|   |              |            |   |
++---+--------------+------------+---+
+
 </code></pre>
 
-<p>To switch <code>S1</code> with <code>V</code>, in <code>S1</code> and hit <code>&lt;Plug&gt;GoldenViewSwitchMain</code>. To switch back, hit <code>&lt;Plug&gt;GoldenViewSwitchToggle</code> in either <code>V</code> or <code>S1</code></p>
+<p>To switch <code>S1</code> with <code>MAIN PANE</code>, in <code>S1</code> and hit <code>&lt;Plug&gt;GoldenViewSwitchMain</code>. To switch back, hit <code>&lt;Plug&gt;GoldenViewSwitchToggle</code> in either <code>MAIN PAIN</code> or <code>S1</code></p>
 
 <h4>g:goldenview__enable_default_mapping</h4>
 
-<p>And, I konw every vimer has a different set of key mappings. </p>
-
-<p>If you you are (most likely) unhappy about some of the mappings, map you own keys as below: </p>
+<p>Every experienced vim user has a different set of key mappings. If you you are (most likely) unhappy about some of the mappings, map you own keys as below: </p>
 
 <div class="highlight"><pre><span class="k">let</span> <span class="k">g</span>:goldenview__enable_default_mapping <span class="p">=</span> <span class="m">0</span>
 
