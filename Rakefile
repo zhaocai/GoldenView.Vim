@@ -1,4 +1,6 @@
 require 'facets/string'
+require 'rake/clean'
+
 project_name = __FILE__.pathmap("%-1d")
 
 def version
@@ -12,18 +14,25 @@ def version
   }
 end
 
-desc "zip"
-task :zip => [] do
-  sh "zip -r #{project_name}-#{version}.zip autoload plugin doc README.md --exclude \*.DS_Store"
-end
-
-
 desc "version"
 task :version => [] do
   puts version
 end
 
-  
+
+
+
+desc "zip for distribution"
+task :zip => [] do
+  sh "zip -r #{project_name}-#{version}.zip",
+     "autoload plugin doc README.md", "--exclude \*.DS_Store "
+end
+
+CLEAN.include('*.zip')
+
+
+
+
 vimup = File.expand_path('~/Developer/Vim/Bundle/tool/vimup/vimup')
 vimorg = File.expand_path('~/.apps/vimup/vim.org.yml')
 

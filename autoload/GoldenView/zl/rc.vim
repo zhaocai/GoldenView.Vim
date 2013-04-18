@@ -3,7 +3,7 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/zl.vim
 " Date Created   : Mon 03 Sep 2012 09:05:14 AM EDT
-" Last Modified  : Thu 20 Sep 2012 04:25:12 PM EDT
+" Last Modified  : Thu 18 Apr 2013 03:16:39 PM EDT
 " Tag            : [ vim, library ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
@@ -37,6 +37,7 @@ function! GoldenView#zl#rc#init() abort "                                       
 
 
 endfunction
+
 
 
 function! GoldenView#zl#rc#load_guard(prefix, vim_version, GoldenView_zl_version,exprs,...)    "[[[2
@@ -151,7 +152,7 @@ function! GoldenView#zl#rc#set_default(var, ...) "  ('var', val) || ( {dict} )  
     "
     " Args    : ('var', val) || ( {dict} )
     " Return  :
-    " Raise   : 'zl: ***'
+    " Raise   : 'zl.vim ***'
     "
     " Pitfall : avoid 's:' variables, which will be defined in
     "           this rc.vim script bur your script
@@ -174,10 +175,10 @@ function! GoldenView#zl#rc#set_default(var, ...) "  ('var', val) || ( {dict} )  
         if a:0 >= 1
             call <SID>set_default(a:var, a:1)
         else
-            throw "zl: should call with default value for " . a:var
+            throw "zl.vim should call with default value for " . a:var
         endif
     else
-        throw "zl: unsupported type: " . type(a:var)
+        throw "zl.vim unsupported type: " . type(a:var)
     endif
 endfunction
 
@@ -191,7 +192,10 @@ endfunction
 
 
 
+
+
 call GoldenView#zl#rc#init()
+
 
 " ============================================================================
 " Modeline:                                                               [[[1
