@@ -5,6 +5,7 @@
     Author        : Zhao Cai
     EMail         : caizhaoff@gmail.com
     URL           : http://zhaocai.github.io/GoldenView.Vim/
+    Version       : 1.1.1
     Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
     Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
     ------------- - -----------------------------------------------
@@ -192,6 +193,12 @@ If you have any issues, please post it to https://github.com/zhaocai/GoldenView.
 
 ## Contributors
 
+
+
+
+## RELEASE HISTORY
+
+Refer to [History.md]( https://github.com/zhaocai/GoldenView.Vim/blob/master/History.md )
 
 ## LICENSE:
 

@@ -1,0 +1,97 @@
+script_name: GoldenView.Vim
+script_id: '4529'
+script_type: utility
+script_package: '{script_name}-{version}.zip'
+required_vim_version: '7.3'
+summary: Always have a nice view for vim split windows 
+
+detailed_description: |
+
+  Please goto homepage for a better view of the introduction.
+
+  Homepage: http://zhaocai.github.io/GoldenView.Vim/ 
+  Screencast:  http://dl.dropboxusercontent.com/u/1897501/Screencasts/GoldenView.gif 
+  
+
+
+
+
+
+  >>> Introduction: 
+ 
+  The initial motive for GoldenView comes from the frustration of using other vim plugins to autoresize split windows. The idea is deadly simple and very useful: resize the focused window to a proper size. However, in practice, many hiccups makes autoresizing not a smooth experience. Below are a list of issues I am trying to solve: 
+
+  First and the most important one, autoresizing should play nicely with existing plugins like tagbar, vimfiler, unite, VOoM, quickfix, undotree, gundo, etc. These windows should manage there own window size. 
+
+  Second, autoresizing should take care of the other windows too. Resizing the focused window may cause the other windows become too small. When you have 4+ split windows, autoresizing may just make a mess out of it. 
+
+
+
+
+  >>> Features:
+
+  GoldenView has preliminarily solved the issues described above. It also provides other features. Bascally, it does two things:
+
+  1. Autoresizing
+
+  First of all, it automatically resize the focused split window to a "golden" view based on golden ratio and textwidth.
+
+  2. Tiled Windows Management
+
+  Second, it maps a single key (<C-L> by default) to nicely split windows to tiled windows.
+
+  ----+--------------+------------+---+
+  |   |              |            |   |
+  | F |              |    S1      | T |
+  | I |              +------------| A |
+  | L |  MAIN PANE   |    S2      | G |
+  | E |              +------------+ B |
+  | R |              |    S3      | A |
+  |   |              |            |   |
+  +---+--------------+------------+---+
+  To get this view, just hit <C-L> 4 times. or, if you have a large monitor, you may get tiled windows below.
+
+  ----+--------------+--------------+------------+---+
+  |   |              |              |            |   |
+  | F |              |              |    S1      | T |
+  | I |              |              +------------| A |
+  | L |  MAIN PANE   |      M2      |    S2      | G |
+  | E |              |              +------------+ B |
+  | R |              |              |    S3      | A |
+  |   |              |              |            |   |
+  +---+--------------+--------------+------------+---+
+  To quickly switch between those windows, a few keys are mapped to
+
+  - Focuse to the main window
+  - Switch with the largest, smallest, etc.
+  - Jump to next and previous window
+
+  Requirements:
+  - Vim 7.3 or later
+
+install_details: |
+  http://zhaocai.github.io/GoldenView.Vim/
+
+versions:
+- '1.1.1': |
+   Improve documents, fix zl library load
+
+- '1.1.0': |
+   - 3 Major Enhancements
+      * add WinLeave event into account. This version works perfectly.
+      * fix various hiccups caused by winleave
+      * use ignore rules from zl.vim
+   - 4 Minor Enhancements
+      * add mapping to switch to main pane. [minor] speed up buffer switch with noautocmd
+      * include zl.vim into source code
+      * tune for autocmd sequence
+      * treat winfixwidth and winfixheight separately
+   - 2 Bug Fixes
+      * winleave cause ignored windows resized
+      * cannot let &winminwidth > &winwidth
+   - 2 Nominal Changes
+      * change profile variable scope to s\:
+      * tweak golden ratio for win size
+
+# __END__
+# vim: filetype=yaml
