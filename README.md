@@ -6,46 +6,58 @@
     EMail         : caizhaoff@gmail.com
     URL           : https://github.com/zhaocai/GoldenView.vim
     Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
-    Last Modified : Thu 27 Sep 2012 01:23:25 AM EDT
+    Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
     ------------- - ----------------------------------------------------------
 
-## :
-1. play nicely with existing plugins like `tagbar`, `vimfiler`, `unite`, `VOoM`, etc. 
-2. make other window too small
-
-[GoldenView][GoldenView] is a window manager split windows. It does three things:
 
 
+The initial motive for [GoldenView][GoldenView] comes from the frustration of using other vim plugins to autoresize split windows. The idea is deadly simple and very useful: **resize the focused window to a proper size.** However, in practice, many hiccups makes **autoresizing** not a smooth experience.  Below are a list of issues I am trying to solve:
+
+First and the most important one, autoresizing should play nicely with existing plugins like `tagbar`, `vimfiler`, `unite`, `VOoM`, `quickfix`, `undotree`, `gundo`, etc. These windows should manage there own window size.
+
+Second, autoresizing should take care of **the other windows** too. Resizing the focused window may cause the other windows become too small. When you have 4+ split windows, autoresizing may just make a mess out of it.
 
 
+![GoldView Screencast]( http://dl.dropboxusercontent.com/u/1897501/Screencasts/GoldenView.gif )
 
+
+## Features
+
+[GoldenView][GoldenView] has preliminarily solved the issues described above. It also provides other features. Bascally, it does two things:
+
+### 1. Autoresizing
 First of all, it automatically resize the focused split window to a "golden" view based on [golden ratio][golden-ratio-wikipedia] and `textwidth`.
 
-Second, it helps to quickly split windows to
 
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    |              |        S1        |
-    |              |===================
-    |      V       |        S2        |
-    |              |===================
-    |              |        S3        |
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 2. Tiled Windows Management
+Second, it maps a single key (`<C-L>` by default) to nicely split windows to tiled windows. 
+```
+-----------------------------------
+|              |        S1        |
+|              |===================
+|      V       |        S2        |
+|              |===================
+|              |        S3        |
+-----------------------------------
+```
+To get this view, just hit `<C-L>` 4 times. or, if you have a large monitor, 
 
-or, (if you have a large monitor)
-
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    |              |              |        S1        |
-    |              |              |===================
-    |      V1      |      V2      |        S2        |
-    |              |              |===================
-    |              |              |        S3        |
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-with single key mapping (`<C-L>` by default).
+```
+--------------------------------------------------
+|              |              |        S1        |
+|              |              |===================
+|      V1      |      V2      |        S2        |
+|              |              |===================
+|              |              |        S3        |
+--------------------------------------------------
+```
 
 
+To quickly switch between those windows, a few keys are mapped to 
 
-Third, it maps keys to switch with the largest, smallest, etc. split window.
+- Focuse to the main window (- the **V** pane above),
+- Switch with the largest, smallest, etc. 
+- Jump to next and previous window
 
 
 
@@ -53,60 +65,100 @@ Third, it maps keys to switch with the largest, smallest, etc. split window.
 
 ## Installation
 
-Latest version: https://github.com/zhaocai/GoldenView.Vim
-
-Install [GoldenView][GoldenView] is the *same as installing other vim plugins*.
-If experienced with vim, you can skim the example below and move to the [next section](#Interface). 
+Install [GoldenView][GoldenView] is the *same as installing other vim plugins*. If experienced with vim, you can skim the example below and move to [next section](#Interface). 
 
 
 ### **Option A** - With [Plugin Manager][vim-plugin-manager] ( **recommanded** )
 
-If you use plugin managers like *Pathogen*, *vundle*,
-*neobundle*, *vim-addon-manager*, etc., just unarchive the zip file or clone the
-[GoldenView][GoldenView] repo from
-`git://github.com/zhaocai/GoldenView.git` into your local plugin installation directory
-(most likely `~/.vim/bundle/`). Then add corresponding command in .vimrc for the
-bundle manager you are using.
-
+If you use plugin managers like *Pathogen*, *vundle*, *neobundle*, *vim-addon-manager*, etc., just unarchive the zip file or clone the [GoldenView][GoldenView] repo from `git://github.com/zhaocai/GoldenView.git` into your local plugin installation directory (most likely `~/.vim/bundle/`). Then add corresponding scripts in .vimrc for the bundle manager you are using.
 
 **Example**:
 
-1. *neobundle*:
+- *neobundle*:
 
 ```vim
     NeoBundle 'zhaocai/GoldenView.Vim'
 ```
 
-2. *vundle*:
+- *vundle*:
 
 ```vim
     Bundle 'zhaocai/GoldenView.Vim'
 ```
 
-
-3. *vim-addon-manager*:
+- *vim-addon-manager*:
 
 ```vim
-    call vam#ActivateAddons(['GoldenView.Vim'], {'auto_install' : 0})
+    call vam#ActivateAddons(['GoldenView.Vim'], {'auto_install' : 1})
 ```
 
 
 ### **Option B** - Without [Plugin Manager][vim-plugin-manager]
 
-After you install [zl.vim][zl], unarchive the zip file into a directory
-that is under `runtimepath` of your vim, including ~/.vim dir.
+Unarchive the zip file into a directory that is under `runtimepath` of your vim, `~/.vim` for example.
 
 
-## Interface
+## Quick Start
+[GoldenView][GoldenView] should work out of the box without configuration. It should automatically start to resize focused window to [golden ratio][golden-ratio-wikipedia] based on `textwidth` and vim available size.
 
-### Command 
-### Key Mapping
-### Variable 
 
-## Usage
+To get you started, a few default keymappings are list as below:
 
-    :
+```vim 
+" split to tiled windows
+nmap <silent> <C-L>  <Plug>GoldenViewSplit
 
+" quickly switch current window with the main pane
+" and toggle back
+nmap <silent> <F8>   <Plug>GoldenViewSwitchMain
+nmap <silent> <S-F8> <Plug>GoldenViewSwitchToggle
+
+" jump to next and previous window
+nmap <silent> <C-N>  <Plug>GoldenViewNext
+nmap <silent> <C-P>  <Plug>GoldenViewPrevious
+
+```
+
+The meaning of those keys are self-explaining. A general workflow would be `<Plug>GoldenViewSplit` key to quickly and nicely split windows to the layout as below. Then you may open your files.
+
+```
+-----------------------------------
+|              |        S1        |
+|              |===================
+|      V       |        S2        |
+|              |===================
+|              |        S3        |
+-----------------------------------
+```
+
+To switch `S1` with `V`, in `S1` and hit `<Plug>GoldenViewSwitchMain`. To switch back, hit `<Plug>GoldenViewSwitchToggle` in either `V` or `S1`
+
+
+
+And, if you you are (most likely) unhappy about some of the mappings, map you own keys as below: 
+
+```vim
+let g:goldenview__enable_default_mapping = 0
+
+nmap <silent> <MY_KEY> <Plug>GoldenViewSplit
+" ... and so on
+
+```
+
+
+## Interface and Details
+
+### Options 
+
+#### g:goldenview__enable_at_startup
+if you do not want to start autoresizing automatically, you can put `let g:goldenview__enable_at_startup = 0` in your vimrc.
+
+
+
+
+### Commands
+### Key Mappings
+ 
 
 ## Contributors
 
