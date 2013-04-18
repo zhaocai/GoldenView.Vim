@@ -65,7 +65,7 @@ To quickly switch between those windows, a few keys are mapped to
 
 ## Installation
 
-Install [GoldenView][GoldenView] is the *same as installing other vim plugins*. If experienced with vim, you can skim the example below and move to [next section](#Interface). 
+Install [GoldenView][GoldenView] is the *same as installing other vim plugins*. If experienced with vim, you can skim the example below and move to [next section](#quick-start). 
 
 
 ### **Option A** - With [Plugin Manager][vim-plugin-manager] ( **recommanded** )
@@ -99,8 +99,7 @@ Unarchive the zip file into a directory that is under `runtimepath` of your vim,
 
 
 ## Quick Start
-[GoldenView][GoldenView] should work out of the box without configuration. It should automatically start to resize focused window to [golden ratio][golden-ratio-wikipedia] based on `textwidth` and vim available size.
-
+[GoldenView][GoldenView] should work out of the box without configuration. It should automatically start to resize focused window to [golden ratio][golden-ratio-wikipedia] based on `textwidth` and vim available size. You may start to play with it now.
 
 To get you started, a few default keymappings are list as below:
 
@@ -181,6 +180,11 @@ Other switch rules can be easily defined.
 > todo
 
  
+
+## Issues:
+
+If you have any issues, please post it to https://github.com/zhaocai/GoldenView.Vim/issues for discussion.
+
 
 ## Contributors
 
