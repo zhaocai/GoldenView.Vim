@@ -4,8 +4,8 @@
 " Author         : Zhao Cai <caizhaoff@gmail.com>
 " HomePage       : https://github.com/zhaocai/GoldenView.Vim
 " Date Created   : Tue 18 Sep 2012 10:25:23 AM EDT
-" Last Modified  : Tue 18 Sep 2012 08:13:08 PM EDT
-" Tag            : [ vim, window, golden-ratio ]
+" Last Modified  : Sat 29 Sep 2012 01:23:02 AM EDT
+" Tag            : [ vim, window, size, golden-ratio ]
 " Copyright      : © 2012 by Zhao Cai,
 "                  Released under current GPL license.
 " =============== ============================================================
@@ -13,11 +13,11 @@
 " ============================================================================
 " Load Guard:                                                             [[[1
 " ============================================================================
-try | if !zlib#rc#load_guard(expand('<sfile>:t:r'), 700, 100, ['!&cp'])
+try | if !GoldenView#zl#rc#load_guard(expand('<sfile>:t:r'), 700, 100, ['!&cp'])
         finish
     endif
 catch /^Vim\%((\a\+)\)\=:E117/ " E117: Unknown Function
-    throw 'GoldenView: zlib.vim is required!'
+    throw 'GoldenView: zl.vim is required!'
 endtry
 
 let s:save_cpo = &cpo
@@ -28,52 +28,133 @@ set cpo&vim
 " Settings:                                                               [[[1
 " ============================================================================
 
-call zlib#rc#set_default({
+call GoldenView#zl#rc#set_default({
     \ 'g:goldenview__enable_at_startup'      : 1         ,
     \ 'g:goldenview__enable_default_mapping' : 1         ,
     \ 'g:goldenview__active_profile'         : 'default' ,
     \ 'g:goldenview__reset_profile'          : 'reset'   ,
+    \ 'g:goldenview__ignore_urule'           : {
+    \   'filetype' : [
+    \     ''        ,
+    \     'qf'      , 'vimpager', 'undotree', 'tagbar',
+    \     'nerdtree', 'vimshell', 'vimfiler', 'voom'  ,
+    \     'tabman'  , 'unite'   , 'quickrun', 'Decho' ,
+    \   ],
+    \   'buftype' : [
+    \     'nofile'  ,
+    \   ],
+    \   'bufname' : [
+    \     'GoToFile'                  , 'diffpanel_\d\+'      , 
+    \     '__Gundo_Preview__'         , '__Gundo__'           , 
+    \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' , 
+    \     '_VOOM\d\+$'                , '__Urannotate_\d\+__' , 
+    \   ],
+    \ },
     \
     \ })
+
 
 
 " ============================================================================
 " Public Interface:                                                       [[[1
 " ============================================================================
 
-command! -nargs=0 GoldenViewToggleAutoResize
-            \ call GoldenView#ToggleAutoResize()
-command! -nargs=0 GoldenViewDisableAutoResize
-            \ call GoldenView#DisableAutoResize()
-command! -nargs=0 GoldenViewEnableAutoResize
-            \ call GoldenView#EnableAutoResize()
+
+
+" Auto Resize:
+" ------------
+command! -nargs=0 ToggleGoldenViewAutoResize
+\ call GoldenView#ToggleAutoResize()
+
+command! -nargs=0 DisableGoldenViewAutoResize
+\ call GoldenView#DisableAutoResize()
+
+command! -nargs=0 EnableGoldenViewAutoResize
+\ call GoldenView#EnableAutoResize()
+
+nnoremap <Plug>ToggleGoldenViewAutoResize
+\ :<C-U>ToggleGoldenViewAutoResize<CR>
+
+
+
+" Manual Resize:
+" --------------
 command! -nargs=0 GoldenViewResize
-            \ call GoldenView#EnableAutoResize()
-            \|call GoldenView#DisableAutoResize()
+\ call GoldenView#EnableAutoResize()
+\|call GoldenView#DisableAutoResize()
+
+nnoremap <Plug>GoldenViewResize
+\ :<C-U>GoldenViewResize<CR>
 
 
 
-nnoremap <Plug>GoldenViewToggleAutoResize :<C-U>GoldenViewToggleAutoResize<CR>
-nnoremap <Plug>GoldenViewResize :<C-U>GoldenViewResize<CR>
+" Layout Split:
+" -------------
+nnoremap <Plug>GoldenViewSplit
+\ :<C-u>call GoldenView#zl#window#split_nicely()<CR>
+" [TODO]( define comfortable width &tw * 4/3) @zhaocai @start(2012-09-29 01:17)
 
+
+
+" Goto Window:
+" ------------
+nnoremap <Plug>GoldenViewNext
+\ :<C-u>call GoldenView#zl#window#next_window_or_tab()<CR>
+
+nnoremap <Plug>GoldenViewPrevious
+\ :<C-u>call GoldenView#zl#window#previous_window_or_tab()<CR>
+
+
+
+" Switch Window:
+" --------------
+nnoremap <Plug>GoldenViewSwitchMain
+\ :<C-u>call GoldenView#SwitchMain()<CR>
+command! -nargs=0 SwitchGoldenViewMain
+\ call GoldenView#SwitchMain()
+
+
+nnoremap <Plug>GoldenViewSwitchToggle
+\ :<C-u>call GoldenView#zl#window#switch_buffer_toggle()<CR>
+command! -nargs=0 SwitchGoldenViewToggle
+\ call GoldenView#zl#window#switch_buffer_toggle()
+
+
+nnoremap <Plug>GoldenViewSwitchWithLargest
+\ :<C-u>call GoldenView#zl#window#switch_buffer_with_largest()<CR>
+command! -nargs=0 SwitchGoldenViewLargest
+\ call GoldenView#zl#window#switch_buffer_with_largest()
+
+
+nnoremap <Plug>GoldenViewSwitchWithSmallest
+\ :<C-u>call GoldenView#zl#window#switch_buffer_with_smallest()<CR>
+command! -nargs=0 SwitchGoldenViewSmallest
+\ call GoldenView#zl#window#switch_buffer_with_smallest()
+
+
+
+
+" ============================================================================
+" Initialization:                                                         [[[1
+" ============================================================================
+if g:goldenview__enable_at_startup == 1
+    call GoldenView#EnableAutoResize()
+endif
 
 if g:goldenview__enable_default_mapping == 1
+    nmap <silent> <C-N>  <Plug>GoldenViewNext
+    nmap <silent> <C-P>  <Plug>GoldenViewPrevious
 
-    nnoremap <silent> <C-O> :<C-u>call zlib#window#split_nicely()<CR>
-    nnoremap <silent> <C-N> :<C-u>call zlib#window#next_window_or_tab()<CR>
-    nnoremap <silent> <C-P> :<C-u>call zlib#window#previous_window_or_tab()<CR>
+    nmap <silent> <F8>   <Plug>GoldenViewSwitchMain
+    nmap <silent> <S-F8> <Plug>GoldenViewSwitchToggle
+
+    nmap <silent> <C-L>  <Plug>GoldenViewSplit
 endif
 
 
 
-" ============================================================================
-" Helper Functions:                                                       [[[1
-" ============================================================================
 
 
-if g:goldenview__enable_at_startup == 1
-    GoldenViewToggleAutoResize
-endif
 
 
 
@@ -84,5 +165,5 @@ unlet s:save_cpo
 " ============================================================================
 " Modeline:                                                               [[[1
 " ============================================================================
-" vim: set ft=vim ts=4 sw=4 tw=78 fdm=syntax fmr=[[[,]]] fdl=1 :
+" vim: set ft=vim ts=4 sw=4 tw=78 fdm=marker fmr=[[[,]]] fdl=1 :
 
