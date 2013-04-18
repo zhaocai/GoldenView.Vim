@@ -1,0 +1,253 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Goldenview.vim</title>
+  <meta name="description" content="Always have a nice view for vim split windows">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Goldenview.vim</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Always have a nice view for vim split windows</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/zhaocai/GoldenView.Vim/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/zhaocai/GoldenView.Vim/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/zhaocai/GoldenView.Vim" class="code">View Goldenview.vim on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>Always have a nice view for vim split windows</h1>
+
+<pre><code>------------- - ----------------------------------------------------------
+Plugin        : GoldenView.vim
+Author        : Zhao Cai
+EMail         : caizhaoff@gmail.com
+URL           : https://github.com/zhaocai/GoldenView.vim
+Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
+Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
+------------- - ----------------------------------------------------------
+</code></pre>
+
+<p>The initial motive for <a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> comes from the frustration of using other vim plugins to autoresize split windows. The idea is deadly simple and very useful: <strong>resize the focused window to a proper size.</strong> However, in practice, many hiccups makes <strong>autoresizing</strong> not a smooth experience.  Below are a list of issues I am trying to solve:</p>
+
+<p>First and the most important one, autoresizing should play nicely with existing plugins like <code>tagbar</code>, <code>vimfiler</code>, <code>unite</code>, <code>VOoM</code>, <code>quickfix</code>, <code>undotree</code>, <code>gundo</code>, etc. These windows should manage there own window size.</p>
+
+<p>Second, autoresizing should take care of <strong>the other windows</strong> too. Resizing the focused window may cause the other windows become too small. When you have 4+ split windows, autoresizing may just make a mess out of it.</p>
+
+<p><img src="http://dl.dropboxusercontent.com/u/1897501/Screencasts/GoldenView.gif" alt="GoldView Screencast"></p>
+
+<h2>Features</h2>
+
+<p><a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> has preliminarily solved the issues described above. It also provides other features. Bascally, it does two things:</p>
+
+<h3>1. Autoresizing</h3>
+
+<p>First of all, it automatically resize the focused split window to a "golden" view based on <a href="http://en.wikipedia.org/wiki/Golden_ratio">golden ratio</a> and <code>textwidth</code>.</p>
+
+<h3>2. Tiled Windows Management</h3>
+
+<p>Second, it maps a single key (<code>&lt;C-L&gt;</code> by default) to nicely split windows to tiled windows. </p>
+
+<pre><code>-----------------------------------
+|              |        S1        |
+|              |===================
+|      V       |        S2        |
+|              |===================
+|              |        S3        |
+-----------------------------------
+</code></pre>
+
+<p>To get this view, just hit <code>&lt;C-L&gt;</code> 4 times. or, if you have a large monitor, </p>
+
+<pre><code>--------------------------------------------------
+|              |              |        S1        |
+|              |              |===================
+|      V1      |      V2      |        S2        |
+|              |              |===================
+|              |              |        S3        |
+--------------------------------------------------
+</code></pre>
+
+<p>To quickly switch between those windows, a few keys are mapped to </p>
+
+<ul>
+<li>Focuse to the main window (- the <strong>V</strong> pane above),</li>
+<li>Switch with the largest, smallest, etc. </li>
+<li>Jump to next and previous window</li>
+</ul><h2>Installation</h2>
+
+<p>Install <a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> is the <em>same as installing other vim plugins</em>. If experienced with vim, you can skim the example below and move to <a href="#quick-start">next section</a>. </p>
+
+<h3>
+<strong>Option A</strong> - With <a href="http://vim-scripts.org/vim/tools.html" title="Vim Plugin Manangers">Plugin Manager</a> ( <strong>recommanded</strong> )</h3>
+
+<p>If you use plugin managers like <em>Pathogen</em>, <em>vundle</em>, <em>neobundle</em>, <em>vim-addon-manager</em>, etc., just unarchive the zip file or clone the <a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> repo from <code>git://github.com/zhaocai/GoldenView.git</code> into your local plugin installation directory (most likely <code>~/.vim/bundle/</code>). Then add corresponding scripts in .vimrc for the bundle manager you are using.</p>
+
+<p><strong>Example</strong>:</p>
+
+<ul>
+<li>
+<em>neobundle</em>:</li>
+</ul><div class="highlight"><pre>    NeoBundle <span class="s1">'zhaocai/GoldenView.Vim'</span>
+</pre></div>
+
+<ul>
+<li>
+<em>vundle</em>:</li>
+</ul><div class="highlight"><pre>    Bundle <span class="s1">'zhaocai/GoldenView.Vim'</span>
+</pre></div>
+
+<ul>
+<li>
+<em>vim-addon-manager</em>:</li>
+</ul><div class="highlight"><pre>    <span class="k">call</span> vam#ActivateAddons<span class="p">(</span>[<span class="s1">'GoldenView.Vim'</span>]<span class="p">,</span> {<span class="s1">'auto_install'</span> : <span class="m">1</span>}<span class="p">)</span>
+</pre></div>
+
+<h3>
+<strong>Option B</strong> - Without <a href="http://vim-scripts.org/vim/tools.html" title="Vim Plugin Manangers">Plugin Manager</a>
+</h3>
+
+<p>Unarchive the zip file into a directory that is under <code>runtimepath</code> of your vim, <code>~/.vim</code> for example.</p>
+
+<h2>Quick Start</h2>
+
+<p><a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> should work out of the box without configuration. It should automatically start to resize focused window to <a href="http://en.wikipedia.org/wiki/Golden_ratio">golden ratio</a> based on <code>textwidth</code> and vim available size. You may start to play with it now.</p>
+
+<p>To get you started, a few default keymappings are list as below:</p>
+
+<div class="highlight"><pre><span class="c">" split to tiled windows</span>
+nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>C<span class="p">-</span>L<span class="p">&gt;</span>  <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewSplit
+
+<span class="c">" quickly switch current window with the main pane</span>
+<span class="c">" and toggle back</span>
+nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>F8<span class="p">&gt;</span>   <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewSwitchMain
+nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>S<span class="p">-</span>F8<span class="p">&gt;</span> <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewSwitchToggle
+
+<span class="c">" jump to next and previous window</span>
+nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>C<span class="p">-</span><span class="k">N</span><span class="p">&gt;</span>  <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewNext
+nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>C<span class="p">-</span><span class="k">P</span><span class="p">&gt;</span>  <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewPrevious
+
+</pre></div>
+
+<p>The meaning of those keys are self-explaining. A general workflow would be <code>&lt;Plug&gt;GoldenViewSplit</code> key to quickly and nicely split windows to the layout as below. Then you may open your files.</p>
+
+<pre><code>-----------------------------------
+|              |        S1        |
+|              |===================
+|      V       |        S2        |
+|              |===================
+|              |        S3        |
+-----------------------------------
+</code></pre>
+
+<p>To switch <code>S1</code> with <code>V</code>, in <code>S1</code> and hit <code>&lt;Plug&gt;GoldenViewSwitchMain</code>. To switch back, hit <code>&lt;Plug&gt;GoldenViewSwitchToggle</code> in either <code>V</code> or <code>S1</code></p>
+
+<h4>g:goldenview__enable_default_mapping</h4>
+
+<p>And, I konw every vimer has a different set of key mappings. </p>
+
+<p>If you you are (most likely) unhappy about some of the mappings, map you own keys as below: </p>
+
+<div class="highlight"><pre><span class="k">let</span> <span class="k">g</span>:goldenview__enable_default_mapping <span class="p">=</span> <span class="m">0</span>
+
+nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>MY_KEY<span class="p">&gt;</span> <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewSplit
+<span class="c">" ... and so on</span>
+
+</pre></div>
+
+<h4>g:goldenview__enable_at_startup</h4>
+
+<p>if you do not want to start autoresizing automatically, you can put <code>let g:goldenview__enable_at_startup = 0</code> in your vimrc.</p>
+
+<h2>More Usage - Commands and Mappings</h2>
+
+<ol>
+<li><p><code>ToggleGoldenViewAutoResize</code>, <code>DisableGoldenViewAutoResize</code>, <code>EnableGoldenViewAutoResize</code>: These commands toggle, enable, and disable GoldenView autoresizing.</p></li>
+<li><p><code>GoldenViewResize</code> : this command do manual resizing of focused window. 
+You can also map a key for this as below:</p></li>
+</ol><div class="highlight"><pre>nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>YOUR_KEY<span class="p">&gt;</span> <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewResize
+
+</pre></div>
+
+<ol>
+<li>
+<code>SwitchGoldenViewLargest</code>, <code>SwitchGoldenViewSmallest</code>: these commands do as it named. </li>
+</ol><p>You can also add mappings as below. ( no default keys for these mappings)</p>
+
+<div class="highlight"><pre>nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>YOUR_KEY<span class="p">&gt;</span> <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewSwitchWithLargest
+nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>YOUR_KEY<span class="p">&gt;</span> <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewSwitchWithSmallest
+
+</pre></div>
+
+<p>Other switch rules can be easily defined.</p>
+
+<h2>More Customized Configuartion and Implementation Details</h2>
+
+<blockquote>
+<p>todo</p>
+</blockquote>
+
+<h2>Issues:</h2>
+
+<p>If you have any issues, please post it to <a href="https://github.com/zhaocai/GoldenView.Vim/issues">https://github.com/zhaocai/GoldenView.Vim/issues</a> for discussion.</p>
+
+<h2>Contributors</h2>
+
+<h2>LICENSE:</h2>
+
+<p>Copyright (c) 2013 Zhao Cai <a href="mailto:caizhaoff@gmail.com">caizhaoff@gmail.com</a></p>
+
+<p>This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License along with
+this program. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/zhaocai" class="avatar"><img src="https://secure.gravatar.com/avatar/2b08807c72509d697419ba3e35c62637?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/zhaocai">zhaocai</a> maintains <a href="https://github.com/zhaocai/GoldenView.Vim">Goldenview.vim</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/zhaocai/GoldenView.Vim/tarball/master" class="tar">tar</a><a href="https://github.com/zhaocai/GoldenView.Vim/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
