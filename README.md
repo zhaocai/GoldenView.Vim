@@ -1,13 +1,13 @@
 # Always have a nice view for vim split windows
 
-    ------------- - ----------------------------------------------------------
+    ------------- - -----------------------------------------------
     Plugin        : GoldenView.vim
     Author        : Zhao Cai
     EMail         : caizhaoff@gmail.com
-    URL           : https://github.com/zhaocai/GoldenView.vim
+    URL           : http://zhaocai.github.io/GoldenView.Vim/
     Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
     Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
-    ------------- - ----------------------------------------------------------
+    ------------- - -----------------------------------------------
 
 
 
@@ -40,7 +40,7 @@ Second, it maps a single key (`<C-L>` by default) to nicely split windows to til
 |              |        S3        |
 -----------------------------------
 ```
-To get this view, just hit `<C-L>` 4 times. or, if you have a large monitor, 
+To get this view, just hit `<C-L>` 4 times. or, if you have a large monitor, you may get tiled windows below.
 
 ```
 --------------------------------------------------
