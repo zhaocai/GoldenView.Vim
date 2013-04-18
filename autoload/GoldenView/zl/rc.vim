@@ -39,7 +39,6 @@ function! GoldenView#zl#rc#init() abort "                                       
 endfunction
 
 
-
 function! GoldenView#zl#rc#load_guard(prefix, vim_version, GoldenView_zl_version,exprs,...)    "[[[2
     "--------- ------------------------------------------------
     " Desc    : gereric script load guard function
@@ -192,10 +191,7 @@ endfunction
 
 
 
-
-
-
-
+call GoldenView#zl#rc#init()
 
 " ============================================================================
 " Modeline:                                                               [[[1

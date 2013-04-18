@@ -13,12 +13,9 @@
 " ============================================================================
 " Load Guard:                                                             [[[1
 " ============================================================================
-try | if !GoldenView#zl#rc#load_guard(expand('<sfile>:t:r'), 700, 100, ['!&cp'])
-        finish
-    endif
-catch /^Vim\%((\a\+)\)\=:E117/ " E117: Unknown Function
-    throw 'GoldenView: zl.vim is required!'
-endtry
+if !GoldenView#zl#rc#load_guard(expand('<sfile>:t:r'), 700, 100, ['!&cp'])
+    finish
+endif
 
 let s:save_cpo = &cpo
 set cpo&vim

@@ -25,8 +25,6 @@ function! GoldenView#Init()
         return
     endif
 
-    call GoldenView#zl#rc#init()
-
     let s:goldenview__golden_ratio = 1.618
     lockvar s:goldenview__golden_ratio
 
@@ -79,7 +77,6 @@ function! GoldenView#EnableAutoResize()
 
     call GoldenView#Init()
 
-    " [TODO]( initialize the other window settings ) @zhaocai @start(2012-09-29 17:01)
     let active_profile = s:goldenview__profile[g:goldenview__active_profile]
     call s:set_focus_window(active_profile)
     call s:set_other_window(active_profile)
