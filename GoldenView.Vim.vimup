@@ -73,6 +73,9 @@ install_details: |
   http://zhaocai.github.io/GoldenView.Vim/
 
 versions:
+- '1.1.2': |
+   Improve documents, fix load sequence
+
 - '1.1.1': |
    Improve documents, fix zl library load
 
