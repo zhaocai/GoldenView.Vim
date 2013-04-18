@@ -11,7 +11,7 @@
 
 
 
-The initial motive for [GoldenView][GoldenView] comes from the frustration of using other vim plugins to autoresize split windows. The idea is deadly simple and very useful: **resize the focused window to a proper size.** However, in practice, many hiccups makes **autoresizing** not a smooth experience.  Below are a list of issues I am trying to solve:
+The initial motive for [GoldenView][GoldenView] comes from the frustration of using other vim plugins to autoresize split windows. The idea is deadly simple and very useful: **resize the focused window to a proper size.** However, in practice, many hiccups makes **autoresizing** not a smooth experience.  Below are a list of issues [GoldenView][GoldenView] attempts to solve:
 
 First and the most important one, autoresizing should play nicely with existing plugins like `tagbar`, `vimfiler`, `unite`, `VOoM`, `quickfix`, `undotree`, `gundo`, etc. These windows should manage there own window size.
 
@@ -32,30 +32,34 @@ First of all, it automatically resize the focused split window to a "golden" vie
 ### 2. Tiled Windows Management
 Second, it maps a single key (`<C-L>` by default) to nicely split windows to tiled windows. 
 ```
------------------------------------
-|              |        S1        |
-|              |===================
-|      V       |        S2        |
-|              |===================
-|              |        S3        |
------------------------------------
+----+--------------+------------+---+
+|   |              |            |   |
+| F |              |    S1      | T |
+| I |              +------------| A |
+| L |  MAIN PANE   |    S2      | G |
+| E |              +------------+ B |
+| R |              |    S3      | A |
+|   |              |            |   |
++---+--------------+------------+---+
 ```
 To get this view, just hit `<C-L>` 4 times. or, if you have a large monitor, you may get tiled windows below.
 
 ```
---------------------------------------------------
-|              |              |        S1        |
-|              |              |===================
-|      V1      |      V2      |        S2        |
-|              |              |===================
-|              |              |        S3        |
---------------------------------------------------
+----+--------------+--------------+------------+---+
+|   |              |              |            |   |
+| F |              |              |    S1      | T |
+| I |              |              +------------| A |
+| L |  MAIN PANE   |      M2      |    S2      | G |
+| E |              |              +------------+ B |
+| R |              |              |    S3      | A |
+|   |              |              |            |   |
++---+--------------+--------------+------------+---+
 ```
 
 
 To quickly switch between those windows, a few keys are mapped to 
 
-- Focuse to the main window (- the **V** pane above),
+- Focuse to the main window
 - Switch with the largest, smallest, etc. 
 - Jump to next and previous window
 
@@ -121,16 +125,19 @@ nmap <silent> <C-P>  <Plug>GoldenViewPrevious
 The meaning of those keys are self-explaining. A general workflow would be `<Plug>GoldenViewSplit` key to quickly and nicely split windows to the layout as below. Then you may open your files.
 
 ```
------------------------------------
-|              |        S1        |
-|              |===================
-|      V       |        S2        |
-|              |===================
-|              |        S3        |
------------------------------------
+----+--------------+------------+---+
+|   |              |            |   |
+| F |              |    S1      | T |
+| I |              +------------| A |
+| L |  MAIN PANE   |    S2      | G |
+| E |              +------------+ B |
+| R |              |    S3      | A |
+|   |              |            |   |
++---+--------------+------------+---+
+
 ```
 
-To switch `S1` with `V`, in `S1` and hit `<Plug>GoldenViewSwitchMain`. To switch back, hit `<Plug>GoldenViewSwitchToggle` in either `V` or `S1`
+To switch `S1` with `MAIN PANE`, in `S1` and hit `<Plug>GoldenViewSwitchMain`. To switch back, hit `<Plug>GoldenViewSwitchToggle` in either `MAIN PAIN` or `S1`
 
 #### g:goldenview__enable_default_mapping
 

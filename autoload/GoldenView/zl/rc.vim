@@ -91,8 +91,8 @@ function! GoldenView#zl#rc#load_guard(prefix, vim_version, GoldenView_zl_version
                     \ . string(a:vim_version * s:VERSION_FACTOR)
         return 0
     elseif a:GoldenView_zl_version > 0
-        if !exists("g:loaded_zl")
-            echoerr 'zl is required but not loaded'
+        if !exists("g:loaded_GoldenView_zl")
+            echoerr 'zl.vim is required but not loaded'
             return 0
         endif
 
