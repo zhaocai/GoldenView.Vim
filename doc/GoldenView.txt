@@ -11,13 +11,12 @@ CONTENTS                                                   *goldenview-contents*
     1. Option A - With Plugin Manager [4] ( recommanded )
     2. Option B - Without Plugin Manager [4]
   4. Quick Start                                        |goldenview-quick-start|
-  5. Interface and Details                    |goldenview-interface-and-details|
-    1. Options                                              |goldenview-options|
-      1. |g:goldenview__enable_at_startup|
-    2. Commands                                            |goldenview-commands|
-    3. Key Mappings                                    |goldenview-key-mappings|
-  6. Contributors                                      |goldenview-contributors|
-  7. LICENSE:                                              |goldenview-license:|
+      1. |g:goldenview__enable_default_mapping|
+      2. |g:goldenview__enable_at_startup|
+  5. More Usage - Commands and Mappings
+  6. More Customized Configuartion and Implementation Details
+  7. Contributors                                      |goldenview-contributors|
+  8. LICENSE:                                              |goldenview-license:|
 
 ===============================================================================
 INTRODUCTION                                           *goldenview-introduction*
@@ -156,19 +155,18 @@ as below. Then you may open your files.
 To switch 'S1' with 'V', in 'S1' and hit '<Plug>GoldenViewSwitchMain'. To
 switch back, hit '<Plug>GoldenViewSwitchToggle' in either 'V' or 'S1'
 
-And, if you you are (most likely) unhappy about some of the mappings, map you
-own keys as below:
+-------------------------------------------------------------------------------
+*g:goldenview__enable_default_mapping*
+
+And, I konw every vimer has a different set of key mappings.
+
+If you you are (most likely) unhappy about some of the mappings, map you own
+keys as below:
 >
     let g:goldenview__enable_default_mapping = 0
     
     nmap <silent> <MY_KEY> <Plug>GoldenViewSplit
     " ... and so on
-
-===============================================================================
-INTERFACE AND DETAILS                         *goldenview-interface-and-details*
-
--------------------------------------------------------------------------------
-OPTIONS                                                     *goldenview-options*
 
 -------------------------------------------------------------------------------
 *g:goldenview__enable_at_startup*
@@ -176,11 +174,31 @@ OPTIONS                                                     *goldenview-options*
 if you do not want to start autoresizing automatically, you can put 'let
 g:goldenview__enable_at_startup = 0' in your vimrc.
 
--------------------------------------------------------------------------------
-COMMANDS                                                   *goldenview-commands*
+===============================================================================
+MORE USAGE - COMMANDS AND MAPPINGS
 
--------------------------------------------------------------------------------
-KEY MAPPINGS                                           *goldenview-key-mappings*
+- 'ToggleGoldenViewAutoResize', 'DisableGoldenViewAutoResize', 'EnableGoldenViewAutoResize':
+   These commands toggle, enable, and disable GoldenView autoresizing.
+
+- 'GoldenViewResize' : this command do manual resizing of focused window. You
+   can also map a key for this as below:
+>
+    nmap <silent> <YOUR_KEY> <Plug>GoldenViewResize
+
+- 'SwitchGoldenViewLargest', 'SwitchGoldenViewSmallest': these commands do as
+   it named.
+
+You can also add mappings as below. ( no default keys for these mappings)
+```vim nmap GoldenViewSwitchWithLargest nmap GoldenViewSwitchWithSmallest
+
+```
+
+Other switch rules can be easily defined.
+
+===============================================================================
+MORE CUSTOMIZED CONFIGUARTION AND IMPLEMENTATION DETAILS
+
+todo
 
 ===============================================================================
 CONTRIBUTORS                                           *goldenview-contributors*

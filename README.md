@@ -133,9 +133,11 @@ The meaning of those keys are self-explaining. A general workflow would be `<Plu
 
 To switch `S1` with `V`, in `S1` and hit `<Plug>GoldenViewSwitchMain`. To switch back, hit `<Plug>GoldenViewSwitchToggle` in either `V` or `S1`
 
+#### g:goldenview__enable_default_mapping
 
+And, I konw every vimer has a different set of key mappings. 
 
-And, if you you are (most likely) unhappy about some of the mappings, map you own keys as below: 
+If you you are (most likely) unhappy about some of the mappings, map you own keys as below: 
 
 ```vim
 let g:goldenview__enable_default_mapping = 0
@@ -145,19 +147,39 @@ nmap <silent> <MY_KEY> <Plug>GoldenViewSplit
 
 ```
 
-
-## Interface and Details
-
-### Options 
-
 #### g:goldenview__enable_at_startup
 if you do not want to start autoresizing automatically, you can put `let g:goldenview__enable_at_startup = 0` in your vimrc.
 
 
+## More Usage - Commands and Mappings
 
 
-### Commands
-### Key Mappings
+1. `ToggleGoldenViewAutoResize`, `DisableGoldenViewAutoResize`, `EnableGoldenViewAutoResize`: These commands toggle, enable, and disable GoldenView autoresizing.
+
+2. `GoldenViewResize` : this command do manual resizing of focused window. 
+You can also map a key for this as below:
+
+```vim 
+nmap <silent> <YOUR_KEY> <Plug>GoldenViewResize
+
+```
+
+3. `SwitchGoldenViewLargest`, `SwitchGoldenViewSmallest`: these commands do as it named. 
+
+You can also add mappings as below. ( no default keys for these mappings)
+```vim 
+nmap <silent> <YOUR_KEY> <Plug>GoldenViewSwitchWithLargest
+nmap <silent> <YOUR_KEY> <Plug>GoldenViewSwitchWithSmallest
+
+```
+
+Other switch rules can be easily defined.
+
+
+## More Customized Configuartion and Implementation Details  
+
+> todo
+
  
 
 ## Contributors
