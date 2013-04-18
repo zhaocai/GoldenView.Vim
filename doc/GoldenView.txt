@@ -15,20 +15,21 @@ CONTENTS                                                   *goldenview-contents*
       2. |g:goldenview__enable_at_startup|
   5. More Usage - Commands and Mappings
   6. More Customized Configuartion and Implementation Details
-  7. Contributors                                      |goldenview-contributors|
-  8. LICENSE:                                              |goldenview-license:|
+  7. Issues:                                                |goldenview-issues:|
+  8. Contributors                                      |goldenview-contributors|
+  9. LICENSE:                                              |goldenview-license:|
 
 ===============================================================================
 INTRODUCTION                                           *goldenview-introduction*
 >
-    ------------- - ----------------------------------------------------------
+    ------------- - -----------------------------------------------
     Plugin        : GoldenView.vim
     Author        : Zhao Cai
     EMail         : caizhaoff@gmail.com
-    URL           : https://github.com/zhaocai/GoldenView.vim
+    URL           : http://zhaocai.github.io/GoldenView.Vim/
     Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
     Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
-    ------------- - ----------------------------------------------------------
+    ------------- - -----------------------------------------------
 
 The initial motive for GoldenView [1] comes from the frustration of using
 other vim plugins to autoresize split windows. The idea is deadly simple and
@@ -66,7 +67,8 @@ view based on golden ratio [3] and 'textwidth'.
 Second, it maps a single key ('<C-L>' by default) to nicely split windows to
 tiled windows. '----------------------------------- | | S1 | | |===================
 | V | S2 | | |=================== | | S3 | -----------------------------------' To get
-this view, just hit '<C-L>' 4 times. or, if you have a large monitor,
+this view, just hit '<C-L>' 4 times. or, if you have a large monitor, you may
+get tiled windows below.
 >
     --------------------------------------------------
     |              |              |        S1        |
@@ -124,19 +126,19 @@ QUICK START                                             *goldenview-quick-start*
 
 GoldenView [1] should work out of the box without configuration. It should
 automatically start to resize focused window to golden ratio [3] based on
-'textwidth' and vim available size.
+'textwidth' and vim available size. You may start to play with it now.
 
-To get you started, a few default keymappings are list as below:
+To get you started, a few default keys are mapped as below:
 >
-    " split to tiled windows
+    " 1. split to tiled windows
     nmap <silent> <C-L>  <Plug>GoldenViewSplit
     
-    " quickly switch current window with the main pane
+    " 2. quickly switch current window with the main pane
     " and toggle back
     nmap <silent> <F8>   <Plug>GoldenViewSwitchMain
     nmap <silent> <S-F8> <Plug>GoldenViewSwitchToggle
     
-    " jump to next and previous window
+    " 3. jump to next and previous window
     nmap <silent> <C-N>  <Plug>GoldenViewNext
     nmap <silent> <C-P>  <Plug>GoldenViewPrevious
 
@@ -158,10 +160,8 @@ switch back, hit '<Plug>GoldenViewSwitchToggle' in either 'V' or 'S1'
 -------------------------------------------------------------------------------
 *g:goldenview__enable_default_mapping*
 
-And, I konw every vimer has a different set of key mappings.
-
-If you you are (most likely) unhappy about some of the mappings, map you own
-keys as below:
+Every experienced vim user has a different set of key mappings. If you you are
+(most likely) unhappy about some of the mappings, map you own keys as below:
 >
     let g:goldenview__enable_default_mapping = 0
     
@@ -199,6 +199,12 @@ Other switch rules can be easily defined.
 MORE CUSTOMIZED CONFIGUARTION AND IMPLEMENTATION DETAILS
 
 todo
+
+===============================================================================
+ISSUES:                                                     *goldenview-issues:*
+
+If you have any issues, please post it to https://github.com/zhaocai/GoldenView.Vim/issues
+for discussion.
 
 ===============================================================================
 CONTRIBUTORS                                           *goldenview-contributors*

@@ -272,7 +272,6 @@ function! s:set_focus_window(profile,...)
     endtry
 endfunction
 
-" [TODO]( should not check &winfixheight here ) @zhaocai @start(2012-09-29 16:57)
 function! s:set_other_window(profile,...)
     let opts = {
              \ 'force' : 0
@@ -283,8 +282,6 @@ function! s:set_other_window(profile,...)
 
     try
         if !&winfixwidth || opts['force']
-            " silent! call tlog#Log("a:profile: " . PP(a:profile))
-            " silent! call tlog#Log("winminwidth: " . PP(s:eval(a:profile, a:profile['other_window_winwidth'])))
             let &winminwidth  =
             \ s:eval(a:profile, a:profile['other_window_winwidth'])
         endif

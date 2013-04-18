@@ -101,18 +101,18 @@ Unarchive the zip file into a directory that is under `runtimepath` of your vim,
 ## Quick Start
 [GoldenView][GoldenView] should work out of the box without configuration. It should automatically start to resize focused window to [golden ratio][golden-ratio-wikipedia] based on `textwidth` and vim available size. You may start to play with it now.
 
-To get you started, a few default keymappings are list as below:
+To get you started, a few default keys are mapped as below:
 
 ```vim 
-" split to tiled windows
+" 1. split to tiled windows
 nmap <silent> <C-L>  <Plug>GoldenViewSplit
 
-" quickly switch current window with the main pane
+" 2. quickly switch current window with the main pane
 " and toggle back
 nmap <silent> <F8>   <Plug>GoldenViewSwitchMain
 nmap <silent> <S-F8> <Plug>GoldenViewSwitchToggle
 
-" jump to next and previous window
+" 3. jump to next and previous window
 nmap <silent> <C-N>  <Plug>GoldenViewNext
 nmap <silent> <C-P>  <Plug>GoldenViewPrevious
 
@@ -134,9 +134,7 @@ To switch `S1` with `V`, in `S1` and hit `<Plug>GoldenViewSwitchMain`. To switch
 
 #### g:goldenview__enable_default_mapping
 
-And, I konw every vimer has a different set of key mappings. 
-
-If you you are (most likely) unhappy about some of the mappings, map you own keys as below: 
+Every experienced vim user has a different set of key mappings. If you you are (most likely) unhappy about some of the mappings, map you own keys as below: 
 
 ```vim
 let g:goldenview__enable_default_mapping = 0
@@ -151,7 +149,6 @@ if you do not want to start autoresizing automatically, you can put `let g:golde
 
 
 ## More Usage - Commands and Mappings
-
 
 1. `ToggleGoldenViewAutoResize`, `DisableGoldenViewAutoResize`, `EnableGoldenViewAutoResize`: These commands toggle, enable, and disable GoldenView autoresizing.
 
