@@ -73,6 +73,9 @@ install_details: |
   http://zhaocai.github.io/GoldenView.Vim/
 
 versions:
+- '1.2.0': |
+   add restore rule for some special buffers, which solves all the hiccups I could identify so far.
+
 - '1.1.2': |
    Improve documents, fix load sequence
 

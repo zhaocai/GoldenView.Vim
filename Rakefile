@@ -24,8 +24,7 @@ end
 
 desc "zip for distribution"
 task :zip => [] do
-  sh "zip -r #{project_name}-#{version}.zip",
-     "autoload plugin doc README.md", "--exclude \*.DS_Store "
+  sh "zip -r #{project_name}-#{version}.zip autoload plugin doc README.md --exclude='*/.DS_Store'"
 end
 
 CLEAN.include('*.zip')
