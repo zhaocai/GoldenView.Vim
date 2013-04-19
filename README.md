@@ -35,32 +35,32 @@ First of all, it automatically resize the focused split window to a "golden" vie
 Second, it maps a single key (`<C-L>` by default) to nicely split windows to tiled windows. 
 
 ```
-----+--------------+------------+---+
-|   |              |            |   |
-| F |              |    S1      | T |
-| I |              +------------| A |
-| L |  MAIN PANE   |    S2      | G |
-| E |              +------------+ B |
-| R |              |    S3      | A |
-|   |              |            | R |
-|   |              |            |   |
-+---+--------------+------------+---+
+----+----------------+------------+---+
+|   |                |            |   |
+| F |                |    S1      | T |
+| I |                +------------| A |
+| L |                |    S2      | G |
+| E |   MAIN PANE    +------------+ B |
+| R |                |    S3      | A |
+|   |                |            | R |
+|   |                |            |   |
++---+----------------+------------+---+
 ```
 
 To get this view, just hit `<C-L>` 4 times. or, if you have a large monitor, you may get tiled windows below.
 
 
 ```
-----+--------------+--------------+------------+---+
-|   |              |              |            |   |
-| F |              |              |    S1      | T |
-| I |              |              +------------| A |
-| L |  MAIN PANE   |      M2      |    S2      | G |
-| E |              |              +------------+ B |
-| R |              |              |    S3      | A |
-|   |              |              |            | B |
-|   |              |              |            |   |
-+---+--------------+--------------+------------+---+
+----+---------------+--------------+------------+---+
+|   |               |              |            |   |
+| F |               |              |    S1      | T |
+| I |               |              +------------| A |
+| L |               |      M2      |    S2      | G |
+| E |   MAIN PANE   |              +------------+ B |
+| R |               |              |    S3      | A |
+|   |               |              |            | B |
+|   |               |              |            |   |
++---+---------------+--------------+------------+---+
 ```
 
 
@@ -132,16 +132,16 @@ nmap <silent> <C-P>  <Plug>GoldenViewPrevious
 The meaning of those keys are self-explaining. A general workflow would be `<Plug>GoldenViewSplit` key to quickly and nicely split windows to the layout as below. Then you may open your files.
 
 ```
-----+--------------+------------+---+
-|   |              |            |   |
-| F |              |    S1      | T |
-| I |              +------------| A |
-| L |  MAIN PANE   |    S2      | G |
-| E |              +------------+ B |
-| R |              |    S3      | A |
-|   |              |            | R |
-|   |              |            |   |
-+---+--------------+------------+---+
+----+----------------+------------+---+
+|   |                |            |   |
+| F |                |    S1      | T |
+| I |                +------------| A |
+| L |                |    S2      | G |
+| E |   MAIN PANE    +------------+ B |
+| R |                |    S3      | A |
+|   |                |            | R |
+|   |                |            |   |
++---+----------------+------------+---+
 
 ```
 
