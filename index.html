@@ -49,11 +49,11 @@ Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 ------------- - -----------------------------------------------
 </code></pre>
 
-<p>The initial motive for <a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> comes from the frustration of using other vim plugins to autoresize split windows. The idea is deadly simple and very useful: <strong>resize the focused window to a proper size.</strong> However, in practice, many hiccups makes <strong>autoresizing</strong> not a smooth experience.  Below are a list of issues <a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> attempts to solve:</p>
+<p>The initial motive for <a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> comes from the frustration of using other vim plugins to auto-resize split windows. The idea is deadly simple and very useful: <strong>resize the focused window to a proper size.</strong> However, in practice, many hiccups makes <strong>auto-resizing</strong> not a smooth experience.  Below are a list of issues <a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> attempts to solve:</p>
 
-<p>First and the most important one, autoresizing should play nicely with existing plugins like <code>tagbar</code>, <code>vimfiler</code>, <code>unite</code>, <code>VOoM</code>, <code>quickfix</code>, <code>undotree</code>, <code>gundo</code>, etc. These windows should manage there own window size.</p>
+<p>First and the most important one, auto-resizing should play nicely with existing plugins like <code>tagbar</code>, <code>vimfiler</code>, <code>unite</code>, <code>VOoM</code>, <code>quickfix</code>, <code>undotree</code>, <code>gundo</code>, etc. These windows should manage there own window size.</p>
 
-<p>Second, autoresizing should take care of <strong>the other windows</strong> too. Resizing the focused window may cause the other windows become too small. When you have 4+ split windows, autoresizing may just make a mess out of it.</p>
+<p>Second, auto-resizing should take care of <strong>the other windows</strong> too. Resizing the focused window may cause the other windows become too small. When you have 4+ split windows, auto-resizing may just make a mess out of it.</p>
 
 <p><img src="http://dl.dropboxusercontent.com/u/1897501/Screencasts/GoldenView.gif" alt="GoldView Screencast"></p>
 
@@ -61,7 +61,7 @@ Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 
 <p><a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> has preliminarily solved the issues described above. It also provides other features. Bascally, it does two things:</p>
 
-<h3>1. Autoresizing</h3>
+<h3>1. AutoResizing</h3>
 
 <p>First of all, it automatically resize the focused split window to a "golden" view based on <a href="http://en.wikipedia.org/wiki/Golden_ratio">golden ratio</a> and <code>textwidth</code>.</p>
 
@@ -183,22 +183,35 @@ nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt
 
 <h4>g:goldenview__enable_at_startup</h4>
 
-<p>if you do not want to start autoresizing automatically, you can put <code>let g:goldenview__enable_at_startup = 0</code> in your vimrc.</p>
+<p>if you do not want to start auto-resizing automatically, you can put <code>let g:goldenview__enable_at_startup = 0</code> in your vimrc.</p>
 
 <h2>More Commands and Mappings</h2>
 
-<ol>
-<li><p><code>ToggleGoldenViewAutoResize</code>, <code>DisableGoldenViewAutoResize</code>, <code>EnableGoldenViewAutoResize</code>: These commands toggle, enable, and disable GoldenView autoresizing.</p></li>
-<li><p><code>GoldenViewResize</code> : this command do manual resizing of focused window. 
-You can also map a key for this as below:</p></li>
-</ol><div class="highlight"><pre>nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>YOUR_KEY<span class="p">&gt;</span> <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewResize
+<h3><code>:ToggleGoldenViewAutoResize</code></h3>
+
+<h3><code>:DisableGoldenViewAutoResize</code></h3>
+
+<h3><code>:EnableGoldenViewAutoResize</code></h3>
+
+<p>These commands toggle, enable, and disable GoldenView auto-resizing.</p>
+
+<h3><code>:GoldenViewResize</code></h3>
+
+<p>this command do manual resizing of focused window. </p>
+
+<p>You can also map a key for this as below:</p>
+
+<div class="highlight"><pre>nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>YOUR_KEY<span class="p">&gt;</span> <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewResize
 
 </pre></div>
 
-<ol>
-<li>
-<code>SwitchGoldenViewLargest</code>, <code>SwitchGoldenViewSmallest</code>: these commands do as it named. </li>
-</ol><p>You can also add mappings as below. ( no default keys for these mappings)</p>
+<h3><code>:SwitchGoldenViewLargest</code></h3>
+
+<h3><code>:SwitchGoldenViewSmallest</code></h3>
+
+<p>these commands do as it named. </p>
+
+<p>You can also add mappings as below. ( no default keys for these mappings)</p>
 
 <div class="highlight"><pre>nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>YOUR_KEY<span class="p">&gt;</span> <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewSwitchWithLargest
 nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt;</span> <span class="p">&lt;</span>YOUR_KEY<span class="p">&gt;</span> <span class="p">&lt;</span>Plug<span class="p">&gt;</span>GoldenViewSwitchWithSmallest
@@ -211,12 +224,15 @@ nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt
 
 <p><a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> defines two rules:</p>
 
-<ul>
-<li>
-<code>g:goldenview__ignore_urule</code> is to "ignore"  - allow those special buffers to manange their own window size. </li>
-<li>
-<code>g:goldenview__restore_urule</code> if to "restore" - restore window size of some of special buffers.</li>
-</ul><p>The <code>urule</code> (user rules) are like this, which will be normalize at runtime for faster processing.</p>
+<h3><code>g:goldenview__ignore_urule</code></h3>
+
+<p>is to "ignore"  - allow those special buffers to manage their own window size. </p>
+
+<h3><code>g:goldenview__restore_urule</code></h3>
+
+<p>is to "restore" - restore window size of some of special buffers.</p>
+
+<p>The <code>urule</code> (user rules) are like this, which will be normalize at runtime for faster processing.</p>
 
 <div class="highlight"><pre>    \{
     \   <span class="s1">'filetype'</span> : [
@@ -243,12 +259,19 @@ nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt
 
 <p><a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> defines two profile:</p>
 
-<ul>
-<li>
-<code>g:goldenview__active_profile</code> defines the functions and preferences to auto resize windows.</li>
-<li>
-<code>g:goldenview__reset_profile</code> defines reset preferences to restore everything to default.</li>
-</ul><h2>Troubleshooting:</h2>
+<h3><code>g:goldenview__active_profile</code></h3>
+
+<p>defines the functions and preferences to auto resize windows.</p>
+
+<h3><code>g:goldenview__reset_profile</code></h3>
+
+<p>defines reset preferences to restore everything to default.</p>
+
+<p><code>function GoldenView#ExtendProfile()</code> is provided to customize preferences.</p>
+
+<p>For more details, please read the source code! :)</p>
+
+<h2>Troubleshooting:</h2>
 
 <h3>Please do not resize me!</h3>
 
@@ -271,7 +294,7 @@ nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt
 
 <h2>LICENSE:</h2>
 
-<p>Copyright (c) 2013 Zhao Cai <a href="mailto:caizhaoff@gmail.com">caizhaoff@gmail.com</a></p>
+<p>Copyright (c) 2013 Zhao Cai &lt;<a href="mailto:caizhaoff@gmail.com">caizhaoff@gmail.com</a>&gt;</p>
 
 <p>This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
