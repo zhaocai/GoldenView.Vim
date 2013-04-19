@@ -54,6 +54,12 @@ function! GoldenView#Init()
     \     'logic' : 'or',
     \   }
     \ )
+
+    let s:goldenview__restore_nrule = GoldenView#zl#rule#norm(
+    \   g:goldenview__restore_urule, {
+    \     'logic' : 'or',
+    \   }
+    \ )
     let g:goldenview__initialized = 1
 endfunction
 
@@ -83,10 +89,13 @@ function! GoldenView#EnableAutoResize()
 
     augroup GoldenView
         au!
+        " Enter
         autocmd VimResized  * call GoldenView#Resize({'event' : 'VimResized'})
         autocmd BufWinEnter * call GoldenView#Resize({'event' : 'BufWinEnter'})
         autocmd WinEnter    * call GoldenView#Resize({'event' : 'WinEnter'})
-        autocmd WinLeave    * call GoldenView#Resize({'event' : 'WinLeave'})
+
+        " Leave
+        autocmd WinLeave    * call GoldenView#WinLeave()
     augroup END
     let s:goldenview__auto_resize = 1
 
@@ -99,6 +108,33 @@ function! GoldenView#DisableAutoResize()
 
     let s:goldenview__auto_resize = 0
 endfunction
+
+function! GoldenView#WinLeave(...)
+
+"    exec GoldenView#zl#vim#context() | call GoldenView#Trace('WinLeave', a:000)
+
+    " Do nothing if there is no split window
+    if winnr('$') < 2
+        return
+    endif
+
+    if GoldenView#IsIgnore()
+        " Record the last size of ignored windows. Restore there sizes if affected
+        " by GoldenView.
+
+        " For new split, the size does not count, which is highly possible
+        " to be resized later. Should use the size with WinLeave event.
+        "
+        call GoldenView#initialize_tab_variable()
+        let t:goldenview['bufs'][bufnr('%')] = {
+        \  'winwidth'  : winwidth(0)  ,
+        \  'winheight' : winheight(0) ,
+        \ }
+        let t:goldenview['cmdheight'] = &cmdheight
+    end
+endfunction
+
+
 
 function! GoldenView#Resize(...)
     "--------- ------------------------------------------------
@@ -116,8 +152,16 @@ function! GoldenView#Resize(...)
     "       1. WinEnter (&ft inherited from last buffer)
     "       2. BufWinEnter (&ft == '')
     "       3. BufWinEnter (&ft == 'qf', set winfixheight)
+    "     - `:split`
+    "       1. WinLeave current window
+    "       2. WinEnter new split window with current buffer
+    "       3. `split` return, user script may change the buffer
+    "          type, width, etc.
+    "
     "
     "--------- ------------------------------------------------
+
+"    exec GoldenView#zl#vim#context() | call GoldenView#Trace('GoldenView Resize', a:000)
 
     if &lazyredraw
         return
@@ -128,12 +172,10 @@ function! GoldenView#Resize(...)
         call extend(opts, a:1)
     endif
 
-    let event = get(opts, 'event', '')
-
     let winnr_diff = s:winnr_diff()
     if winnr_diff > 0
         " New Split Window:
-        " silent! call tlog#Log("GoldenView#Resize: winnr plus " . PP(extend(a:1, GoldenView#Info())))
+"        exec GoldenView#zl#vim#context() | call GoldenView#Trace('+++ winnr +++', a:000)
         return
     elseif winnr_diff < 0
         " Remove Split Window:
@@ -142,16 +184,16 @@ function! GoldenView#Resize(...)
         set lazyredraw
         let current_bufnr = bufnr('%')
 
-        " redraw ignored window to its original size
+        " restore ignored window to its original size
         for nr in GoldenView#zl#list#uniq(tabpagebuflist())
             let buf_saved = get(t:goldenview['bufs'], nr, {})
             if ! empty(buf_saved)
                 silent noautocmd exec bufwinnr(nr) 'wincmd w'
 
-                if GoldenView#IsIgnore()
+                if GoldenView#IsRestore()
                     silent exec 'vertical resize ' . buf_saved['winwidth']
                     silent exec 'resize ' . buf_saved['winheight']
-                    " silent! call tlog#Log("GoldenView#Resize: bufs saved " . bufname(nr) . " : " . PP(buf_saved))
+"                    exec GoldenView#zl#vim#context() | call GoldenView#Trace('restore buffer:'. nr, a:000)
                 endif
             endif
         endfor
@@ -165,45 +207,41 @@ function! GoldenView#Resize(...)
         redraw
         let &lazyredraw = saved_lazyredraw
 
-        " silent! call tlog#Log("GoldenView#Resize: winnr minus " . PP(extend(a:1, GoldenView#Info())))
+"        exec GoldenView#zl#vim#context() | call GoldenView#Trace('--- winnr ---', a:000)
         return
     endif
-
-    " silent! call tlog#Log("GoldenView#Resize: enter " . PP(extend(a:1, GoldenView#Info())))
 
     if GoldenView#IsIgnore()
-        " 1. Do nothing if there is no split window
-        " 2. For new split, the size does not count. Usually it will be
-        "    resized later. should use the size with WinLeave event.
-        "
-        if winnr('$') > 1 && winnr_diff == 0 && event == 'WinLeave'
-            call GoldenView#initialize_tab_variable()
-            let t:goldenview['bufs'][bufnr('%')] = {
-            \  'winwidth'  : winwidth(0)  , 
-            \  'winheight' : winheight(0) , 
-            \ } 
-            let t:goldenview['cmdheight'] = &cmdheight
-            " silent! call tlog#Log("GoldenView#Resize: ignore " . PP(extend(a:1, GoldenView#Info())))
-        end
+
+"        exec GoldenView#zl#vim#context() | call GoldenView#Trace('Ignored', a:000)
+
         return
     endif
 
-    if event == 'WinLeave'
+    " Do nothing if there is no split window
+    if winnr('$') < 2
         return
     endif
 
     let active_profile = s:goldenview__profile[g:goldenview__active_profile]
     call s:set_focus_window(active_profile)
-    " silent! call tlog#Log("GoldenView#Resize: set focus " . PP(extend(a:1, GoldenView#Info())))
+"    exec GoldenView#zl#vim#context() | call GoldenView#Trace('Set Focuse', a:000)
+
+
 
     " reset focus windows minimal size
     let &winheight = &winminheight
     let &winwidth  = &winminwidth
-    " silent! call tlog#Log("GoldenView#Resize: reset focus " . PP(extend(a:1, GoldenView#Info())))
+
+"    exec GoldenView#zl#vim#context() | call GoldenView#Trace('Reset Focus', a:000)
 endfunction
 
 function! GoldenView#IsIgnore()
     return GoldenView#zl#rule#is_true(s:goldenview__ignore_nrule)
+endfunction
+
+function! GoldenView#IsRestore()
+    return GoldenView#zl#rule#is_true(s:goldenview__restore_nrule)
 endfunction
 
 
@@ -296,6 +334,16 @@ endfunction
 
 
 " ============================================================================
+" Split:                                                                  [[[1
+" ============================================================================
+function! GoldenView#Split()
+    call GoldenView#zl#window#split_nicely()
+    enew
+endfunction
+
+
+
+" ============================================================================
 " Switch:                                                                 [[[1
 " ============================================================================
 function! GoldenView#SwitchMain(...)
@@ -325,15 +373,15 @@ function! GoldenView#SwitchMain(...)
         endif
     endfor
 
-    if ! switched
-        silent noautocmd exec current_winnr 'wincmd w'
-    endif
-
     redraw
     let &lazyredraw = saved_lazyredraw
+
+    if switched
+        call GoldenView#Resize({'event' : 'WinEnter'})
+    else
+        silent noautocmd exec current_winnr 'wincmd w'
+    endif
 endfunction
-
-
 
 " ============================================================================
 " Helper Functions:                                                       [[[1
@@ -355,9 +403,9 @@ endfunction
 function! GoldenView#initialize_tab_variable()
     if !exists('t:goldenview')
         let t:goldenview = {
-        \ 'nrwin'     : winnr('$') , 
-        \ 'cmdheight' : &cmdheight , 
-        \ 'bufs'      : {} , 
+        \ 'nrwin'     : winnr('$') ,
+        \ 'cmdheight' : &cmdheight ,
+        \ 'bufs'      : {} ,
         \ }
     endif
 endfunction
@@ -381,6 +429,11 @@ endfunction
 " ============================================================================
 " Debug:                                                                  [[[1
 " ============================================================================
+finish " enable as demand
+
+
+
+
 function! GoldenView#Info()
     return {
     \ 'buffer' : {
@@ -390,8 +443,11 @@ function! GoldenView#Info()
     \   'winwidth'  : winwidth(0)  ,
     \   'winheight' : winheight(0) ,
     \ },
+    \ 'goldenview'  : t:goldenview,
     \ 'setting' : {
-    \   'lazyredraw'   : &lazyredraw  ,
+    \   'win_count'    : winnr('$')    ,
+    \   'lazyredraw'   : &lazyredraw   ,
+    \   'cmdheight'    : &cmdheight    ,
     \   'winfixwidth'  : &winfixwidth  ,
     \   'winfixheight' : &winfixheight ,
     \   'winwidth'     : &winwidth     ,
@@ -402,8 +458,46 @@ function! GoldenView#Info()
     \}
 endfunction
 
-function! GoldenView#Trace(message, ev)
+ruby << __RUBY__
+require "logger"
+require "fileutils"
+require "awesome_print"
+def is_linux?
+RUBY_PLATFORM.downcase.include?("linux")
+  end
+
+def is_windows?
+  RUBY_PLATFORM.downcase.include?("mswin")
+end
+
+def is_mac?
+  RUBY_PLATFORM.downcase.include?("darwin")
+end
+
+if is_mac?
+  logfile = File.expand_path('~/Library/Logs/vim/goldenview.log')
+else
+  logfile = File.expand_path('/var/log/vim/goldenview.log')
+end
+
+FileUtils.mkdir_p File.dirname(logfile)
+
+log = File.open(logfile, File::WRONLY | File::APPEND | File::CREAT)
+$logger = Logger.new(log, 'weekly')
+__RUBY__
+
+
+"function! GoldenView#Trace(...)
+    call GoldenView#initialize_tab_variable()
+    let info            = GoldenView#Info()
+    let info['context'] = g:GoldenView_zl_context
+    let info['args']    = a:000
+ruby << __RUBY__
+    $logger.ap VIM::evaluate('info'), :info
+__RUBY__
 endfunction
+
+
 " ============================================================================
 " Modeline:                                                               [[[1
 " ============================================================================

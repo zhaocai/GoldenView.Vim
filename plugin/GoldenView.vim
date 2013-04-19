@@ -48,6 +48,14 @@ call GoldenView#zl#rc#set_default({
     \     '__MRU_Files__' , 
     \   ],
     \ },
+    \ 'g:goldenview__restore_urule'           : {
+    \   'filetype' : [
+    \     'nerdtree', 'vimfiler',
+    \   ],
+    \   'bufname' : [
+    \     '__MRU_Files__' , 
+    \   ],
+    \ },
     \
     \ })
 
@@ -89,7 +97,7 @@ nnoremap <Plug>GoldenViewResize
 " Layout Split:
 " -------------
 nnoremap <Plug>GoldenViewSplit
-\ :<C-u>call GoldenView#zl#window#split_nicely()<CR>
+\ :<C-u>call GoldenView#Split()<CR>
 " [TODO]( define comfortable width &tw * 4/3) @zhaocai @start(2012-09-29 01:17)
 
 
