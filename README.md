@@ -5,7 +5,7 @@
     Author        : Zhao Cai
     EMail         : caizhaoff@gmail.com
     URL           : http://zhaocai.github.io/GoldenView.Vim/
-    Version       : 1.2.0
+    Version       : 1.2.2
     Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
     Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
     ------------- - -----------------------------------------------
@@ -42,6 +42,7 @@ Second, it maps a single key (`<C-L>` by default) to nicely split windows to til
 | L |  MAIN PANE   |    S2      | G |
 | E |              +------------+ B |
 | R |              |    S3      | A |
+|   |              |            | R |
 |   |              |            |   |
 +---+--------------+------------+---+
 ```
@@ -57,6 +58,7 @@ To get this view, just hit `<C-L>` 4 times. or, if you have a large monitor, you
 | L |  MAIN PANE   |      M2      |    S2      | G |
 | E |              |              +------------+ B |
 | R |              |              |    S3      | A |
+|   |              |              |            | B |
 |   |              |              |            |   |
 +---+--------------+--------------+------------+---+
 ```
@@ -64,9 +66,9 @@ To get this view, just hit `<C-L>` 4 times. or, if you have a large monitor, you
 
 To quickly switch between those windows, a few keys are mapped to 
 
-- Focuse to the main window
-- Switch with the largest, smallest, etc. 
-- Jump to next and previous window
+- Focus to the main window
+- Switch with the `MAIN PANE`, the largest, smallest, etc. 
+- Jump to the next and previous window
 
 
 
@@ -86,7 +88,7 @@ If you use plugin managers like *Pathogen*, *vundle*, *neobundle*, *vim-addon-ma
 - *neobundle*:
 
 ```vim
-    NeoBundle 'zhaocai/GoldenView.Vim'
+    NeoBundle 'zhaocai/GoldenView.Vim' "Always have a nice view for vim split windows
 ```
 
 - *vundle*:
@@ -137,6 +139,7 @@ The meaning of those keys are self-explaining. A general workflow would be `<Plu
 | L |  MAIN PANE   |    S2      | G |
 | E |              +------------+ B |
 | R |              |    S3      | A |
+|   |              |            | R |
 |   |              |            |   |
 +---+--------------+------------+---+
 
@@ -248,6 +251,9 @@ For more details, please read the source code! :)
 ### Please do not resize me!
 
 [GoldenView][] maintains rules for "common" cases. But vim offers a great variety of plugins which defines buffers for special purposes. If you find some special buffers which is supposed to not be auto-resized. Please check `g:goldenview__ignore_urule`. You may extend the `g:goldenview__active_profile` or post the issue to [github issue][GoldenViewIssue] for adding it to builtin support.
+
+
+
 
 ### [minibufexpl.vim][] takes 5+ lines
 

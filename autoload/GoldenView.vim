@@ -28,6 +28,9 @@ function! GoldenView#Init()
     let s:goldenview__golden_ratio = 1.618
     lockvar s:goldenview__golden_ratio
 
+    set equalalways
+    set eadirection=ver
+
 
     let s:goldenview__profile = {
     \ 'reset'   : {
@@ -199,7 +202,7 @@ function! GoldenView#Resize(...)
         endfor
 
         if &cmdheight != t:goldenview['cmdheight']
-            silent exec 'set cmdheight=' . t:goldenview['cmdheight']
+            exec 'set cmdheight=' . t:goldenview['cmdheight']
         endif
 
         silent exec bufwinnr(current_bufnr) 'wincmd w'
