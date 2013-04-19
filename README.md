@@ -5,7 +5,7 @@
     Author        : Zhao Cai
     EMail         : caizhaoff@gmail.com
     URL           : http://zhaocai.github.io/GoldenView.Vim/
-    Version       : 1.1.2
+    Version       : 1.2.0
     Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
     Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
     ------------- - -----------------------------------------------
@@ -156,7 +156,7 @@ nmap <silent> <MY_KEY> <Plug>GoldenViewSplit
 if you do not want to start autoresizing automatically, you can put `let g:goldenview__enable_at_startup = 0` in your vimrc.
 
 
-## More Usage - Commands and Mappings
+## More Commands and Mappings
 
 1. `ToggleGoldenViewAutoResize`, `DisableGoldenViewAutoResize`, `EnableGoldenViewAutoResize`: These commands toggle, enable, and disable GoldenView autoresizing.
 
@@ -177,18 +177,63 @@ nmap <silent> <YOUR_KEY> <Plug>GoldenViewSwitchWithSmallest
 
 ```
 
-Other switch rules can be easily defined.
+Other switch rules can be easily defined. If you have some ideas, please post to [github issue][GoldenViewIssue] for discussion.
 
 
-## More Customized Configuartion and Implementation Details  
+## Rules
 
-> todo
+[GoldenView][] defines two rules:
+
+- `g:goldenview__ignore_urule` is to "ignore"  - allow those special buffers to manange their own window size. 
+- `g:goldenview__restore_urule` if to "restore" - restore window size of some of special buffers.
+
+The `urule` (user rules) are like this, which will be normalize at runtime for faster processing.
+```vim 
+    \{
+    \   'filetype' : [
+    \     ''        ,
+    \     'qf'      , 'vimpager', 'undotree', 'tagbar',
+    \     'nerdtree', 'vimshell', 'vimfiler', 'voom'  ,
+    \     'tabman'  , 'unite'   , 'quickrun', 'Decho' ,
+    \   ],
+    \   'buftype' : [
+    \     'nofile'  ,
+    \   ],
+    \   'bufname' : [
+    \     'GoToFile'                  , 'diffpanel_\d\+'      , 
+    \     '__Gundo_Preview__'         , '__Gundo__'           , 
+    \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' , 
+    \     '_VOOM\d\+$'                , '__Urannotate_\d\+__' , 
+    \     '__MRU_Files__' , 
+    \   ],
+    \},
+
+```
+
+
+## Profiles
+[GoldenView][] defines two profile:
+
+- `g:goldenview__active_profile` defines the functions and preferences to auto resize windows.
+- `g:goldenview__reset_profile` defines reset preferences to restore everything to default.
 
  
+## Troubleshooting:
 
-## Issues:
+### Please do not resize me!
 
-If you have any issues, please post it to https://github.com/zhaocai/GoldenView.Vim/issues for discussion.
+[GoldenView][] maintains rules for "common" cases. But vim offers a great variety of plugins which defines buffers for special purposes. If you find some special buffers which is supposed to not be auto-resized. Please check `g:goldenview__ignore_urule`. You may extend the `g:goldenview__active_profile` or post the issue to [github issue][GoldenViewIssue] for adding it to builtin support.
+
+### [minibufexpl.vim][] takes 5+ lines
+
+Check my fork [minibufexpl.vim][] to see if it is working for you. I have send pull request to the origin repo. 
+
+
+
+
+### I still have Issues:
+
+If you have any issues, please post it to [github issue][GoldenViewIssue] for discussion.
 
 
 ## Contributors
@@ -223,5 +268,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 [golden-ratio-plugin]: http://www.vim.org/scripts/script.php?script_id=3690
 [golden-ratio-wikipedia]: http://en.wikipedia.org/wiki/Golden_ratio
 [zl]: https://github.com/zhaocai/zl.vim "zl.vim vim script library"
-[GoldenView]: https://github.com/zhaocai/GoldenView.Vim "GoldenView Vim Plugin"
+[GoldenView]:  http://zhaocai.github.io/GoldenView.Vim/ "GoldenView Homepage"
+[GoldenViewCode]: https://github.com/zhaocai/GoldenView.Vim "GoldenView Vim Plugin"
 [vim-plugin-manager]: http://vim-scripts.org/vim/tools.html "Vim Plugin Manangers"
+[GoldenViewIssue]: https://github.com/zhaocai/GoldenView.Vim/issues "GoldenView Issue Track"
+[minibufexpl.vim]: https://github.com/zhaocai/minibufexpl.vim
+
