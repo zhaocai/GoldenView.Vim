@@ -43,7 +43,7 @@ Plugin        : GoldenView.vim
 Author        : Zhao Cai
 EMail         : caizhaoff@gmail.com
 URL           : http://zhaocai.github.io/GoldenView.Vim/
-Version       : 1.2.0
+Version       : 1.2.2
 Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
 Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 ------------- - -----------------------------------------------
@@ -69,36 +69,38 @@ Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 
 <p>Second, it maps a single key (<code>&lt;C-L&gt;</code> by default) to nicely split windows to tiled windows. </p>
 
-<pre><code>----+--------------+------------+---+
-|   |              |            |   |
-| F |              |    S1      | T |
-| I |              +------------| A |
-| L |  MAIN PANE   |    S2      | G |
-| E |              +------------+ B |
-| R |              |    S3      | A |
-|   |              |            |   |
-+---+--------------+------------+---+
+<pre><code>----+----------------+------------+---+
+|   |                |            |   |
+| F |                |    S1      | T |
+| I |                +------------| A |
+| L |                |    S2      | G |
+| E |   MAIN PANE    +------------+ B |
+| R |                |    S3      | A |
+|   |                |            | R |
+|   |                |            |   |
++---+----------------+------------+---+
 </code></pre>
 
 <p>To get this view, just hit <code>&lt;C-L&gt;</code> 4 times. or, if you have a large monitor, you may get tiled windows below.</p>
 
-<pre><code>----+--------------+--------------+------------+---+
-|   |              |              |            |   |
-| F |              |              |    S1      | T |
-| I |              |              +------------| A |
-| L |  MAIN PANE   |      M2      |    S2      | G |
-| E |              |              +------------+ B |
-| R |              |              |    S3      | A |
-|   |              |              |            |   |
-+---+--------------+--------------+------------+---+
+<pre><code>----+---------------+--------------+------------+---+
+|   |               |              |            |   |
+| F |               |              |    S1      | T |
+| I |               |              +------------| A |
+| L |               |      M2      |    S2      | G |
+| E |   MAIN PANE   |              +------------+ B |
+| R |               |              |    S3      | A |
+|   |               |              |            | B |
+|   |               |              |            |   |
++---+---------------+--------------+------------+---+
 </code></pre>
 
 <p>To quickly switch between those windows, a few keys are mapped to </p>
 
 <ul>
-<li>Focuse to the main window</li>
-<li>Switch with the largest, smallest, etc. </li>
-<li>Jump to next and previous window</li>
+<li>Focus to the main window</li>
+<li>Switch with the <code>MAIN PANE</code>, the largest, smallest, etc. </li>
+<li>Jump to the next and previous window</li>
 </ul><h2>Installation</h2>
 
 <p>Install <a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> is the <em>same as installing other vim plugins</em>. If experienced with vim, you can skim the example below and move to <a href="#quick-start">next section</a>. </p>
@@ -113,7 +115,7 @@ Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 <ul>
 <li>
 <em>neobundle</em>:</li>
-</ul><div class="highlight"><pre>    NeoBundle <span class="s1">'zhaocai/GoldenView.Vim'</span>
+</ul><div class="highlight"><pre>    NeoBundle <span class="s1">'zhaocai/GoldenView.Vim'</span> <span class="c">"Always have a nice view for vim split windows</span>
 </pre></div>
 
 <ul>
@@ -156,15 +158,16 @@ nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt
 
 <p>The meaning of those keys are self-explaining. A general workflow would be <code>&lt;Plug&gt;GoldenViewSplit</code> key to quickly and nicely split windows to the layout as below. Then you may open your files.</p>
 
-<pre><code>----+--------------+------------+---+
-|   |              |            |   |
-| F |              |    S1      | T |
-| I |              +------------| A |
-| L |  MAIN PANE   |    S2      | G |
-| E |              +------------+ B |
-| R |              |    S3      | A |
-|   |              |            |   |
-+---+--------------+------------+---+
+<pre><code>----+----------------+------------+---+
+|   |                |            |   |
+| F |                |    S1      | T |
+| I |                +------------| A |
+| L |                |    S2      | G |
+| E |   MAIN PANE    +------------+ B |
+| R |                |    S3      | A |
+|   |                |            | R |
+|   |                |            |   |
++---+----------------+------------+---+
 
 </code></pre>
 
