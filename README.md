@@ -12,11 +12,11 @@
 
 
 
-The initial motive for [GoldenView][GoldenView] comes from the frustration of using other vim plugins to autoresize split windows. The idea is deadly simple and very useful: **resize the focused window to a proper size.** However, in practice, many hiccups makes **autoresizing** not a smooth experience.  Below are a list of issues [GoldenView][GoldenView] attempts to solve:
+The initial motive for [GoldenView][GoldenView] comes from the frustration of using other vim plugins to auto-resize split windows. The idea is deadly simple and very useful: **resize the focused window to a proper size.** However, in practice, many hiccups makes **auto-resizing** not a smooth experience.  Below are a list of issues [GoldenView][GoldenView] attempts to solve:
 
-First and the most important one, autoresizing should play nicely with existing plugins like `tagbar`, `vimfiler`, `unite`, `VOoM`, `quickfix`, `undotree`, `gundo`, etc. These windows should manage there own window size.
+First and the most important one, auto-resizing should play nicely with existing plugins like `tagbar`, `vimfiler`, `unite`, `VOoM`, `quickfix`, `undotree`, `gundo`, etc. These windows should manage there own window size.
 
-Second, autoresizing should take care of **the other windows** too. Resizing the focused window may cause the other windows become too small. When you have 4+ split windows, autoresizing may just make a mess out of it.
+Second, auto-resizing should take care of **the other windows** too. Resizing the focused window may cause the other windows become too small. When you have 4+ split windows, auto-resizing may just make a mess out of it.
 
 
 ![GoldView Screencast]( http://dl.dropboxusercontent.com/u/1897501/Screencasts/GoldenView.gif )
@@ -26,7 +26,7 @@ Second, autoresizing should take care of **the other windows** too. Resizing the
 
 [GoldenView][GoldenView] has preliminarily solved the issues described above. It also provides other features. Bascally, it does two things:
 
-### 1. Autoresizing
+### 1. AutoResizing
 First of all, it automatically resize the focused split window to a "golden" view based on [golden ratio][golden-ratio-wikipedia] and `textwidth`.
 
 
@@ -153,12 +153,12 @@ nmap <silent> <MY_KEY> <Plug>GoldenViewSplit
 ```
 
 #### g:goldenview__enable_at_startup
-if you do not want to start autoresizing automatically, you can put `let g:goldenview__enable_at_startup = 0` in your vimrc.
+if you do not want to start auto-resizing automatically, you can put `let g:goldenview__enable_at_startup = 0` in your vimrc.
 
 
 ## More Commands and Mappings
 
-1. `ToggleGoldenViewAutoResize`, `DisableGoldenViewAutoResize`, `EnableGoldenViewAutoResize`: These commands toggle, enable, and disable GoldenView autoresizing.
+1. `ToggleGoldenViewAutoResize`, `DisableGoldenViewAutoResize`, `EnableGoldenViewAutoResize`: These commands toggle, enable, and disable GoldenView auto-resizing.
 
 2. `GoldenViewResize` : this command do manual resizing of focused window. 
 You can also map a key for this as below:
@@ -184,7 +184,7 @@ Other switch rules can be easily defined. If you have some ideas, please post to
 
 [GoldenView][] defines two rules:
 
-- `g:goldenview__ignore_urule` is to "ignore"  - allow those special buffers to manange their own window size. 
+- `g:goldenview__ignore_urule` is to "ignore"  - allow those special buffers to manage their own window size. 
 - `g:goldenview__restore_urule` if to "restore" - restore window size of some of special buffers.
 
 The `urule` (user rules) are like this, which will be normalize at runtime for faster processing.
@@ -216,6 +216,9 @@ The `urule` (user rules) are like this, which will be normalize at runtime for f
 
 - `g:goldenview__active_profile` defines the functions and preferences to auto resize windows.
 - `g:goldenview__reset_profile` defines reset preferences to restore everything to default.
+
+For more details, please read the source code! :)
+
 
  
 ## Troubleshooting:
