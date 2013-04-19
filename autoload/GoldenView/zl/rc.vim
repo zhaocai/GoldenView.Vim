@@ -193,7 +193,7 @@ endfunction
 
 
 
-
+" Note: add this call to other files if they need to check g:loaded_GoldenView_zl
 call GoldenView#zl#rc#init()
 
 

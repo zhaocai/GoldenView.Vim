@@ -131,7 +131,17 @@ function! GoldenView#zl#window#nicely_split_cmd(...)
 endfunction
 
 function! GoldenView#zl#window#split_nicely()
-    exec GoldenView#zl#window#nicely_split_cmd()
+    let split_cmd = GoldenView#zl#window#nicely_split_cmd()
+    try
+        exec split_cmd
+    catch /^Vim\%((\a\+)\)\=:E36/
+        if split_cmd == 'split'
+            let &winminheight = &winminheight / 2
+        else
+            let &winminwidth = &winminwidth / 2
+        endif
+        exec split_cmd
+    endtry
     wincmd p
 endfunction
 
