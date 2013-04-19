@@ -43,13 +43,13 @@ Plugin        : GoldenView.vim
 Author        : Zhao Cai
 EMail         : caizhaoff@gmail.com
 URL           : http://zhaocai.github.io/GoldenView.Vim/
-Version       : 1.1.1
+Version       : 1.2.0
 Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
 Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 ------------- - -----------------------------------------------
 </code></pre>
 
-<p>The initial motive for <a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> comes from the frustration of using other vim plugins to autoresize split windows. The idea is deadly simple and very useful: <strong>resize the focused window to a proper size.</strong> However, in practice, many hiccups makes <strong>autoresizing</strong> not a smooth experience.  Below are a list of issues <a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> attempts to solve:</p>
+<p>The initial motive for <a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> comes from the frustration of using other vim plugins to autoresize split windows. The idea is deadly simple and very useful: <strong>resize the focused window to a proper size.</strong> However, in practice, many hiccups makes <strong>autoresizing</strong> not a smooth experience.  Below are a list of issues <a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> attempts to solve:</p>
 
 <p>First and the most important one, autoresizing should play nicely with existing plugins like <code>tagbar</code>, <code>vimfiler</code>, <code>unite</code>, <code>VOoM</code>, <code>quickfix</code>, <code>undotree</code>, <code>gundo</code>, etc. These windows should manage there own window size.</p>
 
@@ -59,7 +59,7 @@ Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 
 <h2>Features</h2>
 
-<p><a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> has preliminarily solved the issues described above. It also provides other features. Bascally, it does two things:</p>
+<p><a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> has preliminarily solved the issues described above. It also provides other features. Bascally, it does two things:</p>
 
 <h3>1. Autoresizing</h3>
 
@@ -101,12 +101,12 @@ Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 <li>Jump to next and previous window</li>
 </ul><h2>Installation</h2>
 
-<p>Install <a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> is the <em>same as installing other vim plugins</em>. If experienced with vim, you can skim the example below and move to <a href="#quick-start">next section</a>. </p>
+<p>Install <a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> is the <em>same as installing other vim plugins</em>. If experienced with vim, you can skim the example below and move to <a href="#quick-start">next section</a>. </p>
 
 <h3>
 <strong>Option A</strong> - With <a href="http://vim-scripts.org/vim/tools.html" title="Vim Plugin Manangers">Plugin Manager</a> ( <strong>recommanded</strong> )</h3>
 
-<p>If you use plugin managers like <em>Pathogen</em>, <em>vundle</em>, <em>neobundle</em>, <em>vim-addon-manager</em>, etc., just unarchive the zip file or clone the <a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> repo from <code>git://github.com/zhaocai/GoldenView.git</code> into your local plugin installation directory (most likely <code>~/.vim/bundle/</code>). Then add corresponding scripts in .vimrc for the bundle manager you are using.</p>
+<p>If you use plugin managers like <em>Pathogen</em>, <em>vundle</em>, <em>neobundle</em>, <em>vim-addon-manager</em>, etc., just unarchive the zip file or clone the <a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> repo from <code>git://github.com/zhaocai/GoldenView.git</code> into your local plugin installation directory (most likely <code>~/.vim/bundle/</code>). Then add corresponding scripts in .vimrc for the bundle manager you are using.</p>
 
 <p><strong>Example</strong>:</p>
 
@@ -136,7 +136,7 @@ Last Modified : Wed 17 Apr 2013 09:52:45 PM EDT
 
 <h2>Quick Start</h2>
 
-<p><a href="https://github.com/zhaocai/GoldenView.Vim" title="GoldenView Vim Plugin">GoldenView</a> should work out of the box without configuration. It should automatically start to resize focused window to <a href="http://en.wikipedia.org/wiki/Golden_ratio">golden ratio</a> based on <code>textwidth</code> and vim available size. You may start to play with it now.</p>
+<p><a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> should work out of the box without configuration. It should automatically start to resize focused window to <a href="http://en.wikipedia.org/wiki/Golden_ratio">golden ratio</a> based on <code>textwidth</code> and vim available size. You may start to play with it now.</p>
 
 <p>To get you started, a few default keys are mapped as below:</p>
 
@@ -185,7 +185,7 @@ nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt
 
 <p>if you do not want to start autoresizing automatically, you can put <code>let g:goldenview__enable_at_startup = 0</code> in your vimrc.</p>
 
-<h2>More Usage - Commands and Mappings</h2>
+<h2>More Commands and Mappings</h2>
 
 <ol>
 <li><p><code>ToggleGoldenViewAutoResize</code>, <code>DisableGoldenViewAutoResize</code>, <code>EnableGoldenViewAutoResize</code>: These commands toggle, enable, and disable GoldenView autoresizing.</p></li>
@@ -205,17 +205,63 @@ nmap <span class="p">&lt;</span><span class="k">silent</span><span class="p">&gt
 
 </pre></div>
 
-<p>Other switch rules can be easily defined.</p>
+<p>Other switch rules can be easily defined. If you have some ideas, please post to <a href="https://github.com/zhaocai/GoldenView.Vim/issues" title="GoldenView Issue Track">github issue</a> for discussion.</p>
 
-<h2>More Customized Configuartion and Implementation Details</h2>
+<h2>Rules</h2>
 
-<blockquote>
-<p>todo</p>
-</blockquote>
+<p><a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> defines two rules:</p>
 
-<h2>Issues:</h2>
+<ul>
+<li>
+<code>g:goldenview__ignore_urule</code> is to "ignore"  - allow those special buffers to manange their own window size. </li>
+<li>
+<code>g:goldenview__restore_urule</code> if to "restore" - restore window size of some of special buffers.</li>
+</ul><p>The <code>urule</code> (user rules) are like this, which will be normalize at runtime for faster processing.</p>
 
-<p>If you have any issues, please post it to <a href="https://github.com/zhaocai/GoldenView.Vim/issues">https://github.com/zhaocai/GoldenView.Vim/issues</a> for discussion.</p>
+<div class="highlight"><pre>    \{
+    \   <span class="s1">'filetype'</span> : [
+    \     <span class="s1">''</span>        <span class="p">,</span>
+    \     <span class="s1">'qf'</span>      <span class="p">,</span> <span class="s1">'vimpager'</span><span class="p">,</span> <span class="s1">'undotree'</span><span class="p">,</span> <span class="s1">'tagbar'</span><span class="p">,</span>
+    \     <span class="s1">'nerdtree'</span><span class="p">,</span> <span class="s1">'vimshell'</span><span class="p">,</span> <span class="s1">'vimfiler'</span><span class="p">,</span> <span class="s1">'voom'</span>  <span class="p">,</span>
+    \     <span class="s1">'tabman'</span>  <span class="p">,</span> <span class="s1">'unite'</span>   <span class="p">,</span> <span class="s1">'quickrun'</span><span class="p">,</span> <span class="s1">'Decho'</span> <span class="p">,</span>
+    \   ]<span class="p">,</span>
+    \   <span class="s1">'buftype'</span> : [
+    \     <span class="s1">'nofile'</span>  <span class="p">,</span>
+    \   ]<span class="p">,</span>
+    \   <span class="s1">'bufname'</span> : [
+    \     <span class="s1">'GoToFile'</span>                  <span class="p">,</span> <span class="s1">'diffpanel_\d\+'</span>      <span class="p">,</span> 
+    \     <span class="s1">'__Gundo_Preview__'</span>         <span class="p">,</span> <span class="s1">'__Gundo__'</span>           <span class="p">,</span> 
+    \     <span class="s1">'\[LustyExplorer-Buffers\]'</span> <span class="p">,</span> <span class="s1">'\-MiniBufExplorer\-'</span> <span class="p">,</span> 
+    \     <span class="s1">'_VOOM\d\+$'</span>                <span class="p">,</span> <span class="s1">'__Urannotate_\d\+__'</span> <span class="p">,</span> 
+    \     <span class="s1">'__MRU_Files__'</span> <span class="p">,</span> 
+    \   ]<span class="p">,</span>
+    \}<span class="p">,</span>
+
+</pre></div>
+
+<h2>Profiles</h2>
+
+<p><a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> defines two profile:</p>
+
+<ul>
+<li>
+<code>g:goldenview__active_profile</code> defines the functions and preferences to auto resize windows.</li>
+<li>
+<code>g:goldenview__reset_profile</code> defines reset preferences to restore everything to default.</li>
+</ul><h2>Troubleshooting:</h2>
+
+<h3>Please do not resize me!</h3>
+
+<p><a href="http://zhaocai.github.io/GoldenView.Vim/" title="GoldenView Homepage">GoldenView</a> maintains rules for "common" cases. But vim offers a great variety of plugins which defines buffers for special purposes. If you find some special buffers which is supposed to not be auto-resized. Please check <code>g:goldenview__ignore_urule</code>. You may extend the <code>g:goldenview__active_profile</code> or post the issue to <a href="https://github.com/zhaocai/GoldenView.Vim/issues" title="GoldenView Issue Track">github issue</a> for adding it to builtin support.</p>
+
+<h3>
+<a href="https://github.com/zhaocai/minibufexpl.vim">minibufexpl.vim</a> takes 5+ lines</h3>
+
+<p>Check my fork <a href="https://github.com/zhaocai/minibufexpl.vim">minibufexpl.vim</a> to see if it is working for you. I have send pull request to the origin repo. </p>
+
+<h3>I still have Issues:</h3>
+
+<p>If you have any issues, please post it to <a href="https://github.com/zhaocai/GoldenView.Vim/issues" title="GoldenView Issue Track">github issue</a> for discussion.</p>
 
 <h2>Contributors</h2>
 
