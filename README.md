@@ -31,7 +31,9 @@ First of all, it automatically resize the focused split window to a "golden" vie
 
 
 ### 2. Tiled Windows Management
+
 Second, it maps a single key (`<C-L>` by default) to nicely split windows to tiled windows. 
+
 ```
 ----+--------------+------------+---+
 |   |              |            |   |
@@ -43,7 +45,9 @@ Second, it maps a single key (`<C-L>` by default) to nicely split windows to til
 |   |              |            |   |
 +---+--------------+------------+---+
 ```
+
 To get this view, just hit `<C-L>` 4 times. or, if you have a large monitor, you may get tiled windows below.
+
 
 ```
 ----+--------------+--------------+------------+---+
@@ -158,9 +162,14 @@ if you do not want to start auto-resizing automatically, you can put `let g:gold
 
 ## More Commands and Mappings
 
-1. `ToggleGoldenViewAutoResize`, `DisableGoldenViewAutoResize`, `EnableGoldenViewAutoResize`: These commands toggle, enable, and disable GoldenView auto-resizing.
+### `:ToggleGoldenViewAutoResize`
+### `:DisableGoldenViewAutoResize`
+### `:EnableGoldenViewAutoResize`
+These commands toggle, enable, and disable GoldenView auto-resizing.
 
-2. `GoldenViewResize` : this command do manual resizing of focused window. 
+### `:GoldenViewResize`
+this command do manual resizing of focused window. 
+
 You can also map a key for this as below:
 
 ```vim 
@@ -168,7 +177,10 @@ nmap <silent> <YOUR_KEY> <Plug>GoldenViewResize
 
 ```
 
-3. `SwitchGoldenViewLargest`, `SwitchGoldenViewSmallest`: these commands do as it named. 
+### `:SwitchGoldenViewLargest`
+### `:SwitchGoldenViewSmallest` 
+
+these commands do as it named. 
 
 You can also add mappings as below. ( no default keys for these mappings)
 ```vim 
@@ -184,10 +196,14 @@ Other switch rules can be easily defined. If you have some ideas, please post to
 
 [GoldenView][] defines two rules:
 
-- `g:goldenview__ignore_urule` is to "ignore"  - allow those special buffers to manage their own window size. 
-- `g:goldenview__restore_urule` if to "restore" - restore window size of some of special buffers.
+### `g:goldenview__ignore_urule` 
+is to "ignore"  - allow those special buffers to manage their own window size. 
+
+### `g:goldenview__restore_urule` 
+is to "restore" - restore window size of some of special buffers.
 
 The `urule` (user rules) are like this, which will be normalize at runtime for faster processing.
+
 ```vim 
     \{
     \   'filetype' : [
@@ -210,12 +226,18 @@ The `urule` (user rules) are like this, which will be normalize at runtime for f
 
 ```
 
-
 ## Profiles
 [GoldenView][] defines two profile:
 
-- `g:goldenview__active_profile` defines the functions and preferences to auto resize windows.
-- `g:goldenview__reset_profile` defines reset preferences to restore everything to default.
+### `g:goldenview__active_profile` 
+defines the functions and preferences to auto resize windows.
+
+### `g:goldenview__reset_profile` 
+
+defines reset preferences to restore everything to default.
+
+
+`function GoldenView#ExtendProfile()` is provided to customize preferences.
 
 For more details, please read the source code! :)
 
@@ -248,9 +270,12 @@ If you have any issues, please post it to [github issue][GoldenViewIssue] for di
 
 Refer to [History.md]( https://github.com/zhaocai/GoldenView.Vim/blob/master/History.md )
 
+
+
+
 ## LICENSE:
 
-Copyright (c) 2013 Zhao Cai <caizhaoff@gmail.com>
+Copyright (c) 2013 Zhao Cai \<caizhaoff@gmail.com\>
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
