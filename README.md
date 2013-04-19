@@ -250,8 +250,7 @@ For more details, please read the source code! :)
 
 ### Please do not resize me!
 
-[GoldenView][] maintains rules for "common" cases. But vim offers a great variety of plugins which defines buffers for special purposes. If you find some special buffers which is supposed to not be auto-resized. Please check `g:goldenview__ignore_urule`. You may extend the `g:goldenview__active_profile` or post the issue to [github issue][GoldenViewIssue] for adding it to builtin support.
-
+[GoldenView][] maintains rules for "common" cases. But vim offers a great variety of plugins which defines buffers for special purposes. If you find some special buffers which is supposed to not be auto-resized. Please check `g:goldenview__ignore_urule`. You may extend the `g:goldenview__active_profile` yourself or post the issue to [github issue][GoldenViewIssue] for adding it to builtin support.
 
 
 
@@ -265,6 +264,11 @@ Check my fork [minibufexpl.vim][] to see if it is working for you. I have send p
 ### I still have Issues:
 
 If you have any issues, please post it to [github issue][GoldenViewIssue] for discussion.
+
+Remember to run the following command and post the results.
+```vim 
+echo GoldenView#Info()
+```
 
 
 ## Contributors

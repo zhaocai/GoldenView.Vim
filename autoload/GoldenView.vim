@@ -432,10 +432,6 @@ endfunction
 " ============================================================================
 " Debug:                                                                  [[[1
 " ============================================================================
-finish " enable as demand
-
-
-
 
 function! GoldenView#Info()
     return {
@@ -446,7 +442,7 @@ function! GoldenView#Info()
     \   'winwidth'  : winwidth(0)  ,
     \   'winheight' : winheight(0) ,
     \ },
-    \ 'goldenview'  : t:goldenview,
+    \ 'goldenview'  : get(t:, 'goldenview', GoldenView#initialize_tab_variable()),
     \ 'setting' : {
     \   'win_count'    : winnr('$')    ,
     \   'lazyredraw'   : &lazyredraw   ,
@@ -460,6 +456,8 @@ function! GoldenView#Info()
     \ }
     \}
 endfunction
+
+finish " enable as demand
 
 ruby << __RUBY__
 require "logger"
