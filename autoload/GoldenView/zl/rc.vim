@@ -13,17 +13,21 @@
 " Initialization:                                                         [[[1
 " ============================================================================
 
-let s:GOLDENVIEW_ZL_VERSION_CURRENT = 130
+let s:GOLDENVIEW_ZL_VERSION_CURRENT = 140
 
 let s:VERSION_FACTOR = str2float('0.01')
 
 
-function! GoldenView#zl#rc#init() abort "                                            [[[2
+function! GoldenView#zl#rc#init() abort
+    if exists('g:loaded_GoldenView_zl')
+        return
+    endif
 
     if v:version < 700
         echoerr "zl.vim: requires Vim >= 7"
         return
     endif
+
 
     if !exists("g:GoldenView_zl_force_reload")
         let g:GoldenView_zl_force_reload = 0
@@ -40,7 +44,7 @@ endfunction
 
 
 
-function! GoldenView#zl#rc#load_guard(prefix, vim_version, GoldenView_zl_version,exprs,...)    "[[[2
+function! GoldenView#zl#rc#load_guard(prefix, vim_version, GoldenView_zl_version,exprs,...)
     "--------- ------------------------------------------------
     " Desc    : gereric script load guard function
     "
@@ -114,7 +118,7 @@ function! GoldenView#zl#rc#load_guard(prefix, vim_version, GoldenView_zl_version
     return 1
 endfunction
 
-function! GoldenView#zl#rc#script_force_reload(...) " (script)                       [[[2
+function! GoldenView#zl#rc#script_force_reload(...)
     "--------- ------------------------------------------------
     " Desc    : Call to ignore GoldenView#zl#rc#load_guard() and source.
     "
@@ -146,7 +150,7 @@ endfunction
 " ============================================================================
 " Set Initialization Default Variables:                                   [[[1
 " ============================================================================
-function! GoldenView#zl#rc#set_default(var, ...) "  ('var', val) || ( {dict} )       [[[2
+function! GoldenView#zl#rc#set_default(var, ...)
     "--------- ------------------------------------------------
     " Desc    : Set Initialization Default Variables
     "
@@ -193,7 +197,11 @@ endfunction
 
 
 
-" Note: add this call to other files if they need to check g:loaded_GoldenView_zl
+"
+" Note: 
+"   add this call to other files if they need to check g:loaded_GoldenView_zl
+" or g:GoldenView_zl_install_path
+"
 call GoldenView#zl#rc#init()
 
 

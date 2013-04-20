@@ -61,6 +61,43 @@ endfunction
 
 
 " ============================================================================
+" Logger:                                                                 [[[1
+" ============================================================================
+if !has('ruby')
+    function! GoldenView#zl#print#log(...)
+        echo "GoldenView#zl(log): require vim to be built with ruby support."
+    endfunction
+else
+
+ruby ($LOAD_PATH << File.join(Vim.evaluate('g:GoldenView_zl_autoload_path'), 'lib')).uniq!
+
+ruby require 'zlogger'
+
+function! GoldenView#zl#print#log(...)
+ruby << __RUBY__
+
+args = Vim.evaluate('a:000')
+zlogger = ZLogger.new
+
+case args.size
+when 0
+  return
+when 1
+  zlogger.info(args[0].ai(:plain => true))
+when 2
+  zlogger.send(args[0], args[1]).ai(:plain => true)
+else
+  zlogger.send(args[0], args[1]).ai(:plain => true)
+end
+__RUBY__
+
+endfunction
+
+
+endif
+
+
+" ============================================================================
 " Modeline:                                                               [[[1
 " ============================================================================
 " vim: set ft=vim ts=4 sw=4 tw=78 fdm=syntax fmr=[[[,]]] fdl=1 :

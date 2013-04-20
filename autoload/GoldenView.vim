@@ -117,6 +117,7 @@ function! GoldenView#WinLeave(...)
 "    exec GoldenView#zl#vim#context() | call GoldenView#Trace('WinLeave', a:000)
 
     " Do nothing if there is no split window
+    " --------------------------------------
     if winnr('$') < 2
         return
     endif
@@ -457,45 +458,18 @@ function! GoldenView#Info()
     \}
 endfunction
 
-finish " enable as demand
 
-ruby << __RUBY__
-require "logger"
-require "fileutils"
-require "awesome_print"
-def is_linux?
-RUBY_PLATFORM.downcase.include?("linux")
-  end
-
-def is_windows?
-  RUBY_PLATFORM.downcase.include?("mswin")
-end
-
-def is_mac?
-  RUBY_PLATFORM.downcase.include?("darwin")
-end
-
-if is_mac?
-  logfile = File.expand_path('~/Library/Logs/vim/goldenview.log')
-else
-  logfile = File.expand_path('/var/log/vim/goldenview.log')
-end
-
-FileUtils.mkdir_p File.dirname(logfile)
-
-log = File.open(logfile, File::WRONLY | File::APPEND | File::CREAT)
-$logger = Logger.new(log, 'weekly')
-__RUBY__
-
-
-"function! GoldenView#Trace(...)
+function! GoldenView#Trace(...)
+    " -------- - -----------------------------------------------
+    "  Example : >
+    "    exec GoldenView#zl#vim#context() | call GoldenView#Trace(a:000)
+    " -------- - -----------------------------------------------
+    
     call GoldenView#initialize_tab_variable()
     let info            = GoldenView#Info()
-    let info['context'] = g:GoldenView_zl_context
+    let info['context'] = get(g:,'GoldenView_zl_context','')
     let info['args']    = a:000
-ruby << __RUBY__
-    $logger.ap VIM::evaluate('info'), :info
-__RUBY__
+    call GoldenView#zl#print#log(info)
 endfunction
 
 
