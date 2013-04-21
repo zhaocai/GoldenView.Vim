@@ -13,7 +13,8 @@
 " ============================================================================
 " Load Guard:                                                             [[[1
 " ============================================================================
-if !GoldenView#zl#rc#load_guard(expand('<sfile>:t:r'), 700, 130, ['!&cp'])
+if !GoldenView#zl#rc#load_guard(
+	\ expand('<sfile>:t:r'), 700, 130, ['!&cp', "has('float')"])
     finish
 endif
 
