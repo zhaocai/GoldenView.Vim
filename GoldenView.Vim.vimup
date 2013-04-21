@@ -74,7 +74,8 @@ install_details: |
 
 versions:
 - '1.2.2': |
-   Improve documents and small bug fixes
+   Improve documents and small bug fixes,
+   Load guard for #4 (github)
 
 - '1.2.0': |
    add restore rule for some special buffers, which solves all the hiccups I could identify so far.
