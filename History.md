@@ -1,5 +1,38 @@
 # RELEASE HISTORY
 
+## V1.3.0 / 2013-04-22
+
+Diff Mode auto resizing (Zhao Cai <caizhaoff@gmail.com>)
+
+Changes:
+
+* 1 Major Enhancements
+
+    * diff mode auto-resizing.
+
+* 1 Minor Enhancements
+
+    * refactor autocmd function: tweak restore behavior
+
+
+## V1.2.2 / 2013-04-21
+
+Improve documents and small bug fixes,
+Load guard for #4 (github) (Zhao Cai <caizhaoff@gmail.com>)
+
+Changes:
+
+* 1 Minor Enhancements
+
+    * better tracing
+
+* 1 Bug Fixes
+
+    * load guard for issue #4
+      
+      E806: using Float as a String
+
+
 ## V1.2.0 / 2013-04-18
 
  (Zhao Cai <caizhaoff@gmail.com>)
@@ -23,14 +56,14 @@ Changes:
 Fix init sequence between zl.vim and GoldenVim (Zhao Cai <caizhaoff@gmail.com>)
 
 
+## HEAD / 2013-04-23
+
+Current Development (Zhao Cai)
+
+
 ## V1.1.1 / 2013-04-18
 
 improve documents, fix zl library load (Zhao Cai <caizhaoff@gmail.com>)
-
-
-## HEAD / 2013-04-19
-
-Current Development (Zhao Cai)
 
 
 ## V1.1.0 / 2013-04-18
