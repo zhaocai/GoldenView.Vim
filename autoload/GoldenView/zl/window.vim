@@ -16,16 +16,38 @@
 " ============================================================================
 " Status:                                                                 [[[1
 " ============================================================================
-function! GoldenView#zl#window#is_last_visible(...)
+call GoldenView#zl#rc#set_default({
+    \ 'g:GoldenView_zl_window__ignore_urule'           : {
+    \   'filetype' : [
+    \     ''        ,
+    \     'qf'      , 'vimpager', 'undotree', 'tagbar',
+    \     'nerdtree', 'vimshell', 'vimfiler', 'voom'  ,
+    \     'tabman'  , 'unite'   , 'quickrun', 'Decho' ,
+    \   ],
+    \   'buftype' : [
+    \     'nofile'  ,
+    \   ],
+    \   'bufname' : [
+    \     'GoToFile'                  , 'diffpanel_\d\+'      , 
+    \     '__Gundo_Preview__'         , '__Gundo__'           , 
+    \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' , 
+    \     '_VOOM\d\+$'                , '__Urannotate_\d\+__' , 
+    \     '__MRU_Files__' , 
+    \   ],
+    \ },
+    \ })
+
+let s:GoldenView_zl_window__ignore_nrule = GoldenView#zl#rule#norm(
+    \   g:GoldenView_zl_window__ignore_urule, {
+    \     'logic' : 'or',
+    \   }
+    \ )
+
+function! GoldenView#zl#window#is_last_visible()
     "--------- ------------------------------------------------
     " Desc    : check if no visible buffer left
     "
     " Args    :
-    "
-    "   - opts : >
-    "   {
-    "      'ignored_ft' : [] ,
-    "   }
     "
     " Return  :
     "   - 0 : false
@@ -33,17 +55,6 @@ function! GoldenView#zl#window#is_last_visible(...)
     " Raise   :
     "
     "--------- ------------------------------------------------
-
-    let opts = {
-            \ 'ignored_ft' : [
-                \ 'qf'       , 'vimpager' , 'undotree' , 'tagbar' ,
-                \ 'nerdtree' , 'vimshell' , 'vimfiler' , 'voom'   ,
-                \ 'tabman'   , 'unite'    ,
-                \ ]
-            \}
-    if a:0 >= 1 && type(a:1) == type({})
-        call extend(opts, a:1)
-    endif
 
     for i in range(tabpagenr('$'))
         let tabnr = i + 1
@@ -53,7 +64,7 @@ function! GoldenView#zl#window#is_last_visible(...)
             if empty(ft) && empty(buftype)
                 continue
             endif
-            if index(opts['ignored_ft'], ft) == -1
+            if ! GoldenView#zl#rule#is_true(s:GoldenView_zl_window__ignore_nrule)
                 return 0
             endif
         endfor
