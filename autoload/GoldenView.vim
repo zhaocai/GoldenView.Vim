@@ -122,6 +122,8 @@ function! GoldenView#Leave(...)
         return
     endif
 
+    call GoldenView#Diff()
+
     if GoldenView#IsIgnore()
         " Record the last size of ignored windows. Restore there sizes if affected
         " by GoldenView.
@@ -139,11 +141,38 @@ function! GoldenView#Leave(...)
     end
 endfunction
 
+function! GoldenView#Diff()
+    " Diff Mode: auto-resize to equal size
+    if ! exists('b:goldenview_diff')
+        let b:goldenview_diff = 0
+    endif
+    if &diff 
+        if ! b:goldenview_diff 
+            for nr in GoldenView#zl#list#uniq(tabpagebuflist())
+                if getbufvar(nr, '&diff')
+                    call setbufvar(nr, 'goldenview_diff', 1)
+                endif
+            endfor
+            exec 'wincmd ='
+        endif
+        return 1
+    else 
+        if b:goldenview_diff
+            let b:goldenview_diff = 0
+        endif
+    endif
+    return 0
+endfunction
+
 function! GoldenView#Enter(...)
-    if &lazyredraw
+
+    if GoldenView#Diff()
         return
     endif
 
+    if &lazyredraw
+        return
+    endif
 
     return call('GoldenView#Resize', a:000)
 endfunction
