@@ -44,6 +44,7 @@ namespace :vimup do
   desc "updae vim.org script"
   task :release => [:zip] do
     sh vimup, 'update-script', project_name, vimorg
+    task(:clean).invoke
   end
 
   desc "updae vim.org script detail"
