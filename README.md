@@ -161,15 +161,21 @@ nmap <silent> <MY_KEY> <Plug>GoldenViewSplit
 ```
 
 #### g:goldenview__enable_at_startup
-if you do not want to start auto-resizing automatically, you can put `let g:goldenview__enable_at_startup = 0` in your vimrc.
 
+if you do not want to start auto-resizing automatically, you can put the following script in your vimrc.
+
+```vim  
+et g:goldenview__enable_at_startup = 0
+```
 
 ## More Commands and Mappings
 
 ### `:ToggleGoldenViewAutoResize`
 ### `:DisableGoldenViewAutoResize`
 ### `:EnableGoldenViewAutoResize`
+
 These commands toggle, enable, and disable GoldenView auto-resizing.
+
 
 ### `:GoldenViewResize`
 this command do manual resizing of focused window. 
@@ -181,6 +187,7 @@ nmap <silent> <YOUR_KEY> <Plug>GoldenViewResize
 
 ```
 
+### `:SwitchGoldenViewMain`
 ### `:SwitchGoldenViewLargest`
 ### `:SwitchGoldenViewSmallest` 
 
