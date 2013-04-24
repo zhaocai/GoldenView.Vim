@@ -65,7 +65,7 @@ endfunction
 " ============================================================================
 if !has('ruby')
     function! GoldenView#zl#print#log(...)
-        echo "GoldenView#zl(log): require vim to be built with ruby support."
+        echo "GoldenView#zl(log): require vim to be built with +ruby."
     endfunction
 else
 

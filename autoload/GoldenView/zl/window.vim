@@ -28,11 +28,11 @@ call GoldenView#zl#rc#set_default({
     \     'nofile'  ,
     \   ],
     \   'bufname' : [
-    \     'GoToFile'                  , 'diffpanel_\d\+'      , 
-    \     '__Gundo_Preview__'         , '__Gundo__'           , 
-    \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' , 
-    \     '_VOOM\d\+$'                , '__Urannotate_\d\+__' , 
-    \     '__MRU_Files__' , 
+    \     'GoToFile'                  , 'diffpanel_\d\+'      ,
+    \     '__Gundo_Preview__'         , '__Gundo__'           ,
+    \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' ,
+    \     '_VOOM\d\+$'                , '__Urannotate_\d\+__' ,
+    \     '__MRU_Files__' ,
     \   ],
     \ },
     \ })
@@ -114,6 +114,9 @@ function! GoldenView#zl#window#golden_ratio_height()
     return &lines / s:golden_ratio
 endfunction
 
+function! GoldenView#zl#window#textwidth()
+    return &tw == 0 ? 78 : &tw
+endfunction
 
 " ============================================================================
 " Split:                                                                  [[[1
@@ -353,7 +356,7 @@ function! GoldenView#zl#window#switch_buffer(bufnr1, bufnr2)
             silent noautocmd exec 'buffer' a:bufnr1
 
             " need filetype detect (maybe) because bufnr1 disappears for a
-            " moment 
+            " moment
             silent filetype detect
 
             let b:switch_buffer = {

@@ -13,6 +13,9 @@ detailed_description: |
   Screencast:  http://dl.dropboxusercontent.com/u/1897501/Screencasts/GoldenView.gif 
   
 
+  If you like it, please star or fork in https://github.com/zhaocai/GoldenView.Vim so that more people may find it.
+  
+
 
 
 
@@ -40,26 +43,29 @@ detailed_description: |
 
   Second, it maps a single key (<C-L> by default) to nicely split windows to tiled windows.
 
-  ----+--------------+------------+---+
-  |   |              |            |   |
-  | F |              |    S1      | T |
-  | I |              +------------| A |
-  | L |  MAIN PANE   |    S2      | G |
-  | E |              +------------+ B |
-  | R |              |    S3      | A |
-  |   |              |            |   |
-  +---+--------------+------------+---+
-  To get this view, just hit <C-L> 4 times. or, if you have a large monitor, you may get tiled windows below.
+        ====+==============+============+===+
+        |   |              |            |   |
+        | F |              |    S1      | T |
+        | I |              +------------| A |
+        | L |  MAIN PANE   |    S2      | G |
+        | E |              +------------+ B |
+        | R |              |    S3      | A |
+        |   |              |            |   |
+        +===+==============+============+===+
 
-  ----+--------------+--------------+------------+---+
-  |   |              |              |            |   |
-  | F |              |              |    S1      | T |
-  | I |              |              +------------| A |
-  | L |  MAIN PANE   |      M2      |    S2      | G |
-  | E |              |              +------------+ B |
-  | R |              |              |    S3      | A |
-  |   |              |              |            |   |
-  +---+--------------+--------------+------------+---+
+  To get this view, just hit <C-L> 4 times. or, if you have a large monitor, you may get tiled windows below.
+  
+        +===+==============+==============+============+===+
+        |   |              |              |            |   |
+        | F |              |              |    S1      | T |
+        | I |              |              +------------| A |
+        | L |  MAIN PANE   |      M2      |    S2      | G |
+        | E |              |              +------------+ B |
+        | R |              |              |    S3      | A |
+        |   |              |              |            |   |
+        +===+==============+==============+============+===+
+
+
   To quickly switch between those windows, a few keys are mapped to
 
   - Focuse to the main window
