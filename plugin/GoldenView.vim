@@ -47,7 +47,7 @@ call GoldenView#zl#rc#set_default({
     \     '__Gundo_Preview__'         , '__Gundo__'           , 
     \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' , 
     \     '_VOOM\d\+$'                , '__Urannotate_\d\+__' , 
-    \     '__MRU_Files__' , 
+    \     '__MRU_Files__' , 'FencView_\d\+$'
     \   ],
     \ },
     \ 'g:goldenview__restore_urule'           : {
