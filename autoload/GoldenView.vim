@@ -313,7 +313,7 @@ endfunction
 
 
 function! GoldenView#GoldenMinHeight(...)
-    return float2nr(GoldenView#GoldenHeight()/(3*s:goldenview__golden_ratio))
+    return float2nr(GoldenView#GoldenHeight()/(5*s:goldenview__golden_ratio))
 endfunction
 
 
@@ -388,7 +388,7 @@ endfunction
 " ============================================================================
 function! GoldenView#Split()
     call GoldenView#zl#window#split_nicely()
-    enew
+    " enew
 endfunction
 
 

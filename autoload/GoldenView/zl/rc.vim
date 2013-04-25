@@ -39,7 +39,6 @@ function! GoldenView#zl#rc#init() abort
 
     let g:loaded_GoldenView_zl = s:GOLDENVIEW_ZL_VERSION_CURRENT * s:VERSION_FACTOR
 
-
 endfunction
 
 
@@ -140,10 +139,18 @@ endfunction
 
 
 
-
-
-
-
+function! GoldenView#zl#rc#init_python()
+    if has("python3")
+        let g:GoldenView_zl_py = 'py3'
+        let g:GoldenView_zl_pyeval = 'py3eval'
+    elseif has("python")
+        let g:GoldenView_zl_py = 'py'
+        let g:GoldenView_zl_pyeval = 'pyeval'
+    else 
+        let g:GoldenView_zl_py = ''
+        let g:GoldenView_zl_pyeval = ''
+    endif
+endfunction
 
 
 
