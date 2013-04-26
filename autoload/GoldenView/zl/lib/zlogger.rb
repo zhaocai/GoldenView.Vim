@@ -9,9 +9,9 @@ class ZLogger < Logger
   def initialize(logfile=nil)
     unless logfile
       if ::OS.mac?
-        logfile = File.expand_path('~/Library/Logs/vim/zlogger.log')
+        logfile = File.expand_path('~/Library/Logs/vim/GoldenView.log')
       else
-        logfile = File.expand_path('/var/log/vim/zlogger.log')
+        logfile = File.expand_path('/var/log/vim/GoldenView.log')
       end
     end
 

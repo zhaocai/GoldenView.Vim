@@ -6,7 +6,7 @@
     EMail         : caizhaoff@gmail.com
     Homepage      : http://zhaocai.github.io/GoldenView.Vim/
     Vim.org       : http://www.vim.org/scripts/script.php?script_id=4529
-    Version       : 1.3.0
+    Version       : 1.3.5
     Date Created  : Tue 18 Sep 2012 05:23:13 PM EDT
     Last Modified : Mon 22 Apr 2013 05:55:22 PM EDT
     ------------- - -----------------------------------------------

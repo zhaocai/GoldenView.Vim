@@ -69,6 +69,10 @@ if !has('ruby')
     endfunction
 else
 
+" Example:
+" command! -nargs=* -complete=expression Log
+"     \ exec GoldenView#zl#vim#context() | call GoldenView#zl#print#log(<args>)
+
 ruby ($LOAD_PATH << File.join(Vim.evaluate('g:GoldenView_zl_autoload_path'), 'lib')).uniq!
 
 ruby require 'zlogger'
@@ -100,6 +104,6 @@ endif
 " ============================================================================
 " Modeline:                                                               [[[1
 " ============================================================================
-" vim: set ft=vim ts=4 sw=4 tw=78 fdm=syntax fmr=[[[,]]] fdl=1 :
+" vim: set ts=4 sw=4 tw=78 fdm=syntax fmr=[[[,]]] fdl=1 :
 
 

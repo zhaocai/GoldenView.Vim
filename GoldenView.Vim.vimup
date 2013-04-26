@@ -79,6 +79,11 @@ install_details: |
   http://zhaocai.github.io/GoldenView.Vim/
 
 versions:
+- '1.3.5': |
+   - Fix for issue #5 (github).  
+   - Fix for Dirdiff, FencView
+   - Improve tracing
+
 - '1.3.0': |
    - Diff mode auto-resizing
    - refactor autocmd function: tweak restore behavior

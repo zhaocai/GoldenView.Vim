@@ -20,7 +20,7 @@
 " ============================================================================
 " Escape:                                                                 [[[1
 " ============================================================================
-function! GoldenView#zl#regex#escape(text, ...) " (text, ?magic='m')               [[[2
+function! GoldenView#zl#regex#escape(text, ...) " (text, ?magic='m')            [[[2
     "--------- ------------------------------------------------
     " Desc    : escape common special characters.
     "
