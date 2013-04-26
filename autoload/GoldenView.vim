@@ -114,7 +114,7 @@ endfunction
 
 function! GoldenView#Leave(...)
 
-"    exec GoldenView#zl#vim#context() | call GoldenView#Trace('WinLeave', a:000)
+    " GoldenViewTrace 'WinLeave', a:000
 
     " Do nothing if there is no split window
     " --------------------------------------
@@ -202,7 +202,7 @@ function! GoldenView#Resize(...)
     "
     "--------- ------------------------------------------------
 
-"    exec GoldenView#zl#vim#context() | call GoldenView#Trace('GoldenView Resize', a:000)
+    " GoldenViewTrace 'GoldenView Resize', a:000
 
     let opts = {'is_force' : 0}
     if a:0 >= 1 && GoldenView#zl#var#is_dict(a:1)
@@ -214,7 +214,7 @@ function! GoldenView#Resize(...)
         " Plus Split Window:
         " ++++++++++++++++++
 
-"        exec GoldenView#zl#vim#context() | call GoldenView#Trace('+++ winnr +++', a:000)
+        " GoldenViewTrace '+++ winnr +++', a:000
         return
 
     elseif winnr_diff < 0
@@ -240,7 +240,8 @@ function! GoldenView#Resize(...)
                 if GoldenView#IsRestore()
                     silent exec 'vertical resize ' . bufsaved['winwidth']
                     silent exec 'resize ' . bufsaved['winheight']
-"                    exec GoldenView#zl#vim#context() | call GoldenView#Trace('restore buffer:'. nr, a:000)
+
+                    " GoldenViewTrace 'restore buffer:'. nr, a:000
                 endif
             endif
         endfor
@@ -254,7 +255,7 @@ function! GoldenView#Resize(...)
         redraw
         let &lazyredraw = saved_lazyredraw
 
-"        exec GoldenView#zl#vim#context() | call GoldenView#Trace('--- winnr ---', a:000)
+        " GoldenViewTrace '--- winnr ---', a:000
         return
     endif
 
@@ -266,7 +267,7 @@ function! GoldenView#Resize(...)
         endif
 
         if GoldenView#IsIgnore()
-"        exec GoldenView#zl#vim#context() | call GoldenView#Trace('Ignored', a:000)
+            " GoldenViewTrace 'Ignored', a:000
             return
         endif
 
@@ -275,7 +276,7 @@ function! GoldenView#Resize(...)
 
     let active_profile = s:goldenview__profile[g:goldenview__active_profile]
     call s:set_focus_window(active_profile)
-"    exec GoldenView#zl#vim#context() | call GoldenView#Trace('Set Focuse', a:000)
+    " GoldenViewTrace 'Set Focuse', a:000
 
 
 
@@ -283,7 +284,7 @@ function! GoldenView#Resize(...)
     let &winheight = &winminheight
     let &winwidth  = &winminwidth
 
-"    exec GoldenView#zl#vim#context() | call GoldenView#Trace('Reset Focus', a:000)
+    " GoldenViewTrace 'Reset Focus', a:000
 endfunction
 
 function! GoldenView#IsIgnore()
@@ -388,7 +389,7 @@ endfunction
 " ============================================================================
 function! GoldenView#Split()
     call GoldenView#zl#window#split_nicely()
-    " enew
+    enew
 endfunction
 
 
@@ -509,7 +510,7 @@ endfunction
 function! GoldenView#Trace(...)
     " -------- - -----------------------------------------------
     "  Example : >
-    "    exec GoldenView#zl#vim#context() | call GoldenView#Trace(a:000)
+    "    GoldenViewTrace 'WinLeave', a:000
     " -------- - -----------------------------------------------
     
     call GoldenView#initialize_tab_variable()
@@ -519,6 +520,8 @@ function! GoldenView#Trace(...)
     call GoldenView#zl#print#log(info)
 endfunction
 
+command! -nargs=* -complete=expression GoldenViewTrace
+    \ exec GoldenView#zl#vim#context() | call GoldenView#Trace(<args>)
 
 " ============================================================================
 " Modeline:                                                               [[[1
