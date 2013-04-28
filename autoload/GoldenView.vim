@@ -314,7 +314,7 @@ endfunction
 
 
 function! GoldenView#GoldenMinHeight(...)
-    return float2nr(GoldenView#GoldenHeight()/(5*s:goldenview__golden_ratio))
+    return float2nr(GoldenView#GoldenHeight()/(3*s:goldenview__golden_ratio))
 endfunction
 
 
@@ -517,7 +517,7 @@ function! GoldenView#Trace(...)
     let info            = GoldenView#Info()
     let info['context'] = get(g:,'GoldenView_zl_context','')
     let info['args']    = a:000
-    call GoldenView#zl#print#log(info)
+    call GoldenView#zl#log#debug(info)
 endfunction
 
 command! -nargs=* -complete=expression GoldenViewTrace
