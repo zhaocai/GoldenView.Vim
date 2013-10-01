@@ -37,7 +37,7 @@ call GoldenView#zl#rc#set_default({
     \     'qf'      , 'vimpager', 'undotree', 'tagbar',
     \     'nerdtree', 'vimshell', 'vimfiler', 'voom'  ,
     \     'tabman'  , 'unite'   , 'quickrun', 'Decho' ,
-    \     'ControlP', 'diff'
+    \     'ControlP', 'diff'    , 'extradite'
     \   ],
     \   'buftype' : [
     \     'nofile'  ,
