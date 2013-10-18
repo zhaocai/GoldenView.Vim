@@ -23,10 +23,10 @@ let s:rule_types =  [
     \   'bufname' , 'at'     , 'syntax', 'expr' ,
     \ ]
 let s:nrule = {
-    \ 'eval_order'  : s:rule_types ,
-    \ 'eval_negate' : []           ,
-    \ 'logic'       : 'or'         ,
-    \ 'rule'        : {}           ,
+    \ 'eval_order'  : copy(s:rule_types),
+    \ 'eval_negate' : []                ,
+    \ 'logic'       : 'or'              ,
+    \ 'rule'        : {}                ,
     \ }
 
 function! GoldenView#zl#rule#norm(urule, ...)
@@ -328,4 +328,4 @@ endfunction
 " ============================================================================
 " Modeline:                                                               [[[1
 " ============================================================================
-" vim: set ft=vim ts=4 sw=4 tw=78 fdm=syntax fmr=[[[,]]] fdl=1 :
+" vim: set ft=vim ts=4 sw=4 tw=78 fdm=marker fmr=[[[,]]] fdl=1 :

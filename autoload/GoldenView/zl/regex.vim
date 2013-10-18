@@ -18,9 +18,9 @@
 
 
 " ============================================================================
-" Escape:                                                                 [[[1
+" Regex Escape:                                                           ⟨⟨⟨1
 " ============================================================================
-function! GoldenView#zl#regex#escape(text, ...) " (text, ?magic='m')            [[[2
+function! GoldenView#zl#regex#escape(text, ...) " (text, ?magic='m')            ⟨⟨⟨2
     "--------- ------------------------------------------------
     " Desc    : escape common special characters.
     "
@@ -48,13 +48,47 @@ function! GoldenView#zl#regex#escape(text, ...) " (text, ?magic='m')            
     elseif l:magic =~# '^\\\?v$'
         return substitute(a:text, '[^0-9a-zA-Z_]', '\\&', 'g')
     else
-        throw 'zl: unsupported magic type'
+        throw 'unsupported magic type'
         return a:text
     endif
-endfunction
+endfunction " ⟩⟩⟩
+
+
+
+" ----------------------------------------------------------------------------
+" Regex Builder:                                                          ⟨⟨⟨1
+
+
+function! GoldenView#zl#regex#or(list, ...) "⟨⟨⟨
+    let opts =
+        \ { 'is_capturing' : 0
+        \ , 'magic' : 'm'
+        \ }
+    if a:0 >= 1 && GoldenView#zl#var#is_dict(a:1)
+        call extend(opts, a:1)
+    endif
+
+    let begin = opts['is_capturing'] ? '\(' : '\%('
+    let or    = '\|'
+    let end   = '\)'
+
+    if opts['magic'] =~# '^\\\?v$'
+        let begin = opts['is_capturing'] ? '(' : '%('
+        let or    = '|'
+        let end   = ')'
+    endif
+
+    return  begin
+        \ . join(map(
+        \     a:list, 'GoldenView#zl#regex#escape(v:val, "' . opts['magic'] . '")'),
+        \     or)
+        \ . end
+endfunction "⟩⟩⟩
+
+" ⟩⟩⟩
 
 
 " ============================================================================
-" Modeline:                                                               [[[1
+" Modeline:                                                               ⟨⟨⟨1
 " ============================================================================
-" vim: set ft=vim ts=4 sw=4 tw=78 fdm=syntax fmr=[[[,]]] fdl=1 :
+" vim: set ft=vim ts=4 sw=4 tw=78 fdm=marker fmr=⟨⟨⟨,⟩⟩⟩ fdl=1 :

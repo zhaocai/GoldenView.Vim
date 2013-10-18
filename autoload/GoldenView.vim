@@ -11,7 +11,7 @@
 " =============== ============================================================
 
 " ============================================================================
-" Initialization And Profile:                                             [[[1
+" Initialization And Profile:                                             ⟨⟨⟨1
 " ============================================================================
 function! GoldenView#ExtendProfile(name, def)
     let default = get(s:goldenview__profile, a:name,
@@ -69,7 +69,7 @@ endfunction
 
 
 " ============================================================================
-" Auto Resize:                                                            [[[1
+" Auto Resize:                                                            ⟨⟨⟨1
 " ============================================================================
 function! GoldenView#ToggleAutoResize()
     if exists('s:goldenview__auto_resize') && s:goldenview__auto_resize == 1
@@ -146,8 +146,8 @@ function! GoldenView#Diff()
     if ! exists('b:goldenview_diff')
         let b:goldenview_diff = 0
     endif
-    if &diff 
-        if ! b:goldenview_diff 
+    if &diff
+        if ! b:goldenview_diff
             for nr in GoldenView#zl#list#uniq(tabpagebuflist())
                 if getbufvar(nr, '&diff')
                     call setbufvar(nr, 'goldenview_diff', 1)
@@ -156,7 +156,7 @@ function! GoldenView#Diff()
             exec 'wincmd ='
         endif
         return 1
-    else 
+    else
         if b:goldenview_diff
             let b:goldenview_diff = 0
         endif
@@ -231,7 +231,7 @@ function! GoldenView#Resize(...)
         for winnr in range(1, winnr('$'))
             let bufnr = winbufnr(winnr)
             let bufsaved = get(t:goldenview['bufs'], bufnr, {})
-            
+
             " Ignored Case: same buffer displayed in multiply windows
             " -------------------------------------------------------
             if ! empty(bufsaved) && bufsaved['winnr'] == winnr
@@ -385,17 +385,16 @@ endfunction
 
 
 " ============================================================================
-" Split:                                                                  [[[1
+" Split:                                                                  ⟨⟨⟨1
 " ============================================================================
 function! GoldenView#Split()
     call GoldenView#zl#window#split_nicely()
-    enew
 endfunction
 
 
 
 " ============================================================================
-" Switch:                                                                 [[[1
+" Switch:                                                                 ⟨⟨⟨1
 " ============================================================================
 function! GoldenView#SwitchMain(...)
     let opts = {
@@ -436,7 +435,7 @@ function! GoldenView#SwitchMain(...)
 endfunction
 
 " ============================================================================
-" Helper Functions:                                                       [[[1
+" Helper Functions:                                                       ⟨⟨⟨1
 " ============================================================================
 function! s:eval(profile, val)
     if GoldenView#zl#var#is_number(a:val)
@@ -479,7 +478,7 @@ endfunction
 
 
 " ============================================================================
-" Debug:                                                                  [[[1
+" Debug:                                                                  ⟨⟨⟨1
 " ============================================================================
 
 function! GoldenView#Info()
@@ -512,7 +511,7 @@ function! GoldenView#Trace(...)
     "  Example : >
     "    GoldenViewTrace 'WinLeave', a:000
     " -------- - -----------------------------------------------
-    
+
     call GoldenView#initialize_tab_variable()
     let info            = GoldenView#Info()
     let info['context'] = get(g:,'GoldenView_zl_context','')
@@ -524,6 +523,6 @@ command! -nargs=* -complete=expression GoldenViewTrace
     \ exec GoldenView#zl#vim#context() | call GoldenView#Trace(<args>)
 
 " ============================================================================
-" Modeline:                                                               [[[1
+" Modeline:                                                               ⟨⟨⟨1
 " ============================================================================
-" vim: set ft=vim ts=4 sw=4 tw=78 fdm=syntax fmr=[[[,]]] fdl=1 :
+" vim: set ft=vim ts=4 sw=4 tw=78 fdm=syntax fmr=⟨⟨⟨,⟩⟩⟩ fdl=1 :
