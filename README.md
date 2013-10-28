@@ -80,7 +80,7 @@ To quickly switch between those windows, a few keys are mapped to
 Install [GoldenView][GoldenView] is the *same as installing other vim plugins*. If experienced with vim, you can skim the example below and move to [next section](#quick-start). 
 
 
-### **Option A** - With [Plugin Manager][vim-plugin-manager] ( **recommanded** )
+### **Option A** - With [Plugin Manager][vim-plugin-manager] ( **recommended** )
 
 If you use plugin managers like *Pathogen*, *vundle*, *neobundle*, *vim-addon-manager*, etc., just unarchive the zip file or clone the [GoldenView][GoldenView] repo from `git://github.com/zhaocai/GoldenView.git` into your local plugin installation directory (most likely `~/.vim/bundle/`). Then add corresponding scripts in .vimrc for the bundle manager you are using.
 
