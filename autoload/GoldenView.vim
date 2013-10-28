@@ -437,6 +437,7 @@ endfunction
 " ============================================================================
 " Helper Functions:                                                       ⟨⟨⟨1
 " ============================================================================
+
 function! s:eval(profile, val)
     if GoldenView#zl#var#is_number(a:val)
         return a:val

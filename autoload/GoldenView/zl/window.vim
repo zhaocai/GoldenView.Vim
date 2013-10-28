@@ -14,7 +14,7 @@
 
 
 " ============================================================================
-" Status:                                                                 [[[1
+" Status:                                                                 ⟨⟨⟨1
 " ============================================================================
 call GoldenView#zl#rc#set_default({
     \ 'g:GoldenView_zl_window__ignore_urule'           : {
@@ -78,7 +78,7 @@ endfunction
 
 
 " ============================================================================
-" Move:                                                                   [[[1
+" Move:                                                                   ⟨⟨⟨1
 " ============================================================================
 let s:golden_ratio = 1.618
 function! GoldenView#zl#window#next_window_or_tab()
@@ -104,14 +104,14 @@ endfunction
 
 
 " ============================================================================
-" Size:                                                                   [[[1
+" Size:                                                                   ⟨⟨⟨1
 " ============================================================================
 function! GoldenView#zl#window#golden_ratio_width()
-    return &columns / s:golden_ratio
+    return float2nr(&columns / s:golden_ratio)
 endfunction
 
 function! GoldenView#zl#window#golden_ratio_height()
-    return &lines / s:golden_ratio
+    return float2nr(&lines / s:golden_ratio)
 endfunction
 
 function! GoldenView#zl#window#textwidth()
@@ -119,7 +119,7 @@ function! GoldenView#zl#window#textwidth()
 endfunction
 
 " ============================================================================
-" Split:                                                                  [[[1
+" Split:                                                                  ⟨⟨⟨1
 " ============================================================================
 
 function! GoldenView#zl#window#nicely_split_cmd(...)
@@ -172,7 +172,7 @@ endfunction
 
 
 " ============================================================================
-" Sort:                                                                   [[[1
+" Sort:                                                                   ⟨⟨⟨1
 " ============================================================================
 function! GoldenView#zl#window#sort_by(...)
     "--------- ------------------------------------------------
@@ -232,7 +232,7 @@ endfunction
 
 
 " ============================================================================
-" Switch:                                                                 [[[1
+" Switch:                                                                 ⟨⟨⟨1
 " ============================================================================
 
 function! GoldenView#zl#window#switch_buffer_toggle(...)
@@ -399,7 +399,7 @@ function! GoldenView#zl#window#alternate_buffer()
 endfunction
 
 " ============================================================================
-" Scroll:                                                                 [[[1
+" Scroll:                                                                 ⟨⟨⟨1
 " ============================================================================
 
 function! GoldenView#zl#window#scroll_other_window(direction)
@@ -409,19 +409,24 @@ function! GoldenView#zl#window#scroll_other_window(direction)
 endfunction
 
 " ============================================================================
-" View:                                                                   [[[1
+" View:                                                                   ⟨⟨⟨1
 " ============================================================================
-function! GoldenView#zl#window#save_view_command(command)
+function! GoldenView#zl#window#save_view_command(command) range
     let view = winsaveview()
+
+    let range = ''
+    if a:firstline != a:lastline
+       let range = a:firstline.','.a:lastline
+    endif
     try
-        keepjumps execute a:command
+        keepjumps execute range.a:command
     finally
         call winrestview(view)
     endtry
-endf
+endfunction
 
 " ============================================================================
-" Modeline:                                                               [[[1
+" Modeline:                                                               ⟨⟨⟨1
 " ============================================================================
-" vim: set ft=vim ts=4 sw=4 tw=78 fdm=marker fmr=[[[,]]] fdl=1 :
+" vim: set ft=vim ts=4 sw=4 tw=78 fdm=marker fmr=⟨⟨⟨,⟩⟩⟩ fdl=1 :
 
