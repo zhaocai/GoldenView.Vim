@@ -80,7 +80,14 @@ endfunction
 " ============================================================================
 " Move:                                                                   ⟨⟨⟨1
 " ============================================================================
-let s:golden_ratio = 1.618
+let l:golden_ratio_dot = str2float("1.618")
+let l:golden_ratio_comma = str2float("1,618")
+if l:golden_ratio_dot > l:golden_ratio_comma
+    let s:golden_ratio = l:golden_ratio_dot
+else
+    let s:golden_ratio = l:golden_ratio_comma
+endif
+
 function! GoldenView#zl#window#next_window_or_tab()
     if tabpagenr('$') == 1 && winnr('$') == 1
         call GoldenView#zl#window#split_nicely()
