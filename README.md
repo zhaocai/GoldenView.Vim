@@ -33,7 +33,7 @@ First of all, it automatically resize the focused split window to a "golden" vie
 
 ### 2. Tiled Windows Management
 
-Second, it maps a single key (`<C-L>` by default) to nicely split windows to tiled windows. 
+Second, it maps a single key (`<C-L>` by default) to nicely split windows to tiled windows.
 
 ```
 ----+----------------+------------+---+
@@ -65,10 +65,10 @@ To get this view, just hit `<C-L>` 4 times. or, if you have a large monitor, you
 ```
 
 
-To quickly switch between those windows, a few keys are mapped to 
+To quickly switch between those windows, a few keys are mapped to
 
 - Focus to the main window
-- Switch with the `MAIN PANE`, the largest, smallest, etc. 
+- Switch with the `MAIN PANE`, the largest, smallest, etc.
 - Jump to the next and previous window
 
 
@@ -77,7 +77,7 @@ To quickly switch between those windows, a few keys are mapped to
 
 ## Installation
 
-Install [GoldenView][GoldenView] is the *same as installing other vim plugins*. If experienced with vim, you can skim the example below and move to [next section](#quick-start). 
+Install [GoldenView][GoldenView] is the *same as installing other vim plugins*. If experienced with vim, you can skim the example below and move to [next section](#quick-start).
 
 
 ### **Option A** - With [Plugin Manager][vim-plugin-manager] ( **recommended** )
@@ -115,7 +115,7 @@ Unarchive the zip file into a directory that is under `runtimepath` of your vim,
 
 To get you started, a few default keys are mapped as below:
 
-```vim 
+```vim
 " 1. split to tiled windows
 nmap <silent> <C-L>  <Plug>GoldenViewSplit
 
@@ -150,7 +150,7 @@ To switch `S1` with `MAIN PANE`, in `S1` and hit `<Plug>GoldenViewSwitchMain`. T
 
 #### g:goldenview__enable_default_mapping
 
-Every experienced vim user has a different set of key mappings. If you you are (most likely) unhappy about some of the mappings, map you own keys as below: 
+Every experienced vim user has a different set of key mappings. If you you are (most likely) unhappy about some of the mappings, map you own keys as below:
 
 ```vim
 let g:goldenview__enable_default_mapping = 0
@@ -164,8 +164,8 @@ nmap <silent> <MY_KEY> <Plug>GoldenViewSplit
 
 if you do not want to start auto-resizing automatically, you can put the following script in your vimrc.
 
-```vim  
-et g:goldenview__enable_at_startup = 0
+```vim
+let g:goldenview__enable_at_startup = 0
 ```
 
 ## More Commands and Mappings
@@ -178,23 +178,23 @@ These commands toggle, enable, and disable GoldenView auto-resizing.
 
 
 ### `:GoldenViewResize`
-this command do manual resizing of focused window. 
+this command do manual resizing of focused window.
 
 You can also map a key for this as below:
 
-```vim 
+```vim
 nmap <silent> <YOUR_KEY> <Plug>GoldenViewResize
 
 ```
 
 ### `:SwitchGoldenViewMain`
 ### `:SwitchGoldenViewLargest`
-### `:SwitchGoldenViewSmallest` 
+### `:SwitchGoldenViewSmallest`
 
-these commands do as it named. 
+these commands do as it named.
 
 You can also add mappings as below. ( no default keys for these mappings)
-```vim 
+```vim
 nmap <silent> <YOUR_KEY> <Plug>GoldenViewSwitchWithLargest
 nmap <silent> <YOUR_KEY> <Plug>GoldenViewSwitchWithSmallest
 
@@ -207,15 +207,15 @@ Other switch rules can be easily defined. If you have some ideas, please post to
 
 [GoldenView][] defines two rules:
 
-### `g:goldenview__ignore_urule` 
-is to "ignore"  - allow those special buffers to manage their own window size. 
+### `g:goldenview__ignore_urule`
+is to "ignore"  - allow those special buffers to manage their own window size.
 
-### `g:goldenview__restore_urule` 
+### `g:goldenview__restore_urule`
 is to "restore" - restore window size of some of special buffers.
 
 The `urule` (user rules) are like this, which will be normalize at runtime for faster processing.
 
-```vim 
+```vim
     \{
     \   'filetype' : [
     \     ''        ,
@@ -227,11 +227,11 @@ The `urule` (user rules) are like this, which will be normalize at runtime for f
     \     'nofile'  ,
     \   ],
     \   'bufname' : [
-    \     'GoToFile'                  , 'diffpanel_\d\+'      , 
-    \     '__Gundo_Preview__'         , '__Gundo__'           , 
-    \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' , 
-    \     '_VOOM\d\+$'                , '__Urannotate_\d\+__' , 
-    \     '__MRU_Files__' , 
+    \     'GoToFile'                  , 'diffpanel_\d\+'      ,
+    \     '__Gundo_Preview__'         , '__Gundo__'           ,
+    \     '\[LustyExplorer-Buffers\]' , '\-MiniBufExplorer\-' ,
+    \     '_VOOM\d\+$'                , '__Urannotate_\d\+__' ,
+    \     '__MRU_Files__' ,
     \   ],
     \},
 
@@ -240,10 +240,10 @@ The `urule` (user rules) are like this, which will be normalize at runtime for f
 ## Profiles
 [GoldenView][] defines two profile:
 
-### `g:goldenview__active_profile` 
+### `g:goldenview__active_profile`
 defines the functions and preferences to auto resize windows.
 
-### `g:goldenview__reset_profile` 
+### `g:goldenview__reset_profile`
 
 defines reset preferences to restore everything to default.
 
@@ -253,7 +253,7 @@ defines reset preferences to restore everything to default.
 For more details, please read the source code! :)
 
 
- 
+
 ## Troubleshooting:
 
 ### Please do not resize me!
@@ -264,7 +264,7 @@ For more details, please read the source code! :)
 
 ### [minibufexpl.vim][] takes 5+ lines
 
-Check my fork [minibufexpl.vim][] to see if it is working for you. I have send pull request to the origin repo. 
+Check my fork [minibufexpl.vim][] to see if it is working for you. I have send pull request to the origin repo.
 
 
 ### I cannot resize window height to < 7
@@ -295,7 +295,7 @@ let g:goldenview__active_profile = 'small-height'
 If you have any issues, please post it to [github issue][GoldenViewIssue] for discussion.
 
 Remember to run the following command and post the results.
-```vim 
+```vim
 echo GoldenView#Info()
 ```
 
