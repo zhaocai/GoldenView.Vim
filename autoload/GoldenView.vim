@@ -25,7 +25,13 @@ function! GoldenView#Init()
         return
     endif
 
-    let s:goldenview__golden_ratio = 1.618
+    let l:golden_ratio_dot = str2float("1.618")
+    let l:golden_ratio_comma = str2float("1,618")
+    if l:golden_ratio_dot > l:golden_ratio_comma
+        let s:goldenview__golden_ratio = l:golden_ratio_dot
+    else
+        let s:goldenview__golden_ratio = l:golden_ratio_comma
+    endif
     lockvar s:goldenview__golden_ratio
 
     set equalalways
