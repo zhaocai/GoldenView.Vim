@@ -59,7 +59,7 @@ To get this view, just hit `<C-L>` 4 times. or, if you have a large monitor, you
 | L |               |      M2      |    S2      | G |
 | E |   MAIN PANE   |              +------------+ B |
 | R |               |              |    S3      | A |
-|   |               |              |            | B |
+|   |               |              |            | R |
 |   |               |              |            |   |
 +---+---------------+--------------+------------+---+
 ```
