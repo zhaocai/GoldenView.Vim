@@ -15,9 +15,9 @@
 
 The initial motive for [GoldenView][GoldenView] comes from the frustration of using other vim plugins to auto-resize split windows. The idea is deadly simple and very useful: **resize the focused window to a proper size.** However, in practice, many hiccups makes **auto-resizing** not a smooth experience.  Below are a list of issues [GoldenView][GoldenView] attempts to solve:
 
-First and the most important one, auto-resizing should play nicely with existing plugins like `tagbar`, `vimfiler`, `unite`, `VOoM`, `quickfix`, `undotree`, `gundo`, etc. These windows should manage there own window size.
+First and the most important one, auto-resizing should play nicely with existing plugins like `tagbar`, `vimfiler`, `unite`, `VOoM`, `quickfix`, `undotree`, `gundo`, etc. These windows should manage their own size.
 
-Second, auto-resizing should take care of **the other windows** too. Resizing the focused window may cause the other windows become too small. When you have 4+ split windows, auto-resizing may just make a mess out of it.
+Second, auto-resizing should take care of **the other windows** too. Resizing the focused window may cause the other windows to become too small. When you have 4+ split windows, auto-resizing may just make a mess out of it.
 
 
 ![GoldView Screencast]( http://dl.dropboxusercontent.com/u/1897501/Screencasts/GoldenView.gif )
@@ -25,10 +25,10 @@ Second, auto-resizing should take care of **the other windows** too. Resizing th
 
 ## Features
 
-[GoldenView][GoldenView] has preliminarily solved the issues described above. It also provides other features. Bascally, it does two things:
+[GoldenView][GoldenView] has preliminarily solved the issues described above. It also provides other features. Basically, it does two things:
 
 ### 1. AutoResizing
-First of all, it automatically resize the focused split window to a "golden" view based on [golden ratio][golden-ratio-wikipedia] and `textwidth`.
+First of all, it automatically resizes the focused split windows to a "golden" view based on [golden ratio][golden-ratio-wikipedia] and `textwidth`.
 
 
 ### 2. Tiled Windows Management
@@ -77,7 +77,7 @@ To quickly switch between those windows, a few keys are mapped to
 
 ## Installation
 
-Install [GoldenView][GoldenView] is the *same as installing other vim plugins*. If experienced with vim, you can skim the example below and move to [next section](#quick-start).
+Installing [GoldenView][GoldenView] is the *same as installing other vim plugins*. If experienced with vim, you can skim the example below and move to [next section](#quick-start).
 
 
 ### **Option A** - With [Plugin Manager][vim-plugin-manager] ( **recommended** )
@@ -130,7 +130,7 @@ nmap <silent> <C-P>  <Plug>GoldenViewPrevious
 
 ```
 
-The meaning of those keys are self-explaining. A general workflow would be `<Plug>GoldenViewSplit` key to quickly and nicely split windows to the layout as below. Then you may open your files.
+What the keys do is self-explanatory. A general workflow would be `<Plug>GoldenViewSplit` key to quickly and nicely split windows to the layout as below. Then you may open your files.
 
 ```
 ----+----------------+------------+---+
@@ -150,7 +150,7 @@ To switch `S1` with `MAIN PANE`, in `S1` and hit `<Plug>GoldenViewSwitchMain`. T
 
 #### g:goldenview__enable_default_mapping
 
-Every experienced vim user has a different set of key mappings. If you you are (most likely) unhappy about some of the mappings, map you own keys as below:
+Every experienced vim user has a different set of key mappings. If you you are (most likely) unhappy about some of the mappings, map your own keys as below:
 
 ```vim
 let g:goldenview__enable_default_mapping = 0
@@ -162,7 +162,7 @@ nmap <silent> <MY_KEY> <Plug>GoldenViewSplit
 
 #### g:goldenview__enable_at_startup
 
-if you do not want to start auto-resizing automatically, you can put the following script in your vimrc.
+If you do not want to start auto-resizing automatically, you can put the following script in your vimrc.
 
 ```vim
 let g:goldenview__enable_at_startup = 0
@@ -178,7 +178,7 @@ These commands toggle, enable, and disable GoldenView auto-resizing.
 
 
 ### `:GoldenViewResize`
-this command do manual resizing of focused window.
+This command manually resizes the focused window.
 
 You can also map a key for this as below:
 
@@ -191,7 +191,7 @@ nmap <silent> <YOUR_KEY> <Plug>GoldenViewResize
 ### `:SwitchGoldenViewLargest`
 ### `:SwitchGoldenViewSmallest`
 
-these commands do as it named.
+These commands do as they're named.
 
 You can also add mappings as below. ( no default keys for these mappings)
 ```vim
