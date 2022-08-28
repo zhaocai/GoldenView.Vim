@@ -166,6 +166,10 @@ endfunction
 
 function! GoldenView#Enter(...)
 
+    if exists('*win_gettype') && win_gettype(winnr()) == 'popup'
+        return
+    endif
+
     if GoldenView#Diff()
         return
     endif
